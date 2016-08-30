@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:key="pref_main_cat_settings"
+        android:title="@string/pref_main_cat">
+        <ru.megazlo.apnea.component.TimePreference
+            android:key="pref_best_record"
+            android:title="@string/pref_best_record"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_co_cat_settings"
+        android:title="@string/pref_co_cat">
+
+        <ru.megazlo.apnea.component.NumberPickerPreference
+            android:key="key_number"
+            android:title="Интервал уменьшения"
+            android:summary="Процент времени от максимального"
+            android:defaultValue="50"
+            app:max="80"
+            app:min="50"
+            app:suffix="@string/pref_perc_suff"/>
+
+        <ru.megazlo.apnea.component.TimePreference
+            android:key="pref_co2_start_time"
+            android:title="Начальное время отдыха"/>
+
+        <ru.megazlo.apnea.component.NumberPickerPreference
+            android:key="key_number"
+            android:title="Интервал уменьшения"
+            android:defaultValue="15"
+            app:max="30"
+            app:min="5"
+            app:suffix="@string/pref_sec_suff"/>
+
+        <ru.megazlo.apnea.component.TimePreference
+            android:key="pref_co2_end_time"
+            android:title="Конечное время отдыха"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_o_cat_settings"
+        android:title="@string/pref_o_cat">
+        <ru.megazlo.apnea.component.TimePreference
+            android:key="pref_o2_timeout"
+            android:title="Отдых"
+            android:summary="Интервал отдыха между апноэ"
+            android:defaultValue="2:00"/>
+
+        <ru.megazlo.apnea.component.TimePreference
+            android:key="pref_o2_start_time"
+            android:title="Начальное задержка"/>
+
+        <ru.megazlo.apnea.component.NumberPickerPreference
+            android:key="key_number"
+            android:title="Интервал увеличения"
+            android:defaultValue="15"
+            android:summary="Значение на которое будет уменьшаться период отдышки"/>
+
+        <ru.megazlo.apnea.component.TimePreference
+            android:key="pref_o2_end_time"
+            android:title="Конечная задержка"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Type notification"
+        android:summary="Определенные типы оповещений">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="pref_notify_vibrate"
+            android:title="@string/pref_title_vibrate"
+            android:summary="Vibrate on notification"/>
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="pref_notify_speech"
+            android:title="@string/pref_title_speech"
+            android:summary="Voice notification"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_notify_cat"
+        android:summary="Интервалы оповещений">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="pref_notify_minute"
+            android:title="Every minute"/>
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="pref_notify_30sec"
+            android:title="Last 30 second"/>
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="pref_notify_10sec"
+            android:title="Last 10 second"/>
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="pref_notify_5sec"
+            android:title="5 second countdown"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

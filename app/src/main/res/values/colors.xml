@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#045a86</color>
+    <color name="colorPrimaryDark">#034263</color>
+    <color name="colorAccent">#0e78ae</color>
+
+    <color name="timer_circle">#045a86</color>
+    <color name="white">#ffffff</color>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Апноэ тренировки</string>
+    <string name="action_settings">Настройки</string>
+    <string name="nav_title_tables">Таблицы</string>
+    <string name="nav_title_settings">Настройки</string>
+    <string name="nav_title_info">Информация</string>
+    <string name="pref_notify_cat">Оповещения</string>
+    <string name="def_tab_title_co2">Расчетная CO2</string>
+    <string name="def_tab_title_o2">Расчетная O2</string>
+    <string name="pref_sec_suff">секунд</string>
+    <string name="pref_perc_suff">%</string>
+</resources>

@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Apnea training</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_main_cat">Main</string>
+    <string name="pref_notify_cat">Notifications</string>
+    <string name="pref_o_cat">Тренировка O2</string>
+    <string name="pref_co_cat">Тренировка CO2</string>
+
+    <string name="pref_best_record">Best apnea record</string>
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string name="pref_sec_suff">seconds</string>
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="pref_title_speech">Speech</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nav_title_info">Info</string>
+    <string name="nav_title_tables">Tables</string>
+    <string name="nav_title_settings">Settings</string>
+    <string name="def_tab_title_o2">Default O2</string>
+    <string name="def_tab_title_co2">Default CO2</string>
+    <string name="img_lungs">Lungs</string>
+    <string name="pref_perc_suff">%</string>
+    <string name="my_mail">ivangurkin@gmail.com</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+
+</resources>

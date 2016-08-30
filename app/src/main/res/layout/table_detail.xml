@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/list_row"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@android:color/darker_gray"
+        android:layout_weight="1"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ru.megazlo.apnea.component.ArcProgress
+            android:id="@+id/arc_progress"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:paddingRight="22sp"
+            android:paddingLeft="22sp"
+            custom:arc_bottom_text="Дыхание"
+            custom:arc_text_color="@color/colorAccent"
+            custom:arc_max="135"
+            custom:arc_progress="70"
+            custom:arc_finished_color="#039e00"
+            custom:arc_unfinished_color="#a5ffa3"/>
+
+        <Button
+            android:id="@+id/round_discard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/arc_progress"
+            android:layout_alignTop="@id/arc_progress"
+            android:contentDescription=""
+            android:drawableLeft="@drawable/ic_tables"
+            android:drawablePadding="5sp"
+            android:text="Discard"/>
+
+        <TextView
+            android:id="@+id/total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/arc_progress"
+            android:layout_alignBottom="@id/arc_progress"
+            android:paddingBottom="10sp"
+            android:text="Total time:"/>
+    </RelativeLayout>
+
+</LinearLayout>
