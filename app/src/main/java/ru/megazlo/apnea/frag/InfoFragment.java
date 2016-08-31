@@ -25,11 +25,11 @@ public class InfoFragment extends Fragment implements FabClickListener {
 
     @AfterViews
     void init() {
-        infoView.setText(Html.fromHtml(readTxt()));
+        infoView.setText(Html.fromHtml(readTxt(R.raw.info)));
     }
 
-    private String readTxt() {
-        InputStream inputStream = getResources().openRawResource(R.raw.info);
+    private String readTxt(int resId) {
+        InputStream inputStream = getResources().openRawResource(resId);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
             int i = inputStream.read();

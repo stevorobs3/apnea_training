@@ -8,7 +8,7 @@
             android:key="pref_best_record"
             android:title="@string/pref_best_record"
             android:defaultValue="2:40"
-            app:prefix="Максимальное время задержки дыхания:"/>
+            app:prefix="@string/sum_max_time"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -17,7 +17,7 @@
 
         <ru.megazlo.apnea.component.NumberPickerPreference
             android:key="pref_co2_percent"
-            android:title="Процент от максимума"
+            android:title="@string/titl_co2_max_perc"
             android:defaultValue="50"
             app:max="80"
             app:min="50"
@@ -25,13 +25,13 @@
 
         <ru.megazlo.apnea.component.TimePreference
             android:key="pref_co2_start_time"
-            android:title="Начальное время отдыха"
+            android:title="@string/titl_co2_beg_time"
             android:defaultValue="2:30"
-            app:prefix="Время дыхания в начале цикла:"/>
+            app:prefix="@string/sum_co2_beg_time"/>
 
         <ru.megazlo.apnea.component.NumberPickerPreference
             android:key="pref_co2_reduce"
-            android:title="Интервал уменьшения"
+            android:title="@string/titl_co2_reduce"
             android:defaultValue="15"
             app:max="30"
             app:min="5"
