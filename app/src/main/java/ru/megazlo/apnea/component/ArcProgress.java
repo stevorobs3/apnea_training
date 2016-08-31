@@ -47,17 +47,6 @@ public class ArcProgress extends View {
     private float default_text_size;
     private final int min_size;
 
-    private static final String INSTANCE_STATE = "saved_instance";
-    private static final String INSTANCE_STROKE_WIDTH = "stroke_width";
-    private static final String INSTANCE_BOTTOM_TEXT_SIZE = "bottom_text_size";
-    private static final String INSTANCE_BOTTOM_TEXT = "bottom_text";
-    private static final String INSTANCE_TEXT_SIZE = "text_size";
-    private static final String INSTANCE_TEXT_COLOR = "text_color";
-    private static final String INSTANCE_PROGRESS = "progress";
-    private static final String INSTANCE_MAX = "max";
-    private static final String INSTANCE_FINISHED_STROKE_COLOR = "finished_stroke_color";
-    private static final String INSTANCE_UNFINISHED_STROKE_COLOR = "unfinished_stroke_color";
-    private static final String INSTANCE_ARC_ANGLE = "arc_angle";
 
     public ArcProgress(Context context) {
         this(context, null);
@@ -139,6 +128,7 @@ public class ArcProgress extends View {
     }
 
     public void setProgress(int progress) {
+
         this.progress = progress;
         if (this.progress > getMax()) {
             this.progress %= getMax();
@@ -262,40 +252,4 @@ public class ArcProgress extends View {
         return Utils.formatMS(getMax() - getProgress());
     }
 
-    @Override
-    protected Parcelable onSaveInstanceState() {
-        final Bundle bundle = new Bundle();
-        bundle.putParcelable(INSTANCE_STATE, super.onSaveInstanceState());
-        bundle.putFloat(INSTANCE_STROKE_WIDTH, getStrokeWidth());
-        bundle.putFloat(INSTANCE_BOTTOM_TEXT_SIZE, getBottomTextSize());
-        bundle.putString(INSTANCE_BOTTOM_TEXT, getBottomText());
-        bundle.putFloat(INSTANCE_TEXT_SIZE, getTextSize());
-        bundle.putInt(INSTANCE_TEXT_COLOR, getTextColor());
-        bundle.putInt(INSTANCE_PROGRESS, getProgress());
-        bundle.putInt(INSTANCE_MAX, getMax());
-        bundle.putInt(INSTANCE_FINISHED_STROKE_COLOR, getFinishedStrokeColor());
-        bundle.putInt(INSTANCE_UNFINISHED_STROKE_COLOR, getUnfinishedStrokeColor());
-        bundle.putFloat(INSTANCE_ARC_ANGLE, getArcAngle());
-        return bundle;
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
-        if (state instanceof Bundle) {
-            final Bundle bundle = (Bundle) state;
-            strokeWidth = bundle.getFloat(INSTANCE_STROKE_WIDTH);
-            bottomTextSize = bundle.getFloat(INSTANCE_BOTTOM_TEXT_SIZE);
-            bottomText = bundle.getString(INSTANCE_BOTTOM_TEXT);
-            textSize = bundle.getFloat(INSTANCE_TEXT_SIZE);
-            textColor = bundle.getInt(INSTANCE_TEXT_COLOR);
-            setMax(bundle.getInt(INSTANCE_MAX));
-            setProgress(bundle.getInt(INSTANCE_PROGRESS));
-            finishedStrokeColor = bundle.getInt(INSTANCE_FINISHED_STROKE_COLOR);
-            unfinishedStrokeColor = bundle.getInt(INSTANCE_UNFINISHED_STROKE_COLOR);
-            initPainters();
-            super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATE));
-            return;
-        }
-        super.onRestoreInstanceState(state);
-    }
 }

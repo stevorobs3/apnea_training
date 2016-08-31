@@ -22,7 +22,7 @@ public class SettingsFragment extends PreferenceFragment implements FabClickList
 
     @Override
     public void clickByContext(View view) {
-        Snackbar.make(view, "Сбросить настройки?", Snackbar.LENGTH_SHORT).setAction(R.string.ok, new View.OnClickListener() {
+        Snackbar.make(view, R.string.snack_reset_sets, Snackbar.LENGTH_SHORT).setAction(R.string.ok, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getPreferenceManager().getSharedPreferences().edit().clear().commit();

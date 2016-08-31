@@ -95,7 +95,7 @@
         android:title="@string/pref_notify_cat"
         android:summary="Интервалы оповещений">
         <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="pref_notify_minute"
             android:title="Every minute"
             android:summary="Оповещение каджую минуту до окончания"/>
@@ -107,7 +107,7 @@
             android:summary="Оповещение за 30 секунд до окончания"/>
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="pref_notify_10sec"
             android:title="Last 10 second"
             android:summary="Оповещение за 10 секунд до окончания"/>

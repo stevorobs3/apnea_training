@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="speech_minute">
+        <item quantity="zero">%1$d minutes left</item>
+        <item quantity="one">%1$d minute left</item>
+        <item quantity="two">%1$d minutes left</item>
+        <item quantity="few">%1$d minutes left</item>
+        <item quantity="many">%1$d minutes left</item>
+        <item quantity="other">%1$d minutes left</item>
+    </plurals>
+
+</resources>

@@ -67,7 +67,7 @@ public class TableListFragment extends ListFragment implements FabClickListener 
         TableApnea tab = new TableApnea();
         tab.setColor(color);
         tab.setTitle(title);
-        tab.setDescription("Calculated by settings");
+        tab.setDescription(getString(R.string.table_description_calc));
         tab.setType(type);
         return tab;
     }
@@ -78,7 +78,7 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 
     @Override
     public void clickByContext(View view) {
-        Snackbar.make(view, "В разработке. Можно будет создавать свои таблицы", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+        Snackbar.make(view, R.string.snack_tab_dev, Snackbar.LENGTH_SHORT).setAction(R.string.ok, null).show();
     }
 
     @Override

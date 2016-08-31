@@ -1,11 +1,6 @@
 package ru.megazlo.apnea.frag;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -15,7 +10,6 @@ import android.widget.TextView;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.SystemService;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.StringRes;
 
@@ -63,23 +57,14 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
         rows = apneaService.getRowsForTable(tableApnea);
         final TableDetailAdapter adapter = new TableDetailAdapter(getActivity(), R.layout.table_detail_row);
         adapter.addAll(rows);
-        updateTotalTime();
-        setStartProgress();
-
         listView.setAdapter(adapter);
-    }
-
-    @Deprecated
-    private void setStartProgress() {
-        if (rows != null && rows.size() > 0) {
-            final TableApneaRow firstRow = rows.get(0);
-            prg.setMax(firstRow.getBreathe());
-            prg.setProgress(0);
-        }
+        updateTotalTime();
     }
 
     private void updateTotalTime() {
+        prg.setProgress(0);
         if (rows != null && rows.size() > 0) {
+            prg.setMax(rows.get(0).getBreathe());
             int total = 0;
             for (TableApneaRow r : rows) {
                 total += r.getBreathe() + r.getHold();
@@ -115,6 +100,23 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
         return new TimerPref(rows.get(0).getBreathe(), RowState.BREATHE);
     }
 
+    /**
+     * Уничтожаем все что можно, иначе упадет
+     * Это значит фрамерт меняется или приложение закрывается
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+        try {
+            alertService.close();
+        } catch (IOException ignored) {
+        }
+    }
+
     @Override
     public void clickByContext(View view) {
         FloatingActionButton fab = (FloatingActionButton) view;
@@ -126,7 +128,7 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
             updateVisibleState();
             timer.scheduleAtFixedRate(new ApneaTimerTask(), 0, 1000);
         } else {
-            Snackbar.make(view, R.string.stop_session, Snackbar.LENGTH_LONG).setAction(R.string.ok, new View.OnClickListener() {
+            Snackbar.make(view, R.string.snack_stop_session, Snackbar.LENGTH_LONG).setAction(R.string.ok, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     timer.cancel();
@@ -149,26 +151,18 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
         // завершение операций
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        try {
-            alertService.close();
-        } catch (IOException ignored) {
-        }
-    }
-
     private boolean updateVisibleState() {
         TimerPref pr = getNextIntervalAndUpdate();
-        ((TableDetailAdapter) listView.getAdapter()).notifyDataSetChanged();
         if (pr == null) {
             timer.cancel();
             timer = null;
             return false;
         }
+        ((TableDetailAdapter) listView.getAdapter()).notifyDataSetChanged();
         prg.setMax(pr.time);
-        prg.setBottomText(pr.state == RowState.HOLD ? "Задержка" : "Дыхание");
+        prg.setBottomText(getString(pr.state == RowState.HOLD ? R.string.timer_hold_lb : R.string.timer_breath_lb));
         prg.setProgress(0);
+        alertService.sayState(pr.state);
         return true;
     }
 
@@ -176,8 +170,7 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
     class ApneaTimerTask extends TimerTask {
         @Override
         public void run() {
-            final Activity activity = getActivity();
-            activity.runOnUiThread(new Runnable() {
+            getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     if (prg.getProgress() + 1 >= prg.getMax()) {

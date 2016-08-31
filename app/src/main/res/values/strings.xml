@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Apnea training</string>
+    <string name="app_name">Apnea</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -52,5 +52,20 @@
     <string name="cancel">Cancel</string>
 
     <string name="total_time">Total time: %1$s</string>
-    <string name="stop_session">Stop session?</string>
+
+    <string name="speech_30sec">30 seconds</string>
+    <string name="speech_10sec">10 seconds</string>
+    <string name="speech_breathe">breathe</string>
+    <string name="speech_hold">hold your breath</string>
+
+    <string name="timer_hold_lb">Hold</string>
+    <string name="timer_breath_lb">Breath</string>
+
+    <string name="snack_stop_session">Stop session?</string>
+    <string name="snack_reset_sets">Reset settings?</string>
+    <string name="snack_tab_dev">Coming soon. Can create own tables.</string>
+
+    <string name="table_description_calc">Calculated based on the settings</string>
+
+
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Апноэ тренировки</string>
+    <string name="app_name">Апноэ</string>
     <string name="action_settings">Настройки</string>
     <string name="nav_title_tables">Таблицы</string>
     <string name="nav_title_settings">Настройки</string>
@@ -12,5 +12,18 @@
     <string name="pref_perc_suff">%</string>
 
     <string name="total_time">Суммарное время: %1$s</string>
-    <string name="stop_session">Остановить сессию?</string>
+
+    <!--<string name="speech_30sec">30 секунд</string>
+    <string name="speech_10sec">10 секунд</string>
+    <string name="speech_breathe">дышите</string>
+    <string name="speech_hold">задержите дыхание</string>-->
+
+    <string name="timer_hold_lb">Задержка</string>
+    <string name="timer_breath_lb">Дыхание</string>
+
+    <string name="snack_reset_sets">Сбросить настрйки?</string>
+    <string name="snack_stop_session">Остановить сессию?</string>
+    <string name="snack_tab_dev">В разработке. Можно будет создавать свои таблицы</string>
+
+    <string name="table_description_calc">Рассчитано на основе настроек</string>
 </resources>

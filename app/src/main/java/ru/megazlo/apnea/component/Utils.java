@@ -2,6 +2,7 @@ package ru.megazlo.apnea.component;
 
 import android.content.res.Resources;
 
+import java.io.Serializable;
 import java.net.PortUnreachableException;
 
 public final class Utils {
@@ -36,7 +37,11 @@ public final class Utils {
         if (seconds > 60) {
             throw new RuntimeException("Invalid seconds count");
         }
-        return minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
+        return minutes + ":" + formatInt(seconds);
+    }
+
+    private static String formatInt(int seconds) {
+        return seconds < 10 ? "0" + seconds : "" + seconds;
     }
 
     public static int getTotalSeconds(String time) {
