@@ -10,7 +10,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="35sp"
-        android:text="02:30"
+        android:text="@string/default_text"
         android:textSize="18sp"/>
 
     <ImageView
@@ -51,6 +51,6 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="35sp"
-        android:text="01:30"
+        android:text="@string/default_text"
         android:textSize="18sp"/>
 </RelativeLayout>

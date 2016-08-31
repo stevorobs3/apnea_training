@@ -38,9 +38,9 @@
             android:layout_toRightOf="@id/arc_progress"
             android:layout_alignTop="@id/arc_progress"
             android:contentDescription=""
-            android:drawableLeft="@drawable/ic_tables"
+            android:drawableLeft="@drawable/ic_discard"
             android:drawablePadding="5sp"
-            android:text="Discard"/>
+            android:text="@string/btn_discard"/>
 
         <TextView
             android:id="@+id/total_time"
@@ -49,7 +49,7 @@
             android:layout_toRightOf="@id/arc_progress"
             android:layout_alignBottom="@id/arc_progress"
             android:paddingBottom="10sp"
-            android:text="Total time:"/>
+            android:text="@string/total_time"/>
     </RelativeLayout>
 
 </LinearLayout>

@@ -66,6 +66,8 @@
     <string name="snack_tab_dev">Coming soon. Can create own tables.</string>
 
     <string name="table_description_calc">Calculated based on the settings</string>
+    <string name="btn_discard">Discard</string>
+    <string name="default_text">Default text</string>
 
 
 </resources>

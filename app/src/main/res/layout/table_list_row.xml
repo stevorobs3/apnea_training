@@ -22,7 +22,7 @@
         android:layout_toRightOf="@id/img_lungs_icon"
         android:layout_marginLeft="15sp"
         android:textSize="18sp"
-        android:text="Default text"
+        android:text="@string/default_text"
         android:textStyle="bold"/>
 
     <TextView
@@ -35,7 +35,7 @@
         android:paddingBottom="3sp"
         android:layout_marginLeft="15sp"
         android:textSize="12sp"
-        android:text="Default text"
+        android:text="@string/default_text"
         android:textStyle="bold"/>
 
 </RelativeLayout>

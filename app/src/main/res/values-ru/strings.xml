@@ -6,12 +6,12 @@
     <string name="nav_title_settings">Настройки</string>
     <string name="nav_title_info">Информация</string>
     <string name="pref_notify_cat">Оповещения</string>
-    <string name="def_tab_title_co2">Расчетная CO2</string>
-    <string name="def_tab_title_o2">Расчетная O2</string>
+    <string name="def_tab_title_co2">Гиперкапническая CO2</string>
+    <string name="def_tab_title_o2">Гипоксическая O2</string>
     <string name="pref_sec_suff">сек.</string>
     <string name="pref_perc_suff">%</string>
 
-    <string name="total_time">Суммарное время: %1$s</string>
+    <string name="total_time">Общее время: %1$s</string>
 
     <!--<string name="speech_30sec">30 секунд</string>
     <string name="speech_10sec">10 секунд</string>
@@ -26,4 +26,5 @@
     <string name="snack_tab_dev">В разработке. Можно будет создавать свои таблицы</string>
 
     <string name="table_description_calc">Рассчитано на основе настроек</string>
+    <string name="btn_discard">Сброс</string>
 </resources>
