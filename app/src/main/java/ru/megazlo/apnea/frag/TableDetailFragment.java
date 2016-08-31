@@ -1,5 +1,6 @@
 package ru.megazlo.apnea.frag;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -175,7 +176,8 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
     class ApneaTimerTask extends TimerTask {
         @Override
         public void run() {
-            getActivity().runOnUiThread(new Runnable() {
+            final Activity activity = getActivity();
+            activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     if (prg.getProgress() + 1 >= prg.getMax()) {
