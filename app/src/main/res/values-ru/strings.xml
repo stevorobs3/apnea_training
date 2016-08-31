@@ -10,4 +10,7 @@
     <string name="def_tab_title_o2">Расчетная O2</string>
     <string name="pref_sec_suff">сек.</string>
     <string name="pref_perc_suff">%</string>
+
+    <string name="total_time">Суммарное время: %1$s</string>
+    <string name="stop_session">Остановить сессию?</string>
 </resources>

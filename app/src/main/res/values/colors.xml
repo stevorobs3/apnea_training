@@ -7,4 +7,6 @@
 
     <color name="timer_circle">#045a86</color>
     <color name="white">#ffffff</color>
+
+    <color name="colorIndicator">#0eae1e</color>
 </resources>

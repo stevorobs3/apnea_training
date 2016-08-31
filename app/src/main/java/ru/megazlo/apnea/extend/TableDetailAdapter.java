@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import ru.megazlo.apnea.R;
 import ru.megazlo.apnea.component.Utils;
+import ru.megazlo.apnea.entity.RowState;
 import ru.megazlo.apnea.entity.TableApneaRow;
 
 public class TableDetailAdapter extends ArrayAdapter<TableApneaRow> {
@@ -21,24 +23,30 @@ public class TableDetailAdapter extends ArrayAdapter<TableApneaRow> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View cView, ViewGroup parent) {
         ViewHolder holder;
-        if (convertView == null) {
+        if (cView == null) {
             holder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.table_detail_row, null);
-            holder.breathe = (TextView) convertView.findViewById(R.id.r_time_breathe);
-            holder.hold = (TextView) convertView.findViewById(R.id.r_time_hold);
-            convertView.setTag(holder);
+            cView = inflater.inflate(R.layout.table_detail_row, null);
+            holder.breathe = (TextView) cView.findViewById(R.id.r_time_breathe);
+            holder.hold = (TextView) cView.findViewById(R.id.r_time_hold);
+            holder.i_breathe = (ImageView) cView.findViewById(R.id.r_img_breathe);
+            holder.i_hold = (ImageView) cView.findViewById(R.id.r_img_hold);
+            cView.setTag(holder);
         } else {
-            holder = (ViewHolder) convertView.getTag();
+            holder = (ViewHolder) cView.getTag();
         }
         TableApneaRow item = this.getItem(position);
         holder.breathe.setText(Utils.formatMS(item.getBreathe()));
         holder.hold.setText(Utils.formatMS(item.getHold()));
-        return convertView;
+        holder.i_breathe.setVisibility(item.getState() == RowState.BREATHE ? View.VISIBLE : View.GONE);
+        holder.i_hold.setVisibility(item.getState() == RowState.HOLD ? View.VISIBLE : View.GONE);
+        return cView;
     }
 
     private class ViewHolder {
+        ImageView i_breathe;
+        ImageView i_hold;
         TextView breathe;
         TextView hold;
     }

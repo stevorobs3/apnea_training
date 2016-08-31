@@ -7,28 +7,50 @@
         android:id="@+id/r_time_breathe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="35sp"
-        android:textSize="18sp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:text="02:30"/>
+        android:layout_marginLeft="35sp"
+        android:text="02:30"
+        android:textSize="18sp"/>
+
+    <ImageView
+        android:id="@+id/r_img_breathe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/app_name"
+        android:paddingRight="80sp"
+        android:src="@drawable/ic_link"
+        android:tint="@color/colorIndicator"
+        android:visibility="gone"/>
 
     <View
         android:layout_width="1dp"
-        android:layout_height="36sp"
-        android:background="@color/colorAccent"
+        android:layout_height="30sp"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:background="@color/colorAccent"/>
 
+
+    <ImageView
+        android:id="@+id/r_img_hold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/app_name"
+        android:paddingLeft="80sp"
+        android:src="@drawable/ic_link"
+        android:tint="@color/colorIndicator"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/r_time_hold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_marginRight="35sp"
         android:layout_alignParentRight="true"
-        android:layout_gravity="center_vertical"
         android:layout_centerVertical="true"
-        android:text="01:30"/>
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="35sp"
+        android:text="01:30"
+        android:textSize="18sp"/>
 </RelativeLayout>

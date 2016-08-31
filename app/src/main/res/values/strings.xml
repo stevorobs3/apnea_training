@@ -51,5 +51,6 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
-
+    <string name="total_time">Total time: %1$s</string>
+    <string name="stop_session">Stop session?</string>
 </resources>
