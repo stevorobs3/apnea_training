@@ -6,17 +6,18 @@
         android:title="@string/pref_main_cat">
         <ru.megazlo.apnea.component.TimePreference
             android:key="pref_best_record"
-            android:title="@string/pref_best_record"/>
+            android:title="@string/pref_best_record"
+            android:defaultValue="2:40"
+            app:prefix="Максимальное время задержки дыхания:"/>
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="pref_co_cat_settings"
+        android:key="pref_co2_cat_settings"
         android:title="@string/pref_co_cat">
 
         <ru.megazlo.apnea.component.NumberPickerPreference
-            android:key="key_number"
-            android:title="Интервал уменьшения"
-            android:summary="Процент времени от максимального"
+            android:key="pref_co2_percent"
+            android:title="Процент от максимума"
             android:defaultValue="50"
             app:max="80"
             app:min="50"
@@ -24,10 +25,12 @@
 
         <ru.megazlo.apnea.component.TimePreference
             android:key="pref_co2_start_time"
-            android:title="Начальное время отдыха"/>
+            android:title="Начальное время отдыха"
+            android:defaultValue="2:30"
+            app:prefix="Время дыхания в начале цикла:"/>
 
         <ru.megazlo.apnea.component.NumberPickerPreference
-            android:key="key_number"
+            android:key="pref_co2_reduce"
             android:title="Интервал уменьшения"
             android:defaultValue="15"
             app:max="30"
@@ -36,7 +39,9 @@
 
         <ru.megazlo.apnea.component.TimePreference
             android:key="pref_co2_end_time"
-            android:title="Конечное время отдыха"/>
+            android:title="Конечное время отдыха"
+            android:defaultValue="1:00"
+            app:prefix="Время дыхания в конце цикла:"/>
 
     </PreferenceCategory>
 
@@ -46,22 +51,28 @@
         <ru.megazlo.apnea.component.TimePreference
             android:key="pref_o2_timeout"
             android:title="Отдых"
-            android:summary="Интервал отдыха между апноэ"
-            android:defaultValue="2:00"/>
+            android:defaultValue="2:00"
+            app:prefix="Интервал отдыха между задержками:"/>
 
         <ru.megazlo.apnea.component.TimePreference
             android:key="pref_o2_start_time"
-            android:title="Начальное задержка"/>
+            android:title="Начальное задержка"
+            android:defaultValue="1:00"
+            app:prefix="Начальное задержка в серии:"/>
 
         <ru.megazlo.apnea.component.NumberPickerPreference
             android:key="key_number"
             android:title="Интервал увеличения"
             android:defaultValue="15"
-            android:summary="Значение на которое будет уменьшаться период отдышки"/>
+            app:min="5"
+            app:max="30"
+            app:suffix="@string/pref_sec_suff"/>
 
         <ru.megazlo.apnea.component.TimePreference
             android:key="pref_o2_end_time"
-            android:title="Конечная задержка"/>
+            android:title="Конечная задержка"
+            android:defaultValue="2:30"
+            app:prefix="Конечная задержка в серии:"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -86,22 +97,26 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="pref_notify_minute"
-            android:title="Every minute"/>
+            android:title="Every minute"
+            android:summary="Оповещение каджую минуту до окончания"/>
 
         <SwitchPreference
             android:defaultValue="true"
             android:key="pref_notify_30sec"
-            android:title="Last 30 second"/>
+            android:title="Last 30 second"
+            android:summary="Оповещение за 30 секунд до окончания"/>
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="pref_notify_10sec"
-            android:title="Last 10 second"/>
+            android:title="Last 10 second"
+            android:summary="Оповещение за 10 секунд до окончания"/>
 
         <SwitchPreference
             android:defaultValue="true"
             android:key="pref_notify_5sec"
-            android:title="5 second countdown"/>
+            android:title="5 second countdown"
+            android:summary="Оповещение последние 5 секунд"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

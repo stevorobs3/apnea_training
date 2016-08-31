@@ -1,6 +1,7 @@
 package ru.megazlo.apnea;
 
 import android.app.Fragment;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.Map;
 
 import ru.megazlo.apnea.entity.TableApnea;
 import ru.megazlo.apnea.frag.*;
@@ -48,6 +51,12 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        final Map<String, ?> map = PreferenceManager.getDefaultSharedPreferences(this).getAll();
+        if (map.size() < 5) {
+            PreferenceManager.setDefaultValues(this, R.xml.pref_main, true);
+        }
+
         setFragment(tabList);
         tabList.setOnItemClickListener(this);
     }
@@ -62,6 +71,10 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (tabList != getVisibleFragment()) {
+            BackPressHandler handler = (BackPressHandler) getVisibleFragment();
+            handler.backPressed();
+            setFragment(tabList);
         } else {
             super.onBackPressed();
         }

@@ -30,12 +30,14 @@ public class TableListAdapter extends ArrayAdapter<TableApnea> {
             convertView = inflater.inflate(R.layout.table_list_row, null);
             holder.icon = (ImageView) convertView.findViewById(R.id.img_lungs_icon);
             holder.title = (TextView) convertView.findViewById(R.id.table_title);
+            holder.description = (TextView) convertView.findViewById(R.id.table_description);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         TableApnea item = this.getItem(position);
         holder.title.setText(item.getTitle());
+        holder.description.setText(item.getDescription());
         holder.icon.getDrawable().setColorFilter(item.getColor(), PorterDuff.Mode.SRC_ATOP);
         return convertView;
     }
@@ -43,5 +45,6 @@ public class TableListAdapter extends ArrayAdapter<TableApnea> {
     private class ViewHolder {
         ImageView icon;
         TextView title;
+        TextView description;
     }
 }

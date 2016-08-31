@@ -8,14 +8,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@DatabaseTable(tableName = "table_row")
-public class TableRow {
+@DatabaseTable(tableName = "table_apnea_row")
+public class TableApneaRow {
+
+    private RowState state = RowState.NONE;
 
     @DatabaseField(generatedId = true)
     private Integer id;
 
     @DatabaseField(canBeNull = false, columnName = "row_order")
-    private short order;
+    private Integer order;
 
     @DatabaseField(canBeNull = false, columnName = "breathe_sec")
     private int breathe;
@@ -23,6 +25,6 @@ public class TableRow {
     @DatabaseField(canBeNull = false, columnName = "hold_sec")
     private int hold;
 
-    @DatabaseField(foreign = true, canBeNull = false, columnName = "table_id")
-    private TableApnea table;
+    @DatabaseField(canBeNull = false, columnName = "table_id")
+    private Integer table;
 }

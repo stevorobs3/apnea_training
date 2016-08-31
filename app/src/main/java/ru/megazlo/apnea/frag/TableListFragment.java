@@ -9,21 +9,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.j256.ormlite.dao.BaseForeignCollection;
-import com.j256.ormlite.dao.EagerForeignCollection;
-import com.j256.ormlite.dao.LazyForeignCollection;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.res.StringRes;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.megazlo.apnea.R;
 import ru.megazlo.apnea.entity.TableApnea;
-import ru.megazlo.apnea.entity.TableRow;
+import ru.megazlo.apnea.entity.TableType;
 import ru.megazlo.apnea.extend.TableListAdapter;
 
 @EFragment(R.layout.table_list)
@@ -53,8 +48,8 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 
     public List<TableApnea> getAllTables() {
         List<TableApnea> userTables = loadAllForTitle();
-        userTables.add(0, getO2Table());
-        userTables.add(0, getCO2Table());
+        userTables.add(0, getTableApnea(0xff368ec9, titleO2, TableType.O2));
+        userTables.add(0, getTableApnea(0xffff7925, titleCO2, TableType.CO2));
         return userTables;
     }
 
@@ -67,21 +62,13 @@ public class TableListFragment extends ListFragment implements FabClickListener 
         return new ArrayList<>();
     }
 
-    public TableApnea getO2Table() {
-        TableApnea tab = getTableApnea(0xff368ec9, titleO2);
-        return tab;
-    }
-
-    public TableApnea getCO2Table() {
-        TableApnea tab = getTableApnea(0xffff7925, titleCO2);
-        return tab;
-    }
-
     @NonNull
-    private TableApnea getTableApnea(int color, String title) {
+    private TableApnea getTableApnea(int color, String title, TableType type) {
         TableApnea tab = new TableApnea();
         tab.setColor(color);
         tab.setTitle(title);
+        tab.setDescription("Calculated by settings");
+        tab.setType(type);
         return tab;
     }
 
@@ -99,5 +86,9 @@ public class TableListFragment extends ListFragment implements FabClickListener 
         view.setVisibility(View.VISIBLE);
         FloatingActionButton fab = (FloatingActionButton) view;
         fab.setImageResource(R.drawable.ic_add_plus);
+    }
+
+    @Override
+    public void backPressed() {
     }
 }

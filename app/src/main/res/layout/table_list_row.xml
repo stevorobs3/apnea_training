@@ -1,22 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal"
               android:padding="6dp">
 
-    <ImageView android:id="@+id/img_lungs_icon"
-        android:layout_width="40sp"
-        android:layout_height="40sp"
-        android:src="@drawable/ic_lungs_co2"
-        android:contentDescription="@string/img_lungs"/>
+    <ImageView
+        android:id="@+id/img_lungs_icon"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_alignParentLeft="true"
+        android:contentDescription="@string/img_lungs"
+        android:paddingLeft="15sp"
+        android:src="@drawable/ic_lungs"/>
 
-    <TextView android:id="@+id/table_title"
-              android:textSize="18sp"
-              android:textStyle="bold"
-              android:layout_gravity="center_vertical"
-              android:layout_marginLeft="15sp"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/table_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_toRightOf="@id/img_lungs_icon"
+        android:layout_marginLeft="15sp"
+        android:textSize="18sp"
+        android:text="Default text"
+        android:textStyle="bold"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/table_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_toRightOf="@id/img_lungs_icon"
+        android:layout_alignBottom="@id/img_lungs_icon"
+        android:paddingBottom="3sp"
+        android:layout_marginLeft="15sp"
+        android:textSize="12sp"
+        android:text="Default text"
+        android:textStyle="bold"/>
+
+</RelativeLayout>

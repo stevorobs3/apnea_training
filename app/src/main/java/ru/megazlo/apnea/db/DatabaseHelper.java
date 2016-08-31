@@ -11,7 +11,7 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 
 import ru.megazlo.apnea.entity.TableApnea;
-import ru.megazlo.apnea.entity.TableRow;
+import ru.megazlo.apnea.entity.TableApneaRow;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
@@ -26,7 +26,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource, TableApnea.class);
-            TableUtils.createTable(connectionSource, TableRow.class);
+            TableUtils.createTable(connectionSource, TableApneaRow.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -35,7 +35,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
-            TableUtils.dropTable(connectionSource, TableRow.class, true);
+            TableUtils.dropTable(connectionSource, TableApneaRow.class, true);
             TableUtils.dropTable(connectionSource, TableApnea.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException e) {

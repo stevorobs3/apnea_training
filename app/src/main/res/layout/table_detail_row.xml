@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="40sp">
+
+    <TextView
+        android:id="@+id/r_time_breathe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35sp"
+        android:textSize="18sp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:text="02:30"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="36sp"
+        android:background="@color/colorAccent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+
+    <TextView
+        android:id="@+id/r_time_hold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginRight="35sp"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:text="01:30"/>
+</RelativeLayout>

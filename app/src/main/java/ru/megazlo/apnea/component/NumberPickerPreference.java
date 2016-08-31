@@ -33,21 +33,18 @@ public class NumberPickerPreference extends DialogPreference {
 
     public NumberPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setPositiveButtonText(R.string.ok);
-        setNegativeButtonText(R.string.cancel);
-        TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.NumberPickerPreference, 0, 0);
-        initByAttributes(attributes);
+        initStyles(context, attrs, 0);
     }
 
     public NumberPickerPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initStyles(context, attrs, defStyleAttr);
+    }
+
+    private void initStyles(Context context, AttributeSet attrs, int defStyleAttr) {
         setPositiveButtonText(R.string.ok);
         setNegativeButtonText(R.string.cancel);
         TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.NumberPickerPreference, defStyleAttr, 0);
-        initByAttributes(attributes);
-    }
-
-    protected void initByAttributes(TypedArray attributes) {
         min = attributes.getInteger(R.styleable.NumberPickerPreference_min, 0);
         max = attributes.getInteger(R.styleable.NumberPickerPreference_max, 1);
         suffix = attributes.getString(R.styleable.NumberPickerPreference_suffix);

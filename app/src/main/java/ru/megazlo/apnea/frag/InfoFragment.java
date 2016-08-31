@@ -17,6 +17,10 @@ public class InfoFragment extends Fragment implements FabClickListener {
 
     @Override
     public void modifyToContext(View view) {
-        view.setVisibility(View.VISIBLE);
+        view.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void backPressed() {
     }
 }
