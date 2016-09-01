@@ -44,6 +44,7 @@ public class ApneaForeService extends Service {
     private int progress;
     private Notification.Builder builder;
     private Timer timer;
+    private TableApnea table;
     private TableApneaRow currentItem;
     private List<TableApneaRow> items;
 
@@ -69,7 +70,7 @@ public class ApneaForeService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        final TableApnea table = (TableApnea) intent.getSerializableExtra("table");
+        table = (TableApnea) intent.getSerializableExtra("table");
         if (table == null) {
             return -1;
             //throw new RuntimeException("not found table id");
@@ -158,7 +159,9 @@ public class ApneaForeService extends Service {
     }
 
     private PendingIntent getPendingIntent(Class clazz) {
-        return PendingIntent.getActivity(getApplicationContext(), 0, new Intent(getApplicationContext(), clazz), PendingIntent.FLAG_UPDATE_CURRENT);
+        final Intent intent = new Intent(getApplicationContext(), clazz);
+        intent.putExtra("table_restore", table);
+        return PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     class ApneaTimerTask extends TimerTask {
