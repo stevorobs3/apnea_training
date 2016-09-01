@@ -2,9 +2,12 @@ package ru.megazlo.apnea.frag;
 
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.megazlo.apnea.R;
+import ru.megazlo.apnea.entity.RowState;
 import ru.megazlo.apnea.entity.TableApnea;
 import ru.megazlo.apnea.entity.TableType;
 import ru.megazlo.apnea.extend.TableListAdapter;
@@ -31,6 +35,8 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 
     private AdapterView.OnItemClickListener listener;
 
+    private List<TableApnea> apneaList;
+
     /*@OrmLiteDao(helper = DatabaseHelper.class)
     protected Dao<TableApnea, Integer> tableDao;*/
 
@@ -38,18 +44,20 @@ public class TableListFragment extends ListFragment implements FabClickListener 
     protected void afterView() {
         Context ctx = this.getActivity();
         TableListAdapter adapter = new TableListAdapter(ctx, 0);
-        adapter.addAll(getAllTables());
+        apneaList = getAllTables();
+        adapter.addAll(apneaList);
         this.setListAdapter(adapter);
         if (listener != null) {
             ListView listView = this.getListView();
             listView.setOnItemClickListener(listener);
         }
+        getActivity().registerReceiver(detailFragmentReceiver, new IntentFilter(DetailFragmentReceiver.ACTION_UPDATER));
     }
 
     public List<TableApnea> getAllTables() {
         List<TableApnea> userTables = loadAllForTitle();
-        userTables.add(0, getTableApnea(0xff368ec9, titleO2, TableType.O2));
-        userTables.add(0, getTableApnea(0xffff7925, titleCO2, TableType.CO2));
+        userTables.add(0, getTableApnea(-2, 0xff368ec9, titleO2, TableType.O2));
+        userTables.add(0, getTableApnea(-1, 0xffff7925, titleCO2, TableType.CO2));
         return userTables;
     }
 
@@ -63,8 +71,9 @@ public class TableListFragment extends ListFragment implements FabClickListener 
     }
 
     @NonNull
-    private TableApnea getTableApnea(int color, String title, TableType type) {
+    private TableApnea getTableApnea(int id, int color, String title, TableType type) {
         TableApnea tab = new TableApnea();
+        tab.setId(id);
         tab.setColor(color);
         tab.setTitle(title);
         tab.setDescription(getString(R.string.table_description_calc));
@@ -74,6 +83,14 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 
     public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
         this.listener = listener;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (detailFragmentReceiver != null) {
+            getActivity().unregisterReceiver(detailFragmentReceiver);
+        }
     }
 
     @Override
@@ -91,4 +108,18 @@ public class TableListFragment extends ListFragment implements FabClickListener 
     @Override
     public void backPressed() {
     }
+
+    private DetailFragmentReceiver detailFragmentReceiver = new DetailFragmentReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final int tabId = intent.getIntExtra(KEY_ID, -100);
+            for (TableApnea t : apneaList) {
+                t.setRunning(false);
+                if (t.getId() == tabId && !t.isRunning()) {
+                    t.setRunning(true);
+                    ((TableListAdapter) getListAdapter()).notifyDataSetChanged();
+                }
+            }
+        }
+    };
 }

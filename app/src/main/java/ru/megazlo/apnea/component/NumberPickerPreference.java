@@ -8,13 +8,10 @@ import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 
 import ru.megazlo.apnea.R;
-import ru.megazlo.apnea.frag.SettingsFragment;
 
 /**
  * A {@link android.preference.Preference} that displays a number picker as a dialog.

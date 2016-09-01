@@ -4,7 +4,7 @@
     <string name="action_settings">Настройки</string>
     <string name="nav_title_tables">Таблицы</string>
     <string name="nav_title_settings">Настройки</string>
-    <string name="nav_title_info">Информация</string>
+    <string name="nav_title_info">Руководство</string>
     <string name="pref_notify_cat">Оповещения</string>
     <string name="def_tab_title_co2">Гиперкапническая CO2</string>
     <string name="def_tab_title_o2">Гипоксическая O2</string>

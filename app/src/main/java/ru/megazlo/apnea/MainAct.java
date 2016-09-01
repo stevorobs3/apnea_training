@@ -1,10 +1,11 @@
 package ru.megazlo.apnea;
 
 import android.app.Fragment;
-import android.preference.PreferenceManager;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
@@ -19,9 +21,6 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-
-import java.io.Serializable;
-import java.util.Map;
 
 import ru.megazlo.apnea.entity.TableApnea;
 import ru.megazlo.apnea.frag.*;
@@ -31,9 +30,7 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 
     private final static String FRAGMENT_TAG = "CURRENT_FRAG_TAG";
 
-    public InfoFragment infoFragment = new InfoFragment_();
     private TableListFragment tabList = new TableListFragment_();
-    private TableDetailFragment tabDet = new TableDetailFragment_();
 
     @ViewById(R.id.fab)
     public FloatingActionButton fab;
@@ -44,24 +41,26 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
     @ViewById(R.id.nav_view)
     NavigationView navigationView;
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
     @AfterViews
     protected void init() {
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        final Map<String, ?> map = PreferenceManager.getDefaultSharedPreferences(this).getAll();
-        if (map.size() < 5) {
-            PreferenceManager.setDefaultValues(this, R.xml.pref_main, true);
-        }
-        final TableApnea tab = (TableApnea) getIntent().getSerializableExtra("table_restore");
+        /*final TableApnea tab = (TableApnea) getIntent().getSerializableExtra("table_restore");
         if (tab != null) {
             Toast.makeText(this, "aslkfjsk", Toast.LENGTH_SHORT).show();
-        }
+        }*/
         setFragment(tabList);
         tabList.setOnItemClickListener(this);
     }
@@ -91,14 +90,13 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
         ApneaForeService_.intent(getApplication()).start();
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();// Handle navigation view item clicks here.
         if (id == R.id.nav_settings) {
-            setFragment(new SettingsFragment());
+            setFragment(new SettingsFragment_());
         } else if (id == R.id.nav_info) {
-            setFragment(infoFragment);
+            setFragment(new InfoFragment_());
         } else if (id == R.id.nav_tables) {
             setFragment(tabList);
         }
@@ -111,6 +109,7 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         TableApnea table = (TableApnea) parent.getItemAtPosition(position);
+        TableDetailFragment_ tabDet = new TableDetailFragment_();
         tabDet.setTableApnea(table);
         setFragment(tabDet);
     }

@@ -13,6 +13,8 @@ import lombok.Setter;
 @DatabaseTable(tableName = "table_apnea")
 public class TableApnea implements Serializable {
 
+    private boolean running = false;
+
     private TableType type = TableType.USER;
 
     @DatabaseField(generatedId = true)

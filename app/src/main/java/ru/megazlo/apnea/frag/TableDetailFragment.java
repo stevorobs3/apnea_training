@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -56,22 +57,6 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 
     private List<TableApneaRow> rows;
 
-    final DetailFragmentReceiver detailFragmentReceiver = new DetailFragmentReceiver();
-
-    public class DetailFragmentReceiver extends BroadcastReceiver {
-
-        public final static String KEY_UPDATER = "APNEA_DETAIL_UPDATE";
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int max = intent.getIntExtra("key_max", -1);
-            int progress = intent.getIntExtra("key_progress", -1);
-            int row = intent.getIntExtra("key_row", -1);
-            RowState state = (RowState) intent.getSerializableExtra("key_row_type");
-            updateViews(max, progress, row, state);
-        }
-    }
-
     private void updateViews(int max, int progress, int row, RowState state) {
         prg.setProgress(progress);
         int currRow = -1;
@@ -92,7 +77,6 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 
     @AfterViews
     void init() {
-        getActivity().registerReceiver(detailFragmentReceiver, new IntentFilter(DetailFragmentReceiver.KEY_UPDATER));
         rows = apneaService.getRowsForTable(tableApnea);
         final TableDetailAdapter adapter = new TableDetailAdapter(getActivity(), R.layout.table_detail_row);
         adapter.addAll(rows);
@@ -100,6 +84,7 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
         updateTotalTime();
         int iconRes = isMyServiceRunning(ApneaForeService_.class) ? R.drawable.ic_stop : R.drawable.ic_play;
         ((FloatingActionButton) getActivity().findViewById(R.id.fab)).setImageResource(iconRes);
+        getActivity().registerReceiver(detailFragmentReceiver, new IntentFilter(DetailFragmentReceiver.ACTION_UPDATER));
     }
 
     @Override
@@ -161,4 +146,22 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
     @Override
     public void backPressed() {// завершение операций
     }
+
+    private DetailFragmentReceiver detailFragmentReceiver = new DetailFragmentReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int max = intent.getIntExtra(KEY_MAX, -1);
+            int progress = intent.getIntExtra(KEY_PROGRESS, -1);
+            int row = intent.getIntExtra(KEY_ROW, -1);
+            RowState state = (RowState) intent.getSerializableExtra(KEY_ROW_TYPE);
+            final int tabId = intent.getIntExtra(KEY_ID, -100);
+            if (tableApnea.getId() != tabId) {
+                Log.i("TableDetailFragment", "need restart service with new parameters");
+            } else  {
+                if (rows != null && rows.size() > 0) {
+                    updateViews(max, progress, row, state);
+                }
+            }
+        }
+    };
 }

@@ -38,4 +38,15 @@
         android:text="@string/default_text"
         android:textStyle="bold"/>
 
+    <ImageView
+        android:id="@+id/table_run_state"
+        android:layout_width="22sp"
+        android:layout_height="22sp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/app_name"
+        android:layout_marginRight="10sp"
+        android:src="@drawable/ic_link"
+        android:tint="@color/colorIndicator"/>
+
 </RelativeLayout>

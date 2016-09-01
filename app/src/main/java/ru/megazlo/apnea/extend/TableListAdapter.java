@@ -29,6 +29,7 @@ public class TableListAdapter extends ArrayAdapter<TableApnea> {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.table_list_row, null);
             holder.icon = (ImageView) convertView.findViewById(R.id.img_lungs_icon);
+            holder.state = (ImageView) convertView.findViewById(R.id.table_run_state);
             holder.title = (TextView) convertView.findViewById(R.id.table_title);
             holder.description = (TextView) convertView.findViewById(R.id.table_description);
             convertView.setTag(holder);
@@ -39,11 +40,13 @@ public class TableListAdapter extends ArrayAdapter<TableApnea> {
         holder.title.setText(item.getTitle());
         holder.description.setText(item.getDescription());
         holder.icon.getDrawable().setColorFilter(item.getColor(), PorterDuff.Mode.SRC_ATOP);
+        holder.state.setVisibility(item.isRunning() ? View.VISIBLE : View.GONE);
         return convertView;
     }
 
     private class ViewHolder {
         ImageView icon;
+        ImageView state;
         TextView title;
         TextView description;
     }

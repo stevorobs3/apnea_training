@@ -2,15 +2,18 @@ package ru.megazlo.apnea.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.AudioAttributes;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
 import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -24,13 +27,6 @@ public class AlertService implements TextToSpeech.OnInitListener, Closeable {
 
     public static final int VIBRATE_TIME = 200;
 
-    private boolean vibrate;
-    private boolean textSpeech;
-    private boolean alertMinute;
-    private boolean alertHalfMinute;
-    private boolean alertTenSecond;
-    private boolean alertCountDown;
-
     private TextToSpeech tts;
 
     @SystemService
@@ -39,29 +35,31 @@ public class AlertService implements TextToSpeech.OnInitListener, Closeable {
     @RootContext
     Context context;
 
-    @AfterInject
-    void init() {
-        final SharedPreferences pr = PreferenceManager.getDefaultSharedPreferences(context);
-        vibrate = pr.getBoolean("pref_notify_vibrate", false);
-        textSpeech = pr.getBoolean("pref_notify_speech", false);
-        tts = new TextToSpeech(context, this);
+    @Pref
+    ApneaPrefs_ pref;
 
-        alertMinute = pr.getBoolean("pref_notify_minute", false);
-        alertHalfMinute = pr.getBoolean("pref_notify_30sec", false);
-        alertTenSecond = pr.getBoolean("pref_notify_10sec", false);
-        alertCountDown = pr.getBoolean("pref_notify_5sec", false);
+    @AfterInject
+    void initTts() {
+        tts = getTts();
+    }
+
+    private TextToSpeech getTts() {
+        if (tts == null) {
+            tts = new TextToSpeech(context, this);
+        }
+        return tts;
     }
 
     public void sayImOk() {
-        if (textSpeech) {
+        if (pref.notifySpeech().get()) {
             final String string = context.getResources().getString(R.string.speech_im_ok);
             notifyAlertSpeech(string);
         }
     }
 
     public void sayState(RowState state) {
-        if (textSpeech) {
-            if (state == RowState.BREATHE){
+        if (pref.notifySpeech().get()) {
+            if (state == RowState.BREATHE) {
                 final String string = context.getResources().getString(R.string.speech_breathe);
                 notifyAlertSpeech(string);
             } else if (state == RowState.HOLD) {
@@ -72,16 +70,16 @@ public class AlertService implements TextToSpeech.OnInitListener, Closeable {
     }
 
     public void checkNotifications(int sec) {
-        if (alertMinute && sec % 60 == 0) {
+        if (pref.notifyMinute().get() && sec % 60 == 0) {
             final String string = context.getResources().getQuantityString(R.plurals.speech_minute, sec / 60, sec / 60);
             notifyAlert(string);
-        } else if (alertHalfMinute && sec == 30) {
+        } else if (pref.notify30sec().get() && sec == 30) {
             final String string = context.getResources().getString(R.string.speech_30sec);
             notifyAlert(string);
-        } else if (alertTenSecond && sec == 10) {
+        } else if (pref.notify10sec().get() && sec == 10) {
             final String string = context.getResources().getString(R.string.speech_10sec);
             notifyAlert(string);
-        } else if (alertCountDown && sec <= 5) {
+        } else if (pref.notify5sec().get() && sec <= 5) {
             notifyAlert(sec + "");
         }
     }
@@ -92,23 +90,23 @@ public class AlertService implements TextToSpeech.OnInitListener, Closeable {
     }
 
     private void notifyAlertVibrate() {
-        if (vibrate) {
-            vibrator.vibrate(VIBRATE_TIME);
+        if (pref.notifyVibrate().get()) {
+            ((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(VIBRATE_TIME);
         }
     }
 
     private void notifyAlertSpeech(String textToSpeech) {
-        if (textSpeech) {
-            tts.speak(textToSpeech, TextToSpeech.QUEUE_FLUSH, null);
+        if (pref.notifySpeech().get()) {
+            getTts().speak(textToSpeech, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
 
     @Override
     public void onInit(int status) {
         if (status == TextToSpeech.SUCCESS) {
-            int result = tts.setLanguage(Locale.US);
+            int result = getTts().setLanguage(Locale.US);
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                textSpeech = false;
+                pref.edit().notifySpeech().put(false).apply();
                 Log.e("TTS", "Извините, этот язык не поддерживается");
             }
         }

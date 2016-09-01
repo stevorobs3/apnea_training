@@ -1,11 +1,10 @@
 package ru.megazlo.apnea.service;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +20,9 @@ public class ApneaService {
     @RootContext
     Context context;
 
+    @Pref
+    ApneaPrefs_ pref;
+
     public List<TableApneaRow> getRowsForTable(TableApnea table) {
         if (table.getType() == TableType.O2) {
             return createOxygenSeries();
@@ -33,20 +35,17 @@ public class ApneaService {
 
     private List<TableApneaRow> createOxygenSeries() {
         List<TableApneaRow> rez = new ArrayList<>();
-        final SharedPreferences p = getSettings();
 
         return rez;
     }
 
     private List<TableApneaRow> createCarbonSeries() {
         List<TableApneaRow> rez = new ArrayList<>();
-        final SharedPreferences p = getSettings();
-        int myMax = Utils.getTotalSeconds(p.getString("pref_best_record", ""));
-        int percOfMax = p.getInt("pref_co2_percent", 1);
-        int hold = (int) (myMax * percOfMax / 100.0);
-        int breTimeStart = Utils.getTotalSeconds(p.getString("pref_co2_start_time", ""));
-        int breTimeEnd = Utils.getTotalSeconds(p.getString("pref_co2_end_time", ""));
-        int reduceSec = p.getInt("pref_co2_reduce", 1);
+        int myMax = Utils.getTotalSeconds(pref.bestRecord().get());
+        int hold = (int) (myMax * pref.co2Percent().get() / 100.0);
+        int breTimeStart = Utils.getTotalSeconds(pref.co2StartTime().get());
+        int breTimeEnd = Utils.getTotalSeconds(pref.co2EndTime().get());
+        int reduceSec = pref.co2Reduce().get();
 
         int pos = 1;
         do {
@@ -78,9 +77,5 @@ public class ApneaService {
         List<TableApneaRow> rez = new ArrayList<>();
 
         return rez;
-    }
-
-    private SharedPreferences getSettings() {
-        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 }

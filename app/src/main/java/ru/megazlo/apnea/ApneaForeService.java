@@ -4,11 +4,14 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.WindowManager;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
@@ -23,9 +26,10 @@ import ru.megazlo.apnea.component.Utils;
 import ru.megazlo.apnea.entity.RowState;
 import ru.megazlo.apnea.entity.TableApnea;
 import ru.megazlo.apnea.entity.TableApneaRow;
-import ru.megazlo.apnea.frag.TableDetailFragment;
+import ru.megazlo.apnea.frag.DetailFragmentReceiver;
 import ru.megazlo.apnea.service.AlertService;
 import ru.megazlo.apnea.service.ApneaService;
+import ru.megazlo.apnea.service.ScreenReceiver;
 
 @EService
 public class ApneaForeService extends Service {
@@ -47,6 +51,8 @@ public class ApneaForeService extends Service {
     private TableApnea table;
     private TableApneaRow currentItem;
     private List<TableApneaRow> items;
+    private ScreenReceiver receiver = new ScreenReceiver();
+
 
     @Nullable
     @Override
@@ -83,15 +89,28 @@ public class ApneaForeService extends Service {
         currentItem = items.get(0);
         currentItem.setState(RowState.BREATHE);
         timer.scheduleAtFixedRate(new ApneaTimerTask(), 0, 1000);
+
         RUNNING = true;
         return START_NOT_STICKY;
     }
 
+    /*private void startTimer() {
+        getApplication().getaddFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        registerReceiver(receiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
+    }
+
+    private void stopTimer() {
+        unregisterReceiver(receiver);
+    }*/
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        timer.cancel();
         RUNNING = false;
+        try {
+            timer.cancel();
+        } catch (Exception ignored) {
+        }
         try {
             alertService.close();
         } catch (IOException ignored) {
@@ -151,12 +170,13 @@ public class ApneaForeService extends Service {
     }
 
     private void updateFragmentUi() {
-        Intent data = new Intent(TableDetailFragment.DetailFragmentReceiver.KEY_UPDATER);
-        data.putExtra("key_max", getCurrentMax());
-        data.putExtra("key_progress", progress);
-        data.putExtra("key_row", items.indexOf(currentItem));
-        data.putExtra("key_row_type", currentItem.getState());
-        getApplication().sendBroadcast(data);
+        Intent tb = new Intent(DetailFragmentReceiver.ACTION_UPDATER);
+        tb.putExtra(DetailFragmentReceiver.KEY_MAX, getCurrentMax());
+        tb.putExtra(DetailFragmentReceiver.KEY_PROGRESS, progress);
+        tb.putExtra(DetailFragmentReceiver.KEY_ROW, items.indexOf(currentItem));
+        tb.putExtra(DetailFragmentReceiver.KEY_ROW_TYPE, currentItem.getState());
+        tb.putExtra(DetailFragmentReceiver.KEY_ID, table.getId());
+        getApplication().sendBroadcast(tb);
     }
 
     private PendingIntent getPendingIntent(Class clazz) {
