@@ -9,7 +9,6 @@ import org.androidannotations.annotations.RootContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import ru.megazlo.apnea.component.Utils;
 import ru.megazlo.apnea.entity.TableApnea;

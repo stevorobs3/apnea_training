@@ -38,4 +38,6 @@
     <string name="titl_co2_beg_time">Начальное время отдыха</string>
     <string name="sum_co2_beg_time">Время дыхания в начале цикла:</string>
     <string name="titl_co2_reduce">Интервал уменьшения</string>
+    <string name="notif_breathe">Дыхание: %1$s</string>
+    <string name="notif_hold">Задержка дыхания: %1$s</string>
 </resources>

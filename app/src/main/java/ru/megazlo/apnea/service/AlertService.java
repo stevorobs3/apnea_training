@@ -52,6 +52,13 @@ public class AlertService implements TextToSpeech.OnInitListener, Closeable {
         alertCountDown = pr.getBoolean("pref_notify_5sec", false);
     }
 
+    public void sayImOk() {
+        if (textSpeech) {
+            final String string = context.getResources().getString(R.string.speech_im_ok);
+            notifyAlertSpeech(string);
+        }
+    }
+
     public void sayState(RowState state) {
         if (textSpeech) {
             if (state == RowState.BREATHE){

@@ -55,4 +55,7 @@
     <string name="titl_co2_beg_time">Breathe begin time</string>
     <string name="sum_co2_beg_time">Breathe time on start cycle:</string>
     <string name="titl_co2_reduce">Interval reduce</string>
+    <string name="speech_im_ok" translatable="false">I am ok</string>
+    <string name="notif_breathe">Breathe: %1$s</string>
+    <string name="notif_hold">Hold breathe: %1$s</string>
 </resources>

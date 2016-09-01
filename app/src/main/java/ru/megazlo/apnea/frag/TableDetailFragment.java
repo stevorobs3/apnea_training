@@ -1,6 +1,12 @@
 package ru.megazlo.apnea.frag;
 
+import android.app.ActivityManager;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -18,6 +24,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import ru.megazlo.apnea.ApneaForeService;
+import ru.megazlo.apnea.ApneaForeService_;
 import ru.megazlo.apnea.R;
 import ru.megazlo.apnea.component.ArcProgress;
 import ru.megazlo.apnea.component.Utils;
@@ -38,8 +46,6 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 
     @Bean
     ApneaService apneaService;
-    @Bean
-    AlertService alertService;
 
     @ViewById(R.id.arc_progress)
     ArcProgress prg;
@@ -48,17 +54,59 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
     @ViewById(R.id.list_row)
     ListView listView;
 
-    private Timer timer;
-
     private List<TableApneaRow> rows;
+
+    final DetailFragmentReceiver detailFragmentReceiver = new DetailFragmentReceiver();
+
+    public class DetailFragmentReceiver extends BroadcastReceiver {
+
+        public final static String KEY_UPDATER = "APNEA_DETAIL_UPDATE";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int max = intent.getIntExtra("key_max", -1);
+            int progress = intent.getIntExtra("key_progress", -1);
+            int row = intent.getIntExtra("key_row", -1);
+            RowState state = (RowState) intent.getSerializableExtra("key_row_type");
+            updateViews(max, progress, row, state);
+        }
+    }
+
+    private void updateViews(int max, int progress, int row, RowState state) {
+        prg.setMax(max);
+        prg.setProgress(progress);
+        int currRow = -1;
+        RowState currStt = null;
+        for (int i = 0; i < rows.size(); i++) {
+            if (rows.get(i).getState() != RowState.NONE) {
+                currRow = i;
+                currStt = rows.get(i).getState();
+            }
+            rows.get(i).setState(RowState.NONE);
+        }
+        rows.get(row).setState(state);
+        if (currRow != row || currStt != state) {
+            ((TableDetailAdapter) listView.getAdapter()).notifyDataSetChanged();
+        }
+    }
 
     @AfterViews
     void init() {
+        getActivity().registerReceiver(detailFragmentReceiver, new IntentFilter(DetailFragmentReceiver.KEY_UPDATER));
         rows = apneaService.getRowsForTable(tableApnea);
         final TableDetailAdapter adapter = new TableDetailAdapter(getActivity(), R.layout.table_detail_row);
         adapter.addAll(rows);
         listView.setAdapter(adapter);
         updateTotalTime();
+        if (isMyServiceRunning(ApneaForeService_.class)) {
+            ((FloatingActionButton)getActivity().findViewById(R.id.fab)).setImageResource(R.drawable.ic_stop);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(detailFragmentReceiver);
     }
 
     private void updateTotalTime() {
@@ -77,66 +125,33 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
         this.tableApnea = tableApnea;
     }
 
-    private TimerPref getNextIntervalAndUpdate() {
-        if (rows == null || rows.size() == 0) {
-            return null;
-        }
-        for (int i = 0; i < rows.size(); i++) {
-            final TableApneaRow r = rows.get(i);
-            if (r.getState() == RowState.BREATHE) {//если дышали возвращаем задержку
-                r.setState(RowState.HOLD);
-                return new TimerPref(r.getHold(), RowState.HOLD);
-            } else if (r.getState() == RowState.HOLD) {
-                r.setState(RowState.NONE);// если была задержка, то сбрасываем и если есть еще возвращаем дыхание
-                if (i != rows.size() - 1) {
-                    rows.get(i + 1).setState(RowState.BREATHE);
-                    return new TimerPref(rows.get(i + 1).getBreathe(), RowState.BREATHE);
-                }
-                return null;
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        return ApneaForeService_.RUNNING;
+        /*ActivityManager manager = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
             }
         }
-        // если ничего нет начинаем с дыхания
-        rows.get(0).setState(RowState.BREATHE);
-        return new TimerPref(rows.get(0).getBreathe(), RowState.BREATHE);
-    }
-
-    /**
-     * Уничтожаем все что можно, иначе упадет
-     * Это значит фрамерт меняется или приложение закрывается
-     */
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
-        try {
-            alertService.close();
-        } catch (IOException ignored) {
-        }
+        return false;*/
     }
 
     @Override
     public void clickByContext(View view) {
-        FloatingActionButton fab = (FloatingActionButton) view;
-        /*if (arcProgress.isInProgress()) {
-            fab.setImageResource(R.drawable.ic_stop);
-        }*/
-        if (timer == null) {
-            timer = new Timer();
-            updateVisibleState();
-            timer.scheduleAtFixedRate(new ApneaTimerTask(), 0, 1000);
-        } else {
+        final FloatingActionButton fab = (FloatingActionButton) view;
+        if (isMyServiceRunning(ApneaForeService_.class)) {
             Snackbar.make(view, R.string.snack_stop_session, Snackbar.LENGTH_LONG).setAction(R.string.ok, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    timer.cancel();
-                    timer = null;
+                    ApneaForeService_.intent(getActivity().getApplication()).stop();
+                    fab.setImageResource(R.drawable.ic_play);
                 }
             }).show();
+        } else {
+            ApneaForeService_.intent(getActivity().getApplication()).extra("table", tableApnea).start();
+            fab.setImageResource(R.drawable.ic_stop);
         }
-        fab.setImageResource(R.drawable.ic_stop);
     }
 
     @Override
@@ -151,48 +166,4 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
         // завершение операций
     }
 
-    private boolean updateVisibleState() {
-        TimerPref pr = getNextIntervalAndUpdate();
-        if (pr == null) {
-            timer.cancel();
-            timer = null;
-            return false;
-        }
-        ((TableDetailAdapter) listView.getAdapter()).notifyDataSetChanged();
-        prg.setMax(pr.time);
-        prg.setBottomText(getString(pr.state == RowState.HOLD ? R.string.timer_hold_lb : R.string.timer_breath_lb));
-        prg.setProgress(0);
-        alertService.sayState(pr.state);
-        return true;
-    }
-
-
-    class ApneaTimerTask extends TimerTask {
-        @Override
-        public void run() {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (prg.getProgress() + 1 >= prg.getMax()) {
-                        if (updateVisibleState()) {
-                            return;
-                        }
-                    }
-                    prg.setProgress(prg.getProgress() + 1);
-                    alertService.checkNotifications(prg.getMax() - prg.getProgress());
-                }
-            });
-        }
-    }
-
-    class TimerPref {
-        public int time;
-
-        public RowState state;
-
-        public TimerPref(int time, RowState state) {
-            this.time = time;
-            this.state = state;
-        }
-    }
 }

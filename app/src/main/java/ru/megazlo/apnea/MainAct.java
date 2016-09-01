@@ -80,6 +80,12 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ApneaForeService_.intent(getApplication()).start();
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

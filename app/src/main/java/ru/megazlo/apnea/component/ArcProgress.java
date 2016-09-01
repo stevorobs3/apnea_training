@@ -142,8 +142,11 @@ public class ArcProgress extends View {
 
     public void setMax(int max) {
         if (max > 0) {
+            int old = this.max;
             this.max = max;
-            invalidate();
+            if (old != max) {
+                invalidate();
+            }
         }
     }
 
