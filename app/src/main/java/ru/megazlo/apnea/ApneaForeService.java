@@ -55,8 +55,10 @@ public class ApneaForeService extends Service {
     }
 
     @Override
-    public void onCreate() {
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // super.onStartCommand(intent, flags, startId);
         Log.i("Test", "Service: onCreate");
+        table = (TableApnea) intent.getSerializableExtra("table");
         PendingIntent pi = getPendingIntent(MainAct_.class);
 
         builder = new Notification.Builder(getApplication())
@@ -64,13 +66,11 @@ public class ApneaForeService extends Service {
                 .setSmallIcon(R.drawable.ic_lungs)
                 .setContentTitle(getText(R.string.app_name))
                 .setContentIntent(pi)
-                .setOngoing(true);
+                .setOngoing(true)
+                .setWhen(System.currentTimeMillis())
+                .setAutoCancel(false);
         startForeground(ONGOING_NOTIFICATION_ID, builder.getNotification());
-    }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        table = (TableApnea) intent.getSerializableExtra("table");
         if (table == null) {
             return -1;
             //throw new RuntimeException("not found table id");
@@ -84,7 +84,7 @@ public class ApneaForeService extends Service {
         currentItem.setState(RowState.BREATHE);
         timer.scheduleAtFixedRate(new ApneaTimerTask(), 0, 1000);
         RUNNING = true;
-        return super.onStartCommand(intent, flags, startId);
+        return START_NOT_STICKY;
     }
 
     @Override
@@ -125,6 +125,7 @@ public class ApneaForeService extends Service {
             try {
                 updateCurrentRow();
             } catch (EndCycleException e) {
+                Log.w("Error", "updateProgress");
                 alertService.sayImOk();
                 stopForeground(true);
                 stopSelf();
@@ -139,7 +140,7 @@ public class ApneaForeService extends Service {
     }
 
     private void updateNotificationUi() {
-        PendingIntent pi = getPendingIntent(MainAct_.class);
+        PendingIntent pi = getPendingIntent(this.getClass());
         final String arg = Utils.formatMS(getCurrentMax() - progress);
         if (currentItem.getState() == RowState.BREATHE) {
             builder.setContentText(getString(R.string.notif_breathe, arg)).setContentIntent(pi);
@@ -159,9 +160,10 @@ public class ApneaForeService extends Service {
     }
 
     private PendingIntent getPendingIntent(Class clazz) {
-        final Intent intent = new Intent(getApplicationContext(), clazz);
+        final Intent intent = new Intent(getBaseContext(), clazz);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("table_restore", table);
-        return PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getActivity(getBaseContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     class ApneaTimerTask extends TimerTask {
@@ -171,5 +173,6 @@ public class ApneaForeService extends Service {
         }
     }
 
-    class EndCycleException extends Exception {}
+    class EndCycleException extends Exception {
+    }
 }

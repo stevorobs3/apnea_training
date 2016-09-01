@@ -73,7 +73,6 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
     }
 
     private void updateViews(int max, int progress, int row, RowState state) {
-        prg.setMax(max);
         prg.setProgress(progress);
         int currRow = -1;
         RowState currStt = null;
@@ -86,6 +85,7 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
         }
         rows.get(row).setState(state);
         if (currRow != row || currStt != state) {
+            prg.setMax(max);
             ((TableDetailAdapter) listView.getAdapter()).notifyDataSetChanged();
         }
     }
@@ -98,9 +98,8 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
         adapter.addAll(rows);
         listView.setAdapter(adapter);
         updateTotalTime();
-        if (isMyServiceRunning(ApneaForeService_.class)) {
-            ((FloatingActionButton)getActivity().findViewById(R.id.fab)).setImageResource(R.drawable.ic_stop);
-        }
+        int iconRes = isMyServiceRunning(ApneaForeService_.class) ? R.drawable.ic_stop : R.drawable.ic_play;
+        ((FloatingActionButton) getActivity().findViewById(R.id.fab)).setImageResource(iconRes);
     }
 
     @Override
@@ -144,12 +143,12 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
             Snackbar.make(view, R.string.snack_stop_session, Snackbar.LENGTH_LONG).setAction(R.string.ok, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ApneaForeService_.intent(getActivity().getApplication()).stop();
+                    ApneaForeService_.intent(getActivity().getBaseContext()).stop();
                     fab.setImageResource(R.drawable.ic_play);
                 }
             }).show();
         } else {
-            ApneaForeService_.intent(getActivity().getApplication()).extra("table", tableApnea).start();
+            ApneaForeService_.intent(getActivity().getBaseContext()).extra("table", tableApnea).start();
             fab.setImageResource(R.drawable.ic_stop);
         }
     }
@@ -157,13 +156,9 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
     @Override
     public void modifyToContext(View view) {
         view.setVisibility(View.VISIBLE);
-        FloatingActionButton fab = (FloatingActionButton) view;
-        fab.setImageResource(R.drawable.ic_play);
     }
 
     @Override
-    public void backPressed() {
-        // завершение операций
+    public void backPressed() {// завершение операций
     }
-
 }

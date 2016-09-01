@@ -13,12 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import ru.megazlo.apnea.entity.TableApnea;
@@ -56,7 +58,10 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
         if (map.size() < 5) {
             PreferenceManager.setDefaultValues(this, R.xml.pref_main, true);
         }
-
+        final TableApnea tab = (TableApnea) getIntent().getSerializableExtra("table_restore");
+        if (tab != null) {
+            Toast.makeText(this, "aslkfjsk", Toast.LENGTH_SHORT).show();
+        }
         setFragment(tabList);
         tabList.setOnItemClickListener(this);
     }
