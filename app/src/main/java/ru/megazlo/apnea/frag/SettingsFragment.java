@@ -19,39 +19,39 @@ import ru.megazlo.apnea.service.ApneaPrefs_;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class SettingsFragment extends PreferenceFragment implements FabClickListener {
 
-    public static String PREF_NAME = "ApneaPrefs";
+	public static String PREF_NAME = "ApneaPrefs";
 
-    @Pref
-    ApneaPrefs_ pref;
+	@Pref
+	ApneaPrefs_ pref;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getPreferenceManager().setSharedPreferencesName(PREF_NAME);
-        addPreferencesFromResource(R.xml.pref_main);
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		getPreferenceManager().setSharedPreferencesName(PREF_NAME);
+		addPreferencesFromResource(R.xml.pref_main);
+	}
 
-    @Override
-    public void clickByContext(View view) {
-        Snackbar.make(view, R.string.snack_reset_sets, Snackbar.LENGTH_SHORT).setAction(R.string.ok, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pref.clear();
-                getPreferenceManager().setSharedPreferencesName(PREF_NAME);
-                setPreferenceScreen(null);
-                addPreferencesFromResource(R.xml.pref_main);
-            }
-        }).show();
-    }
+	@Override
+	public void clickByContext(View view) {
+		Snackbar.make(view, R.string.snack_reset_sets, Snackbar.LENGTH_SHORT).setAction(R.string.ok, new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				pref.clear();
+				getPreferenceManager().setSharedPreferencesName(PREF_NAME);
+				setPreferenceScreen(null);
+				addPreferencesFromResource(R.xml.pref_main);
+			}
+		}).show();
+	}
 
-    @Override
-    public void modifyToContext(View view) {
-        view.setVisibility(View.VISIBLE);
-        FloatingActionButton fab = (FloatingActionButton) view;
-        fab.setImageResource(R.drawable.ic_reset);
-    }
+	@Override
+	public void modifyToContext(View view) {
+		view.setVisibility(View.VISIBLE);
+		FloatingActionButton fab = (FloatingActionButton) view;
+		fab.setImageResource(R.drawable.ic_reset);
+	}
 
-    @Override
-    public void backPressed() {
-    }
+	@Override
+	public void backPressed() {
+	}
 }

@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Апноэ</string>
-    <string name="action_settings">Настройки</string>
-    <string name="nav_title_tables">Таблицы</string>
-    <string name="nav_title_settings">Настройки</string>
-    <string name="nav_title_info">Руководство</string>
-    <string name="pref_notify_cat">Оповещения</string>
-    <string name="def_tab_title_co2">Гиперкапническая CO2</string>
-    <string name="def_tab_title_o2">Гипоксическая O2</string>
-    <string name="pref_sec_suff">сек.</string>
+	<string name="app_name">Апноэ</string>
+	<string name="action_settings">Настройки</string>
+	<string name="nav_title_tables">Таблицы</string>
+	<string name="nav_title_settings">Настройки</string>
+	<string name="nav_title_info">Руководство</string>
+	<string name="nav_title_record">Лучшее время</string>
+	<string name="nav_title_about">О программе</string>
+	<string name="pref_notify_cat">Оповещения</string>
+	<string name="def_tab_title_co2">Гиперкапническая CO2</string>
+	<string name="def_tab_title_o2">Гипоксическая O2</string>
+	<string name="pref_sec_suff">сек.</string>
 
-    <string name="total_time">Общее время: %1$s</string>
+	<string name="total_time">Общее время: %1$s</string>
 
-    <!--<string name="speech_30sec">30 секунд</string>
-    <string name="speech_10sec">10 секунд</string>
-    <string name="speech_breathe">дышите</string>
-    <string name="speech_hold">задержите дыхание</string>-->
+	<!--<string name="speech_30sec">30 секунд</string>
+	<string name="speech_10sec">10 секунд</string>
+	<string name="speech_breathe">дышите</string>
+	<string name="speech_hold">задержите дыхание</string>-->
 
-    <string name="timer_hold_lb">Задержка</string>
-    <string name="timer_breath_lb">Дыхание</string>
+	<string name="timer_hold_lb">Задержка</string>
+	<string name="timer_breath_lb">Дыхание</string>
 
-    <string name="snack_reset_sets">Сбросить настрйки?</string>
-    <string name="snack_stop_session">Остановить сессию?</string>
-    <string name="snack_tab_dev">В разработке. Можно будет создавать свои таблицы</string>
+	<string name="snack_reset_sets">Сбросить настрйки?</string>
+	<string name="snack_stop_session">Остановить сессию?</string>
+	<string name="snack_tab_dev">В разработке. Можно будет создавать свои таблицы</string>
 
-    <string name="table_description_calc">Рассчитано на основе настроек</string>
-    <string name="btn_discard">Сброс</string>
-    <string name="cancel">Отмена</string>
-    <string name="pref_best_record">Лучший рекод апноэ</string>
-    <string name="pref_co_cat">Тренировка CO2</string>
-    <string name="pref_main_cat">Основное</string>
-    <string name="pref_title_vibrate">Вибрация</string>
-    <string name="pref_title_speech">Голосовое</string>
-    <string name="pref_o_cat">Тренировка O2</string>
-    <string name="sum_max_time">Максимальное время задержки дыхания:</string>
-    <string name="titl_co2_max_perc">Процент от максимума</string>
-    <string name="titl_co2_beg_time">Начальное время отдыха</string>
-    <string name="sum_co2_beg_time">Время дыхания в начале цикла:</string>
-    <string name="titl_co2_reduce">Интервал уменьшения</string>
-    <string name="notif_breathe">Дыхание: %1$s</string>
-    <string name="notif_hold">Задержка дыхания: %1$s</string>
-    <string name="dlg_sess_complete">Сессия завершена!</string>
-    <string name="tst_cant_edit">Нельзя редактировать пока идет сессия</string>
+	<string name="table_description_calc">Рассчитано на основе настроек</string>
+	<string name="btn_discard">Сброс</string>
+	<string name="cancel">Отмена</string>
+	<string name="pref_best_record">Лучший рекод апноэ</string>
+	<string name="pref_co_cat">Тренировка CO2</string>
+	<string name="pref_main_cat">Основное</string>
+	<string name="pref_title_vibrate">Вибрация</string>
+	<string name="pref_title_speech">Голосовое</string>
+	<string name="pref_o_cat">Тренировка O2</string>
+	<string name="sum_max_time">Максимальное время задержки дыхания:</string>
+	<string name="titl_co2_max_perc">Процент от максимума</string>
+	<string name="titl_co2_beg_time">Начальное время отдыха</string>
+	<string name="sum_co2_beg_time">Время дыхания в начале цикла:</string>
+	<string name="titl_co2_reduce">Интервал уменьшения</string>
+	<string name="notif_breathe">Дыхание: %1$s</string>
+	<string name="notif_hold">Задержка дыхания: %1$s</string>
+	<string name="dlg_sess_complete">Сессия завершена!</string>
+	<string name="tst_cant_edit">Нельзя редактировать пока идет сессия</string>
 </resources>

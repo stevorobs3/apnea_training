@@ -112,8 +112,8 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 
 	private boolean isMyServiceRunning(Class<?> serviceClass) {
 		return ApneaForeService_.RUNNING;
-	    /*ActivityManager manager = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+		/*ActivityManager manager = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+		for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
                 return true;
             }

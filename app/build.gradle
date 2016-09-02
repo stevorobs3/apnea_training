@@ -7,62 +7,62 @@ def compat_ver = '24.2.0'
 def ormLite_ver = '5.0'
 
 repositories {
-    mavenCentral()
-    mavenLocal()
+	mavenCentral()
+	mavenLocal()
 }
 
 buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        // replace with the current version of the Android plugin
-        // classpath 'com.android.tools.build:gradle:1.5.0'
-        // replace with the current version of the android-apt plugin
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    }
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		// replace with the current version of the Android plugin
+		// classpath 'com.android.tools.build:gradle:1.5.0'
+		// replace with the current version of the android-apt plugin
+		classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+	}
 }
 
 apt {
-    arguments {
-        resourcePackageName android.defaultConfig.applicationId
-        androidManifestFile variant.outputs[0]?.processResources?.manifestFile
-    }
+	arguments {
+		resourcePackageName android.defaultConfig.applicationId
+		androidManifestFile variant.outputs[0]?.processResources?.manifestFile
+	}
 }
 
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
-    defaultConfig {
-        applicationId "ru.megazlo.apnea"
-        minSdkVersion 16
-        targetSdkVersion 24
-        versionCode 1
-        versionName '1.0a'
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
-    productFlavors {
-    }
+	compileSdkVersion 24
+	buildToolsVersion "24.0.2"
+	defaultConfig {
+		applicationId "ru.megazlo.apnea"
+		minSdkVersion 16
+		targetSdkVersion 24
+		versionCode 1
+		versionName '1.0a'
+	}
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_7
+		targetCompatibility JavaVersion.VERSION_1_7
+	}
+	productFlavors {
+	}
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile "com.android.support:appcompat-v7:$compat_ver"
-    compile "com.android.support:design:$compat_ver"
-    apt "org.androidannotations:androidannotations:$aa_ver"
-    compile "org.androidannotations:androidannotations-api:$aa_ver"
-    apt "org.androidannotations:ormlite:$aa_ver"
-    compile "org.androidannotations:ormlite-api:$aa_ver"
-    compile "com.j256.ormlite:ormlite-core:$ormLite_ver"
-    compile "com.j256.ormlite:ormlite-android:$ormLite_ver"
-    //https://github.com/lzyzsd/CircleProgress
-    //compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
-    provided "org.projectlombok:lombok:$lom_ver"
-    apt "org.projectlombok:lombok:$lom_ver"
-    compile "com.android.support:support-v4:$aa_ver"
+	compile fileTree(include: ['*.jar'], dir: 'libs')
+	testCompile 'junit:junit:4.12'
+	compile "com.android.support:appcompat-v7:$compat_ver"
+	compile "com.android.support:design:$compat_ver"
+	apt "org.androidannotations:androidannotations:$aa_ver"
+	compile "org.androidannotations:androidannotations-api:$aa_ver"
+	apt "org.androidannotations:ormlite:$aa_ver"
+	compile "org.androidannotations:ormlite-api:$aa_ver"
+	compile "com.j256.ormlite:ormlite-core:$ormLite_ver"
+	compile "com.j256.ormlite:ormlite-android:$ormLite_ver"
+	//https://github.com/lzyzsd/CircleProgress
+	//compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
+	provided "org.projectlombok:lombok:$lom_ver"
+	apt "org.projectlombok:lombok:$lom_ver"
+	compile "com.android.support:support-v4:$aa_ver"
 }

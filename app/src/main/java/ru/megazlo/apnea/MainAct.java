@@ -41,6 +41,7 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		setTheme(R.style.AppTheme_NoActionBar);
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 	}
