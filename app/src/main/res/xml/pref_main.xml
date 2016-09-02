@@ -40,8 +40,8 @@
 		<ru.megazlo.apnea.component.TimePreference
 			android:defaultValue="1:00"
 			android:key="co2EndTime"
-			android:title="Конечное время отдыха"
-			app:prefix="Время дыхания в конце цикла:"/>
+			android:title="@string/t_co2_end_time"
+			app:prefix="@string/p_co2_end_time"/>
 
 	</PreferenceCategory>
 
@@ -51,19 +51,19 @@
 		<ru.megazlo.apnea.component.TimePreference
 			android:defaultValue="2:00"
 			android:key="o2Timeout"
-			android:title="Отдых"
-			app:prefix="Интервал отдыха между задержками:"/>
+			android:title="@string/t_o2_timeout"
+			app:prefix="@string/p_o2_timeout"/>
 
 		<ru.megazlo.apnea.component.TimePreference
 			android:defaultValue="1:00"
 			android:key="o2StartTime"
-			android:title="Начальное задержка"
-			app:prefix="Начальное задержка в серии:"/>
+			android:title="@string/t_o2_start_time"
+			app:prefix="@string/p_o2_start_time"/>
 
 		<ru.megazlo.apnea.component.NumberPickerPreference
 			android:defaultValue="15"
 			android:key="o2IncreaseTime"
-			android:title="Интервал увеличения"
+			android:title="@string/t_o2_increase_time"
 			app:max="30"
 			app:min="5"
 			app:suffix="@string/pref_sec_suff"/>
@@ -71,52 +71,52 @@
 		<ru.megazlo.apnea.component.TimePreference
 			android:defaultValue="2:30"
 			android:key="o2EndTime"
-			android:title="Конечная задержка"
-			app:prefix="Конечная задержка в серии:"/>
+			android:title="@string/t_o2_end_time"
+			app:prefix="@string/p_o2_end_time"/>
 	</PreferenceCategory>
 
 	<PreferenceCategory
-		android:summary="Определенные типы оповещений"
-		android:title="Type notification">
+		android:title="@string/t_notify_type"
+		android:summary="@string/s_notify_type">
 		<SwitchPreference
 			android:defaultValue="false"
 			android:key="notifyVibrate"
-			android:summary="Vibrate on notification"
+			android:summary="@string/s_notify_vibrate"
 			android:title="@string/pref_title_vibrate"/>
 
 		<SwitchPreference
 			android:defaultValue="true"
 			android:key="notifySpeech"
-			android:summary="Voice notification"
+			android:summary="@string/s_notify_voice"
 			android:title="@string/pref_title_speech"/>
 	</PreferenceCategory>
 
 	<PreferenceCategory
-		android:summary="Интервалы оповещений"
+		android:summary="@string/s_notify_cat"
 		android:title="@string/pref_notify_cat">
 		<SwitchPreference
 			android:defaultValue="true"
 			android:key="notifyMinute"
-			android:summary="Оповещение каджую минуту до окончания"
-			android:title="Every minute"/>
+			android:title="@string/t_notify_minute"
+			android:summary="@string/s_notify_minute"/>
 
 		<SwitchPreference
 			android:defaultValue="true"
 			android:key="notify30sec"
-			android:summary="Оповещение за 30 секунд до окончания"
-			android:title="Last 30 second"/>
+			android:title="@string/t_notify_30sec"
+			android:summary="@string/s_notify_30sec"/>
 
 		<SwitchPreference
 			android:defaultValue="true"
 			android:key="notify10sec"
-			android:summary="Оповещение за 10 секунд до окончания"
-			android:title="Last 10 second"/>
+			android:title="@string/t_notify_10sec"
+			android:summary="@string/s_notify_10sec"/>
 
 		<SwitchPreference
 			android:defaultValue="true"
 			android:key="notify5sec"
-			android:summary="Оповещение последние 5 секунд"
-			android:title="5 second countdown"/>
+			android:title="@string/t_notify_5sec"
+			android:summary="@string/s_notify_5sec"/>
 	</PreferenceCategory>
 
 </PreferenceScreen>

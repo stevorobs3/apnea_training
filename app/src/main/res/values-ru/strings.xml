@@ -44,4 +44,33 @@
 	<string name="notif_hold">Задержка дыхания: %1$s</string>
 	<string name="dlg_sess_complete">Сессия завершена!</string>
 	<string name="tst_cant_edit">Нельзя редактировать пока идет сессия</string>
+
+	<string name="t_co2_end_time">Конечное время отдыха</string>
+	<string name="p_co2_end_time">Время дыхания в конце цикла:</string>
+	<string name="t_o2_timeout">Отдых</string>
+	<string name="p_o2_timeout">Интервал отдыха между задержками:</string>
+	<string name="t_o2_increase_time">Интервал увеличения</string>
+	<string name="t_o2_start_time">Начальная задержка</string>
+	<string name="p_o2_start_time">Начальная задержка в серии:</string>
+	<string name="t_o2_end_time">Конечная задержка</string>
+	<string name="p_o2_end_time">Конечная задержка в серии:</string>
+	<string name="s_notify_vibrate">Вибрация при событии</string>
+	<string name="s_notify_voice">Голосовые оповещения</string>
+
+	<string name="t_notify_minute">Каждую минуту</string>
+	<string name="s_notify_minute">Оповещение каджую минуту до окончания</string>
+
+	<string name="t_notify_30sec">Последние 30 секунд</string>
+	<string name="s_notify_30sec">Оповещение за 30 секунд до окончания</string>
+
+	<string name="t_notify_10sec">Последние 10 секунд</string>
+	<string name="s_notify_10sec">Оповещение за 10 секунд до окончания</string>
+
+	<string name="t_notify_5sec">Последние 5 секунд</string>
+	<string name="s_notify_5sec">Пятисекундный отсчет перед завершением</string>
+
+	<string name="s_notify_cat">Интервалы оповещений</string>
+
+	<string name="t_notify_type">Типы оповещений</string>
+	<string name="s_notify_type">Определенные типы оповещений</string>
 </resources>

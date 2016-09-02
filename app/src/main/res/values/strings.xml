@@ -64,4 +64,36 @@
 	<string name="dlg_sess_complete">Session complete!</string>
 	<string name="dlg_im_ok" translatable="false">I`m OK!</string>
 	<string name="tst_cant_edit">You can not edit while session is started</string>
+
+	<string name="t_co2_end_time">End time breathe</string>
+	<string name="p_co2_end_time">Time breathe on end cycle:</string>
+	<string name="t_o2_timeout">Breathe</string>
+	<string name="p_o2_timeout">Time breathe between holds:</string>
+	<string name="t_o2_increase_time">Increase time</string>
+	<string name="t_o2_start_time">Begin hold</string>
+	<string name="p_o2_start_time">Begin hold in series:</string>
+	<string name="t_o2_end_time">End hold</string>
+	<string name="p_o2_end_time">End hold in series:</string>
+	<string name="s_notify_vibrate">Vibrate on notification</string>
+	<string name="s_notify_voice">Speech on notification</string>
+
+	<string name="t_notify_minute">Every minute</string>
+	<string name="s_notify_minute">Notification every minute before end</string>
+
+	<string name="t_notify_30sec">Last 30 seconds</string>
+	<string name="s_notify_30sec">Alert for 30 seconds before the end</string>
+
+	<string name="t_notify_10sec">Last 10 seconds</string>
+	<string name="s_notify_10sec">Alert for 10 seconds before the end</string>
+
+	<string name="t_notify_5sec">Last 5 seconds</string>
+	<string name="s_notify_5sec">Last countdown before end</string>
+
+	<string name="s_notify_cat">Notify timeouts</string>
+
+	<string name="t_notify_type">Notify types</string>
+	<string name="s_notify_type">Set types notifications on events</string>
+
+
+
 </resources>
