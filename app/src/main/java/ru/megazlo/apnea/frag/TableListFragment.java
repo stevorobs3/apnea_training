@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -19,6 +20,7 @@ import org.androidannotations.annotations.res.StringRes;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.megazlo.apnea.ApneaForeService_;
 import ru.megazlo.apnea.R;
 import ru.megazlo.apnea.entity.RowState;
 import ru.megazlo.apnea.entity.TableApnea;
@@ -95,6 +97,10 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 
     @Override
     public void clickByContext(View view) {
+        if (ApneaForeService_.RUNNING) {
+            Toast.makeText(getActivity(), R.string.tst_cant_edit, Toast.LENGTH_SHORT).show();
+            return;
+        }
         Snackbar.make(view, R.string.snack_tab_dev, Snackbar.LENGTH_SHORT).setAction(R.string.ok, null).show();
     }
 

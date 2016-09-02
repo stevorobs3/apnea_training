@@ -58,4 +58,7 @@
     <string name="speech_im_ok" translatable="false">I am ok</string>
     <string name="notif_breathe">Breathe: %1$s</string>
     <string name="notif_hold">Hold breathe: %1$s</string>
+    <string name="dlg_sess_complete">Session complete!</string>
+    <string name="dlg_im_ok" translatable="false">I`m OK!</string>
+    <string name="tst_cant_edit">You can not edit while session is started</string>
 </resources>

@@ -4,20 +4,19 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.WindowManager;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
 import org.androidannotations.annotations.SystemService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,6 +34,8 @@ import ru.megazlo.apnea.service.ScreenReceiver;
 public class ApneaForeService extends Service {
 
     private final static int ONGOING_NOTIFICATION_ID = 251665161;
+    public static final String TABLE_RESTORE = "table_restore";
+    public static final String IS_ALERT_SERIES_END = "is_alert_series_end";
 
     public static boolean RUNNING = false;
 
@@ -47,12 +48,11 @@ public class ApneaForeService extends Service {
 
     private int progress;
     private Notification.Builder builder;
-    private Timer timer;
+    private Timer timer = new Timer();
     private TableApnea table;
     private TableApneaRow currentItem;
     private List<TableApneaRow> items;
     private ScreenReceiver receiver = new ScreenReceiver();
-
 
     @Nullable
     @Override
@@ -67,50 +67,48 @@ public class ApneaForeService extends Service {
         table = (TableApnea) intent.getSerializableExtra("table");
         PendingIntent pi = getPendingIntent(MainAct_.class);
 
-        builder = new Notification.Builder(getApplication())
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_freediving))
-                .setSmallIcon(R.drawable.ic_lungs)
-                .setContentTitle(getText(R.string.app_name))
-                .setContentIntent(pi)
-                .setOngoing(true)
-                .setWhen(System.currentTimeMillis())
-                .setAutoCancel(false);
+        builder = new Notification.Builder(getApplicationContext()).setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_freediving))
+                .setSmallIcon(R.drawable.ic_lungs).setContentTitle(getText(R.string.app_name)).setContentIntent(pi)
+                .setOngoing(true).setAutoCancel(false).setWhen(System.currentTimeMillis());
         startForeground(ONGOING_NOTIFICATION_ID, builder.getNotification());
 
         if (table == null) {
             return -1;
             //throw new RuntimeException("not found table id");
         }
-        items = apneaService.getRowsForTable(table);
+        //items = apneaService.getRowsForTable(table);
+        items = new ArrayList<>();
+        final List<TableApneaRow> rowsForTable = apneaService.getRowsForTable(table);
+        items.add(rowsForTable.get(rowsForTable.size() - 1));
         if (items == null || items.size() == 0) {
             throw new RuntimeException("table has no items");
         }
-        timer = new Timer();
+
         currentItem = items.get(0);
         currentItem.setState(RowState.BREATHE);
-        timer.scheduleAtFixedRate(new ApneaTimerTask(), 0, 1000);
-
-        RUNNING = true;
+        startTimer();
         return START_NOT_STICKY;
     }
 
-    /*private void startTimer() {
-        getApplication().getaddFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    private void startTimer() {
+        timer.scheduleAtFixedRate(new ApneaTimerTask(), 0, 1000);
+        RUNNING = true;
         registerReceiver(receiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
     }
 
     private void stopTimer() {
         unregisterReceiver(receiver);
-    }*/
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
         RUNNING = false;
         try {
             timer.cancel();
         } catch (Exception ignored) {
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopTimer();
         try {
             alertService.close();
         } catch (IOException ignored) {
@@ -144,10 +142,7 @@ public class ApneaForeService extends Service {
             try {
                 updateCurrentRow();
             } catch (EndCycleException e) {
-                Log.w("Error", "updateProgress");
-                alertService.sayImOk();
-                stopForeground(true);
-                stopSelf();
+                onEndSeries();
                 return;
             }
             alertService.sayState(currentItem.getState());
@@ -156,6 +151,16 @@ public class ApneaForeService extends Service {
         updateNotificationUi();
         updateFragmentUi();
         progress++;
+    }
+
+    private void onEndSeries() {
+        alertService.sayImOk();
+        stopForeground(true);
+        stopSelf();
+        Intent mainInt = new Intent(getApplicationContext(), MainAct_.class);
+        mainInt.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+        mainInt.putExtra(IS_ALERT_SERIES_END, true);
+        startActivity(mainInt);
     }
 
     private void updateNotificationUi() {
@@ -180,10 +185,10 @@ public class ApneaForeService extends Service {
     }
 
     private PendingIntent getPendingIntent(Class clazz) {
-        final Intent intent = new Intent(getBaseContext(), clazz);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("table_restore", table);
-        return PendingIntent.getActivity(getBaseContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intent = new Intent(getApplicationContext(), clazz);
+        intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra(TABLE_RESTORE, table);
+        return PendingIntent.getActivity(getApplicationContext(), 651651, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     class ApneaTimerTask extends TimerTask {

@@ -40,4 +40,6 @@
     <string name="titl_co2_reduce">Интервал уменьшения</string>
     <string name="notif_breathe">Дыхание: %1$s</string>
     <string name="notif_hold">Задержка дыхания: %1$s</string>
+    <string name="dlg_sess_complete">Сессия завершена!</string>
+    <string name="tst_cant_edit">Нельзя редактировать пока идет сессия</string>
 </resources>
