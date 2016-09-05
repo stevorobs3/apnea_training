@@ -11,7 +11,7 @@
 		android:restoreAnyVersion="true"
 		android:backupAgent=".ApneaBackupHelper"
 		android:hardwareAccelerated="true"
-		android:icon="@mipmap/ic_freediving"
+		android:icon="@mipmap/ic_ico"
 		android:label="@string/app_name"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
