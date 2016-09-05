@@ -1,6 +1,7 @@
 package ru.megazlo.apnea.frag;
 
 import android.annotation.TargetApi;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
@@ -12,14 +13,15 @@ import android.view.View;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
+import ru.megazlo.apnea.ApneaBackupHelper;
 import ru.megazlo.apnea.R;
 import ru.megazlo.apnea.service.ApneaPrefs_;
 
 @EFragment
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class SettingsFragment extends PreferenceFragment implements FabClickListener {
+public class SettingsFragment extends PreferenceFragment implements FabClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
-	public static String PREF_NAME = "ApneaPrefs";
+	public final static String PREF_NAME = "ApneaPrefs";
 
 	@Pref
 	ApneaPrefs_ pref;
@@ -29,6 +31,13 @@ public class SettingsFragment extends PreferenceFragment implements FabClickList
 		super.onCreate(savedInstanceState);
 		getPreferenceManager().setSharedPreferencesName(PREF_NAME);
 		addPreferencesFromResource(R.xml.pref_main);
+		getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+	}
+
+	@Override
+	public void onDestroy() {
+		getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+		super.onDestroy();
 	}
 
 	@Override
@@ -53,5 +62,10 @@ public class SettingsFragment extends PreferenceFragment implements FabClickList
 
 	@Override
 	public void backPressed() {
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		ApneaBackupHelper.NEED_BACKUP = true;
 	}
 }

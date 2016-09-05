@@ -2,6 +2,8 @@ package ru.megazlo.apnea.frag;
 
 import android.app.Fragment;
 import android.text.Html;
+import android.text.util.Linkify;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,41 +22,53 @@ import ru.megazlo.apnea.R;
 @EFragment(R.layout.info_fragment_layout)
 public class InfoFragment extends Fragment implements FabClickListener {
 
-    @ViewById(R.id.info_text)
-    TextView infoView;
+	private int resRawId = -1;
 
-    @AfterViews
-    void init() {
-        infoView.setText(Html.fromHtml(readTxt(R.raw.info)));
-    }
+	@ViewById(R.id.info_text)
+	TextView infoView;
 
-    private String readTxt(int resId) {
-        InputStream inputStream = getResources().openRawResource(resId);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        try {
-            int i = inputStream.read();
-            while (i != -1) {
-                bos.write(i);
-                i = inputStream.read();
-            }
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bos.toString();
-    }
+	@AfterViews
+	void init() {
+		if (resRawId == -1) {
+			Log.e("InfoFragment", "Raw resource not found");
+			return;
+		}
+		infoView.setText(Html.fromHtml(readTxt(resRawId)));
+		//Linkify.addLinks(infoView, Linkify.EMAIL_ADDRESSES | Linkify.WEB_URLS);
+	}
 
-    @Override
-    public void clickByContext(View view) {
+	private String readTxt(int resId) {
+		InputStream inputStream = getResources().openRawResource(resId);
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		try {
+			int i = inputStream.read();
+			while (i != -1) {
+				bos.write(i);
+				i = inputStream.read();
+			}
+			inputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return bos.toString();
+	}
 
-    }
+	@Override
+	public void clickByContext(View view) {
 
-    @Override
-    public void modifyToContext(View view) {
-        view.setVisibility(View.GONE);
-    }
+	}
 
-    @Override
-    public void backPressed() {
-    }
+	@Override
+	public void modifyToContext(View view) {
+		view.setVisibility(View.GONE);
+	}
+
+	@Override
+	public void backPressed() {
+	}
+
+	public InfoFragment setResRawId(int resRawId) {
+		this.resRawId = resRawId;
+		return this;
+	}
 }

@@ -19,7 +19,6 @@
 			android:title="@string/nav_title_about"/>
 	</group>
 
-
 	<group
 		android:id="@+id/grp3"
 		android:checkableBehavior="single">

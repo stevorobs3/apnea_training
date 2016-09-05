@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fillViewport="true"
-    android:scrollbars="vertical">
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:fillViewport="true"
+	android:scrollbars="vertical">
 
-    <TextView
-        android:id="@+id/info_text"
-        android:padding="4sp"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
+	<TextView
+		android:id="@+id/info_text"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:autoLink="web|email"
+		android:linksClickable="true"
+		android:padding="4sp"/>
 
 </ScrollView>

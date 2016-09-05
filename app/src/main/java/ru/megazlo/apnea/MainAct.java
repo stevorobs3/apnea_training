@@ -108,13 +108,17 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 		if (id == R.id.nav_settings) {
 			setFragment(new SettingsFragment_());
 		} else if (id == R.id.nav_info) {
-			setFragment(new InfoFragment_());
+			setFragment(new InfoFragment_().setResRawId(R.raw.info));
+		} else if (id == R.id.nav_about) {
+			setFragment(new InfoFragment_().setResRawId(R.raw.about));
+		} else if (id == R.id.nav_record) {
+			Toast.makeText(MainAct.this, "Coming soon", Toast.LENGTH_SHORT).show();
 		} else if (id == R.id.nav_tables) {
 			setFragment(tabList);
 		}
 
-		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawer.closeDrawer(GravityCompat.START);
+		ApneaBackupHelper.requestBackup(this);// бэкапим если надо
 		return true;
 	}
 
