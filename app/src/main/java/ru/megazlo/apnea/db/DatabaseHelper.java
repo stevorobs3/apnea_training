@@ -15,7 +15,7 @@ import ru.megazlo.apnea.entity.TableApneaRow;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
-    private static final int DATABASE_VERSION = 25;
+    private static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "apnea_training.db";
 
     public DatabaseHelper(Context context) {

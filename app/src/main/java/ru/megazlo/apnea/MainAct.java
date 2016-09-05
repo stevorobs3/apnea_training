@@ -98,7 +98,11 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 			handler.backPressed();
 			setFragment(tabList);
 		} else {
-			super.onBackPressed();
+			try {
+				super.onBackPressed();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -112,7 +116,7 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 		} else if (id == R.id.nav_about) {
 			setFragment(new InfoFragment_().setResRawId(R.raw.about));
 		} else if (id == R.id.nav_record) {
-			Toast.makeText(MainAct.this, "Coming soon", Toast.LENGTH_SHORT).show();
+			setFragment(new RecordFragment_());
 		} else if (id == R.id.nav_tables) {
 			setFragment(tabList);
 		}

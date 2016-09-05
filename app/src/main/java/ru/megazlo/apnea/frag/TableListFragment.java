@@ -13,15 +13,20 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.j256.ormlite.dao.Dao;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.res.StringRes;
+import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.megazlo.apnea.ApneaForeService_;
 import ru.megazlo.apnea.R;
+import ru.megazlo.apnea.db.DatabaseHelper;
 import ru.megazlo.apnea.entity.RowState;
 import ru.megazlo.apnea.entity.TableApnea;
 import ru.megazlo.apnea.entity.TableType;
@@ -39,8 +44,8 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 
 	private List<TableApnea> apneaList;
 
-    /*@OrmLiteDao(helper = DatabaseHelper.class)
-    protected Dao<TableApnea, Integer> tableDao;*/
+    @OrmLiteDao(helper = DatabaseHelper.class)
+    protected Dao<TableApnea, Integer> tableDao;
 
 	@AfterViews
 	protected void afterView() {
@@ -64,11 +69,22 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 	}
 
 	protected List<TableApnea> loadAllForTitle() {
-	    /*try {
+
+		TableApnea itm = new TableApnea();
+		itm.setType(TableType.USER);
+		itm.setDescription("description");
+		itm.setTitle("User Table");
+		/*try {
+			tableDao.create(itm);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}*/
+
+		try {
             return tableDao.queryForAll();
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
+        }
 		return new ArrayList<>();
 	}
 

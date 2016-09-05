@@ -1,12 +1,7 @@
 package ru.megazlo.apnea.frag;
 
-import android.app.ActivityManager;
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Bundle;
+import android.content.*;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -14,27 +9,17 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.*;
 import org.androidannotations.annotations.res.StringRes;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import ru.megazlo.apnea.ApneaForeService;
 import ru.megazlo.apnea.ApneaForeService_;
 import ru.megazlo.apnea.R;
 import ru.megazlo.apnea.component.ArcProgress;
 import ru.megazlo.apnea.component.Utils;
-import ru.megazlo.apnea.entity.RowState;
-import ru.megazlo.apnea.entity.TableApnea;
-import ru.megazlo.apnea.entity.TableApneaRow;
+import ru.megazlo.apnea.entity.*;
 import ru.megazlo.apnea.extend.TableDetailAdapter;
-import ru.megazlo.apnea.service.AlertService;
 import ru.megazlo.apnea.service.ApneaService;
 
 @EFragment(R.layout.table_detail)

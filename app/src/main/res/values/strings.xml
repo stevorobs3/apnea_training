@@ -93,7 +93,8 @@
 
 	<string name="t_notify_type">Notify types</string>
 	<string name="s_notify_type">Set types notifications on events</string>
-
-
+	<string name="bt_text_start">Start</string>
+	<string name="bt_text_stop">Stop</string>
+	<string name="arc_best_best">Best</string>
 
 </resources>
