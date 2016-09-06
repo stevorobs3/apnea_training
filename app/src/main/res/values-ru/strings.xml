@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Апноэ</string>
+	<string name="main_act_title">Апноэ таблицы</string>
 	<string name="action_settings">Настройки</string>
 	<string name="nav_title_tables">Таблицы</string>
 	<string name="nav_title_settings">Настройки</string>
@@ -76,4 +77,5 @@
 	<string name="bt_text_start">Старт</string>
 	<string name="bt_text_stop">Стоп</string>
 	<string name="arc_best_best">Лучшее</string>
+	<string name="dlg_new_rec">Это новый рекорд?</string>
 </resources>

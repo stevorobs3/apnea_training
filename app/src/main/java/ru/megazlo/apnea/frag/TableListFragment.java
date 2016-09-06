@@ -57,7 +57,7 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 			getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 				@Override
 				public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-					adapter.setSelectedItem(position);
+					adapter.setSelectedIndex(position);
 					FloatingActionButton fab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
 					fab.setImageResource(R.drawable.ic_delete);
 					return true;
@@ -75,7 +75,6 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 	}
 
 	protected List<TableApnea> loadAllForTitle() {
-
 		TableApnea itm = new TableApnea();
 		itm.setType(TableType.USER);
 		itm.setDescription("description");
@@ -117,10 +116,25 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 		}
 	}
 
+	private void deleteSelectedItem() {
+		TableApnea tb = adapter.getItem(adapter.getSelectedIndex());
+		try {
+			tableDao.deleteById(tb.getId());
+		} catch (SQLException ignored) {
+		}
+		adapter.remove(tb);
+		FloatingActionButton fab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
+		fab.setImageResource(R.drawable.ic_add_plus);
+	}
+
 	@Override
 	public void clickByContext(View view) {
 		if (ApneaForeService_.RUNNING) {
 			Toast.makeText(getActivity(), R.string.tst_cant_edit, Toast.LENGTH_SHORT).show();
+			return;
+		}
+		if (adapter.hasSelection()) {
+			deleteSelectedItem();
 			return;
 		}
 		Snackbar.make(view, R.string.snack_tab_dev, Snackbar.LENGTH_SHORT).setAction(R.string.ok, null).show();
@@ -136,7 +150,7 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 	@Override
 	public boolean backPressed() {
 		if (adapter.hasSelection()) {
-			adapter.removeSelection();
+			adapter.resetSelection();
 			FloatingActionButton fab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
 			fab.setImageResource(R.drawable.ic_add_plus);
 			return false;
@@ -147,10 +161,11 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 	private DetailFragmentReceiver detailFragmentReceiver = new DetailFragmentReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
+			boolean ended = intent.getBooleanExtra(KEY_ENDED, false);
 			final int tabId = intent.getIntExtra(KEY_ID, -100);
 			for (TableApnea t : apneaList) {
 				t.setRunning(false);
-				if (t.getId() == tabId && !t.isRunning()) {
+				if (!ended && t.getId() == tabId && !t.isRunning()) {
 					t.setRunning(true);
 					((TableListAdapter) getListAdapter()).notifyDataSetChanged();
 				}

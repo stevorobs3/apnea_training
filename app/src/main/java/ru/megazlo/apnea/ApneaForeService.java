@@ -98,6 +98,7 @@ public class ApneaForeService extends Service {
 	}
 
 	private void stopTimer() {
+		updateFragmentUi(true);
 		unregisterReceiver(receiver);
 		RUNNING = false;
 		try {
@@ -108,8 +109,8 @@ public class ApneaForeService extends Service {
 
 	@Override
 	public void onDestroy() {
-		super.onDestroy();
 		stopTimer();
+		super.onDestroy();
 		try {
 			alertService.close();
 		} catch (IOException ignored) {
@@ -127,6 +128,7 @@ public class ApneaForeService extends Service {
 			currentItem.setState(RowState.NONE);
 			final int i = items.indexOf(currentItem);
 			if (i == items.size() - 1) {
+				currentItem.setState(RowState.NONE);
 				throw new EndCycleException();
 			} else {
 				currentItem = items.get(i + 1);
@@ -150,7 +152,7 @@ public class ApneaForeService extends Service {
 		}
 		alertService.checkNotifications(currentMax - progress);
 		updateNotificationUi();
-		updateFragmentUi();
+		updateFragmentUi(false);
 		progress++;
 	}
 
@@ -175,9 +177,10 @@ public class ApneaForeService extends Service {
 		notificationManager.notify(ONGOING_NOTIFICATION_ID, builder.build());
 	}
 
-	private void updateFragmentUi() {
+	private void updateFragmentUi(boolean ended) {
 		Intent tb = new Intent(DetailFragmentReceiver.ACTION_UPDATER);
 		tb.putExtra(DetailFragmentReceiver.KEY_MAX, getCurrentMax());
+		tb.putExtra(DetailFragmentReceiver.KEY_ENDED, ended);
 		tb.putExtra(DetailFragmentReceiver.KEY_PROGRESS, progress);
 		tb.putExtra(DetailFragmentReceiver.KEY_ROW, items.indexOf(currentItem));
 		tb.putExtra(DetailFragmentReceiver.KEY_ROW_TYPE, currentItem.getState());

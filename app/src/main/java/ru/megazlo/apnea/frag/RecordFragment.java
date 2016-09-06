@@ -1,7 +1,9 @@
 package ru.megazlo.apnea.frag;
 
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 
@@ -49,12 +51,25 @@ public class RecordFragment extends Fragment implements FabClickListener {
 			setButtonState(R.drawable.ic_stop_white);
 		} else {
 			stopTimer();
+			final int oldBest = Utils.getTotalSeconds(pref.bestRecord().get());
+			if (progress.getMax() > oldBest) {
+				new AlertDialog.Builder(getActivity()).setMessage(R.string.dlg_new_rec).setCancelable(false).setNegativeButton(R.string.cancel, null)
+						.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								pref.edit().bestRecord().put(Utils.formatMS(progress.getMax())).apply();
+							}
+						}).show();
+
+			}
 		}
 	}
 
 	private void stopTimer() {
-		timer.cancel();
-		timer = null;
+		if (timer != null) {
+			timer.cancel();
+			timer = null;
+		}
 		setButtonState(R.drawable.ic_play_white);
 	}
 
@@ -94,7 +109,7 @@ public class RecordFragment extends Fragment implements FabClickListener {
 
 	@Override
 	public boolean backPressed() {
-		if (timer == null) {
+		if (timer != null) {
 			stopTimer();
 			return false;
 		}

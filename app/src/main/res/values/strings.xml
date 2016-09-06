@@ -1,5 +1,6 @@
 <resources>
 	<string name="app_name">Apnea</string>
+	<string name="main_act_title">Apnea tables</string>
 
 	<string name="navigation_drawer_open" translatable="false">Open</string>
 	<string name="navigation_drawer_close" translatable="false">Close</string>
@@ -96,5 +97,6 @@
 	<string name="bt_text_start">Start</string>
 	<string name="bt_text_stop">Stop</string>
 	<string name="arc_best_best">Best</string>
+	<string name="dlg_new_rec">Are you new record?</string>
 
 </resources>

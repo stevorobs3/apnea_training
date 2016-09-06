@@ -2,7 +2,6 @@ package ru.megazlo.apnea.extend;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -17,9 +16,10 @@ import ru.megazlo.apnea.entity.TableApnea;
 
 public class TableListAdapter extends ArrayAdapter<TableApnea> {
 
+	private final static int NO_SELECT_INDEX = -1;
 	private final int selectedColor;
 	private final int normalColor;
-	private int selectedItem = -1;
+	private int selectedIndex = NO_SELECT_INDEX;
 
 	private LayoutInflater inflater;
 
@@ -54,21 +54,25 @@ public class TableListAdapter extends ArrayAdapter<TableApnea> {
 	}
 
 	public boolean hasSelection() {
-		return selectedItem != -1;
+		return selectedIndex != NO_SELECT_INDEX;
 	}
 
-	public void removeSelection() {
-		setSelectedItem(-1);
+	public void resetSelection() {
+		setSelectedIndex(NO_SELECT_INDEX);
 	}
 
-	public void setSelectedItem(int selectedItem) {
-		this.selectedItem = selectedItem;
+	public void setSelectedIndex(int selectedIndex) {
+		this.selectedIndex = selectedIndex;
 		notifyDataSetChanged();
+	}
+
+	public int getSelectedIndex() {
+		return selectedIndex;
 	}
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private void highlightItem(int position, View result) {
-		if (position == selectedItem) {
+		if (position == selectedIndex) {
 			result.setBackgroundColor(selectedColor);
 		} else {
 			result.setBackgroundColor(normalColor);

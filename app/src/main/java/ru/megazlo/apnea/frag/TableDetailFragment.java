@@ -136,6 +136,12 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 	private DetailFragmentReceiver detailFragmentReceiver = new DetailFragmentReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
+			boolean ended = intent.getBooleanExtra(KEY_ENDED, false);
+			if (ended) {
+				updateTotalTime();
+				((FloatingActionButton) getActivity().findViewById(R.id.fab)).setImageResource(R.drawable.ic_play);
+				return;
+			}
 			int max = intent.getIntExtra(KEY_MAX, -1);
 			int progress = intent.getIntExtra(KEY_PROGRESS, -1);
 			int row = intent.getIntExtra(KEY_ROW, -1);

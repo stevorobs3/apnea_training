@@ -6,53 +6,54 @@ import java.io.Serializable;
 import java.net.PortUnreachableException;
 
 public final class Utils {
-    public static float dp2px(Resources resources, float dp) {
-        final float scale = resources.getDisplayMetrics().density;
-        return dp * scale + 0.5f;
-    }
+	public static float dp2px(Resources resources, float dp) {
+		final float scale = resources.getDisplayMetrics().density;
+		return dp * scale + 0.5f;
+	}
 
-    public static float sp2px(Resources resources, float sp) {
-        final float scale = resources.getDisplayMetrics().scaledDensity;
-        return sp * scale;
-    }
+	public static float sp2px(Resources resources, float sp) {
+		final float scale = resources.getDisplayMetrics().scaledDensity;
+		return sp * scale;
+	}
 
-    /**
-     * Форматирование секунд в строку mm:ss
-     *
-     * @param seconds полное количество секунд
-     * @return строка в формате mm:ss
-     */
-    public static String formatMS(int seconds) {
-        return formatMS(seconds / 60, seconds % 60);
-    }
+	/**
+	 Форматирование секунд в строку mm:ss
+	 до фига где используется, потому что я рукожопый
 
-    /**
-     * Форматирование таймера в строку mm:ss
-     *
-     * @param minutes минуты
-     * @param seconds секунда, не больше 60
-     * @return строка в формате mm:ss
-     */
-    public static String formatMS(int minutes, int seconds) {
-        if (seconds > 60) {
-            throw new RuntimeException("Invalid seconds count");
-        }
-        return minutes + ":" + formatInt(seconds);
-    }
+	 @param seconds полное количество секунд
+	 @return строка в формате mm:ss
+	 */
+	public static String formatMS(int seconds) {
+		return formatMS(seconds / 60, seconds % 60);
+	}
 
-    private static String formatInt(int seconds) {
-        return seconds < 10 ? "0" + seconds : "" + seconds;
-    }
+	/**
+	 Форматирование таймера в строку mm:ss
 
-    public static int getTotalSeconds(String time) {
-        return getMinutes(time) * 60 + getSeconds(time);
-    }
+	 @param minutes минуты
+	 @param seconds секунда, не больше 60
+	 @return строка в формате mm:ss
+	 */
+	public static String formatMS(int minutes, int seconds) {
+		if (seconds > 60) {
+			throw new RuntimeException("Invalid seconds count");
+		}
+		return minutes + ":" + formatInt(seconds);
+	}
 
-    public static int getMinutes(String time) {
-        return Integer.parseInt(time.split(":")[0]);
-    }
+	private static String formatInt(int seconds) {
+		return seconds < 10 ? "0" + seconds : "" + seconds;
+	}
 
-    public static int getSeconds(String time) {
-        return Integer.parseInt(time.split(":")[1]);
-    }
+	public static int getTotalSeconds(String time) {
+		return getMinutes(time) * 60 + getSeconds(time);
+	}
+
+	public static int getMinutes(String time) {
+		return Integer.parseInt(time.split(":")[0]);
+	}
+
+	public static int getSeconds(String time) {
+		return Integer.parseInt(time.split(":")[1]);
+	}
 }
