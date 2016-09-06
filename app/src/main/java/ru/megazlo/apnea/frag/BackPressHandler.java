@@ -4,5 +4,5 @@ public interface BackPressHandler {
     /**
      * Обработка нажатия back
      */
-    void backPressed();
+    boolean backPressed();
 }

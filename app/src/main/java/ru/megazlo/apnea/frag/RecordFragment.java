@@ -93,10 +93,12 @@ public class RecordFragment extends Fragment implements FabClickListener {
 	}
 
 	@Override
-	public void backPressed() {
+	public boolean backPressed() {
 		if (timer == null) {
 			stopTimer();
+			return false;
 		}
+		return true;
 	}
 
 	class RecordTask extends TimerTask {

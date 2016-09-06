@@ -93,17 +93,17 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 	public void onBackPressed() {
 		if (drawer.isDrawerOpen(GravityCompat.START)) {
 			drawer.closeDrawer(GravityCompat.START);
-		} else if (tabList != getVisibleFragment()) {
-			BackPressHandler handler = (BackPressHandler) getVisibleFragment();
-			handler.backPressed();
-			setFragment(tabList);
-		} else {
-			try {
-				super.onBackPressed();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			return;
 		}
+		BackPressHandler handler = (BackPressHandler) getVisibleFragment();
+		if (!handler.backPressed()) {//если нельзя перехватывать контекст
+			return;
+		}
+		if (tabList != getVisibleFragment()) {
+			setFragment(tabList);
+			return;
+		}
+		super.onBackPressed();
 	}
 
 	@Override

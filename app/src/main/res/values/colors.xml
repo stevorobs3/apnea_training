@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#045a86</color>
-    <color name="colorPrimaryDark">#034263</color>
-    <color name="colorPrimaryUltraLight">#cbe2ef</color>
-    <color name="colorAccent">#0e78ae</color>
+	<color name="colorPrimary">#045a86</color>
+	<color name="colorPrimaryDark">#034263</color>
+	<color name="colorPrimaryUltraLight">#cbe2ef</color>
+	<color name="colorAccent">#0e78ae</color>
 
-    <color name="timer_circle">#045a86</color>
-    <color name="white">#ffffff</color>
+	<color name="timer_circle">#045a86</color>
+	<color name="white">#ffffff</color>
 
-    <color name="colorIndicator">#0eae1e</color>
+	<color name="colorIndicator">#0eae1e</color>
+
+	<color name="list_row_default_bg">@color/white</color>
+	<color name="list_row_pressed_bg">#d2d2d2</color>
+	<color name="list_row_selected_bg">#0e78ae</color>
 </resources>

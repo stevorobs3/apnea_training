@@ -2,7 +2,6 @@ package ru.megazlo.apnea.frag;
 
 import android.app.Fragment;
 import android.text.Html;
-import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -11,11 +10,9 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import ru.megazlo.apnea.R;
 
@@ -64,7 +61,8 @@ public class InfoFragment extends Fragment implements FabClickListener {
 	}
 
 	@Override
-	public void backPressed() {
+	public boolean backPressed() {
+		return true;
 	}
 
 	public InfoFragment setResRawId(int resRawId) {

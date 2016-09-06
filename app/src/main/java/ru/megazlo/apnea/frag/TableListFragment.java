@@ -1,17 +1,12 @@
 package ru.megazlo.apnea.frag;
 
 import android.app.ListFragment;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.*;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import com.j256.ormlite.dao.Dao;
 
@@ -27,7 +22,6 @@ import java.util.List;
 import ru.megazlo.apnea.ApneaForeService_;
 import ru.megazlo.apnea.R;
 import ru.megazlo.apnea.db.DatabaseHelper;
-import ru.megazlo.apnea.entity.RowState;
 import ru.megazlo.apnea.entity.TableApnea;
 import ru.megazlo.apnea.entity.TableType;
 import ru.megazlo.apnea.extend.TableListAdapter;
@@ -40,23 +34,35 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 	@StringRes(R.string.def_tab_title_co2)
 	protected String titleCO2;
 
+	@OrmLiteDao(helper = DatabaseHelper.class)
+	protected Dao<TableApnea, Integer> tableDao;
+
 	private AdapterView.OnItemClickListener listener;
 
 	private List<TableApnea> apneaList;
 
-    @OrmLiteDao(helper = DatabaseHelper.class)
-    protected Dao<TableApnea, Integer> tableDao;
+	private TableListAdapter adapter;
 
 	@AfterViews
 	protected void afterView() {
 		Context ctx = this.getActivity();
-		TableListAdapter adapter = new TableListAdapter(ctx, 0);
+		adapter = new TableListAdapter(ctx, 0);
 		apneaList = getAllTables();
 		adapter.addAll(apneaList);
-		this.setListAdapter(adapter);
+		setListAdapter(adapter);
 		if (listener != null) {
-			ListView listView = this.getListView();
-			listView.setOnItemClickListener(listener);
+			getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+			getListView().setSelector(R.drawable.list_color_selector);
+			getListView().setOnItemClickListener(listener);
+			getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+				@Override
+				public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+					adapter.setSelectedItem(position);
+					FloatingActionButton fab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
+					fab.setImageResource(R.drawable.ic_delete);
+					return true;
+				}
+			});
 		}
 		getActivity().registerReceiver(detailFragmentReceiver, new IntentFilter(DetailFragmentReceiver.ACTION_UPDATER));
 	}
@@ -81,10 +87,10 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 		}*/
 
 		try {
-            return tableDao.queryForAll();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+			return tableDao.queryForAll();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return new ArrayList<>();
 	}
 
@@ -128,7 +134,14 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 	}
 
 	@Override
-	public void backPressed() {
+	public boolean backPressed() {
+		if (adapter.hasSelection()) {
+			adapter.removeSelection();
+			FloatingActionButton fab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
+			fab.setImageResource(R.drawable.ic_add_plus);
+			return false;
+		}
+		return true;
 	}
 
 	private DetailFragmentReceiver detailFragmentReceiver = new DetailFragmentReceiver() {

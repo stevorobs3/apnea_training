@@ -4,12 +4,11 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <ListView
-        android:id="@id/android:list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#FFFFFF"
-        android:drawSelectorOnTop="false"/>
+	<ListView
+		android:id="@+id/list_tables"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:choiceMode="singleChoice"/>
 
 </LinearLayout>

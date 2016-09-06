@@ -129,7 +129,8 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 	}
 
 	@Override
-	public void backPressed() {// завершение операций
+	public boolean backPressed() {
+		return true;
 	}
 
 	private DetailFragmentReceiver detailFragmentReceiver = new DetailFragmentReceiver() {

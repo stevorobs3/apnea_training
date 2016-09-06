@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -61,7 +60,8 @@ public class SettingsFragment extends PreferenceFragment implements FabClickList
 	}
 
 	@Override
-	public void backPressed() {
+	public boolean backPressed() {
+		return true;
 	}
 
 	@Override
