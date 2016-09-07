@@ -2,40 +2,26 @@ package ru.megazlo.apnea.frag;
 
 import android.app.ListFragment;
 import android.content.*;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.view.*;
+import android.view.View;
 import android.widget.*;
 
-import com.j256.ormlite.dao.Dao;
+import org.androidannotations.annotations.*;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.res.StringRes;
-import org.androidannotations.ormlite.annotations.OrmLiteDao;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import ru.megazlo.apnea.ApneaForeService_;
 import ru.megazlo.apnea.R;
-import ru.megazlo.apnea.db.DatabaseHelper;
 import ru.megazlo.apnea.entity.TableApnea;
-import ru.megazlo.apnea.entity.TableType;
 import ru.megazlo.apnea.extend.TableListAdapter;
+import ru.megazlo.apnea.service.ApneaService;
 
 @EFragment(R.layout.table_list)
 public class TableListFragment extends ListFragment implements FabClickListener {
 
-	@StringRes(R.string.def_tab_title_o2)
-	protected String titleO2;
-	@StringRes(R.string.def_tab_title_co2)
-	protected String titleCO2;
-
-	@OrmLiteDao(helper = DatabaseHelper.class)
-	protected Dao<TableApnea, Integer> tableDao;
+	@Bean
+	ApneaService apneaService;
 
 	private AdapterView.OnItemClickListener listener;
 
@@ -47,7 +33,7 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 	protected void afterView() {
 		Context ctx = this.getActivity();
 		adapter = new TableListAdapter(ctx, 0);
-		apneaList = getAllTables();
+		apneaList = apneaService.loadAllTables();
 		adapter.addAll(apneaList);
 		setListAdapter(adapter);
 		if (listener != null) {
@@ -67,43 +53,6 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 		getActivity().registerReceiver(detailFragmentReceiver, new IntentFilter(DetailFragmentReceiver.ACTION_UPDATER));
 	}
 
-	public List<TableApnea> getAllTables() {
-		List<TableApnea> userTables = loadAllForTitle();
-		userTables.add(0, getTableApnea(-2, 0xff368ec9, titleO2, TableType.O2));
-		userTables.add(0, getTableApnea(-1, 0xffff7925, titleCO2, TableType.CO2));
-		return userTables;
-	}
-
-	protected List<TableApnea> loadAllForTitle() {
-		TableApnea itm = new TableApnea();
-		itm.setType(TableType.USER);
-		itm.setDescription("description");
-		itm.setTitle("User Table");
-		/*try {
-			tableDao.create(itm);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}*/
-
-		try {
-			return tableDao.queryForAll();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return new ArrayList<>();
-	}
-
-	@NonNull
-	private TableApnea getTableApnea(int id, int color, String title, TableType type) {
-		TableApnea tab = new TableApnea();
-		tab.setId(id);
-		tab.setColor(color);
-		tab.setTitle(title);
-		tab.setDescription(getString(R.string.table_description_calc));
-		tab.setType(type);
-		return tab;
-	}
-
 	public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
 		this.listener = listener;
 	}
@@ -118,10 +67,7 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 
 	private void deleteSelectedItem() {
 		TableApnea tb = adapter.getItem(adapter.getSelectedIndex());
-		try {
-			tableDao.deleteById(tb.getId());
-		} catch (SQLException ignored) {
-		}
+		apneaService.deleteTableById(tb.getId());
 		adapter.remove(tb);
 		FloatingActionButton fab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
 		fab.setImageResource(R.drawable.ic_add_plus);

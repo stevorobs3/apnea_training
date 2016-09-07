@@ -13,22 +13,30 @@ import lombok.Setter;
 @DatabaseTable(tableName = "table_apnea")
 public class TableApnea implements Serializable {
 
-    private boolean running = false;
+	private boolean running = false;
 
-    private TableType type = TableType.USER;
+	private TableType type = TableType.USER;
 
-    @DatabaseField(generatedId = true)
-    private Integer id;
+	@DatabaseField(generatedId = true)
+	private Integer id;
 
-    @DatabaseField(canBeNull = false, columnName = "allow_edit")
-    private boolean allowEdit;
+	@DatabaseField(canBeNull = false, columnName = "allow_edit")
+	private boolean allowEdit;
 
-    @DatabaseField(canBeNull = false, columnName = "color")
-    private int color;
+	@DatabaseField(canBeNull = false, columnName = "color")
+	private int color;
 
-    @DatabaseField(canBeNull = false, columnName = "title")
-    private String title;
+	@DatabaseField(canBeNull = false, columnName = "title")
+	private String title;
 
-    @DatabaseField(columnName = "description")
-    private String description;
+	@DatabaseField(columnName = "description")
+	private String description;
+
+	public TableApnea() {
+	}
+
+	public TableApnea(Integer id) {
+		this.id = id;
+	}
+
 }

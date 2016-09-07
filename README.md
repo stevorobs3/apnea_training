@@ -1,2 +1,2 @@
-# apnea_training
+# apnea training
 Programm for apnea training freediving

@@ -2,6 +2,7 @@ package ru.megazlo.apnea.frag;
 
 import android.app.Fragment;
 import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -10,10 +11,11 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.util.Formatter;
+import java.util.Locale;
 
+import ru.megazlo.apnea.BuildConfig;
 import ru.megazlo.apnea.R;
 
 @EFragment(R.layout.info_fragment_layout)
@@ -30,29 +32,25 @@ public class InfoFragment extends Fragment implements FabClickListener {
 			Log.e("InfoFragment", "Raw resource not found");
 			return;
 		}
-		infoView.setText(Html.fromHtml(readTxt(resRawId)));
-		//Linkify.addLinks(infoView, Linkify.EMAIL_ADDRESSES | Linkify.WEB_URLS);
+		infoView.setText(Html.fromHtml(readTxt()));
 	}
 
-	private String readTxt(int resId) {
-		InputStream inputStream = getResources().openRawResource(resId);
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	private String readTxt() {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(getResources().openRawResource(resRawId)));
+		StringBuilder bld = new StringBuilder();
+		String line;
 		try {
-			int i = inputStream.read();
-			while (i != -1) {
-				bos.write(i);
-				i = inputStream.read();
+			while ((line = reader.readLine()) != null) {
+				bld.append(line).append("\r\n");
 			}
-			inputStream.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+			reader.close();
+		} catch (IOException ignored) {
 		}
-		return bos.toString();
+		return bld.toString();
 	}
 
 	@Override
 	public void clickByContext(View view) {
-
 	}
 
 	@Override
