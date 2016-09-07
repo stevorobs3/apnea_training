@@ -67,7 +67,7 @@ public class ApneaForeService extends Service {
 		table = (TableApnea) intent.getSerializableExtra("table");
 		PendingIntent pi = getPendingIntent(MainAct_.class);
 
-		builder = new Notification.Builder(getApplicationContext()).setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_freediving))
+		builder = new Notification.Builder(getApplicationContext()).setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_ico))
 				.setSmallIcon(R.drawable.ic_lungs).setContentTitle(getText(R.string.app_name)).setContentIntent(pi)
 				.setOngoing(true).setAutoCancel(false).setWhen(System.currentTimeMillis());
 		startForeground(ONGOING_NOTIFICATION_ID, builder.getNotification());

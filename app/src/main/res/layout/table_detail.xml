@@ -17,7 +17,7 @@
 			android:layout_marginLeft="50sp"
 			android:layout_weight="1"
 			android:padding="2sp"
-			android:text="Дыхание"/>
+			android:text="@string/timer_breath_lb"/>
 
 		<TextView
 			android:layout_width="0dp"
@@ -26,7 +26,7 @@
 			android:layout_marginLeft="50sp"
 			android:layout_weight="1"
 			android:padding="2sp"
-			android:text="Задержка"/>
+			android:text="@string/timer_hold_lb"/>
 	</LinearLayout>
 
 	<ListView
@@ -50,23 +50,22 @@
 			android:gravity="center_vertical"
 			android:paddingLeft="22sp"
 			android:paddingRight="22sp"
-			custom:arc_bottom_text="Дыхание"
+			custom:arc_bottom_text="@string/timer_breath_lb"
 			custom:arc_finished_color="#039e00"
 			custom:arc_max="135"
 			custom:arc_progress="70"
 			custom:arc_text_color="@color/colorAccent"
 			custom:arc_unfinished_color="#a5ffa3"/>
 
-		<Button
-			android:id="@+id/round_discard"
+		<android.support.design.widget.FloatingActionButton
+			android:id="@+id/fab_discard"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_marginLeft="10dp"
 			android:layout_alignTop="@id/arc_progress"
 			android:layout_toRightOf="@id/arc_progress"
-			android:contentDescription=""
-			android:drawableLeft="@drawable/ic_discard"
-			android:drawablePadding="5sp"
-			android:text="@string/btn_discard"/>
+			android:src="@drawable/ic_discard"
+			android:tint="@color/white"/>
 
 		<TextView
 			android:id="@+id/total_time"

@@ -67,7 +67,7 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 		}
 		if (getIntent().getBooleanExtra(ApneaForeService_.IS_ALERT_SERIES_END, false)) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(R.string.dlg_sess_complete).setIcon(R.mipmap.ic_freediving).setCancelable(false).setPositiveButton(R.string.dlg_im_ok,
+			builder.setMessage(R.string.dlg_sess_complete).setIcon(R.mipmap.ic_ico).setCancelable(false).setPositiveButton(R.string.dlg_im_ok,
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
 							dialog.cancel();

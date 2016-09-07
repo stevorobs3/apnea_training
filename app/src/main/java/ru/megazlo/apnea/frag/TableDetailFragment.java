@@ -6,8 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 
 import org.androidannotations.annotations.*;
 import org.androidannotations.annotations.res.StringRes;
@@ -39,6 +38,9 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 	TextView totalTime;
 	@ViewById(R.id.list_row)
 	ListView listView;
+
+	/*@ViewById(R.id.fab_discard)
+	FloatingActionButton fabDiscard;*/
 
 	private List<TableApneaRow> rows;
 
@@ -77,6 +79,11 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 	public void onDestroy() {
 		super.onDestroy();
 		getActivity().unregisterReceiver(detailFragmentReceiver);
+	}
+
+	@Click(R.id.fab_discard)
+	void clickDiscard() {
+		Toast.makeText(getActivity(), R.string.coming_soon, Toast.LENGTH_SHORT).show();
 	}
 
 	private void updateTotalTime() {
@@ -149,10 +156,8 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 			final int tabId = intent.getIntExtra(KEY_ID, -100);
 			if (tableApnea.getId() != tabId) {
 				Log.i("TableDetailFragment", "need restart service with new parameters");
-			} else {
-				if (rows != null && rows.size() > 0) {
-					updateViews(max, progress, row, state);
-				}
+			} else if (rows != null && rows.size() > 0) {
+				updateViews(max, progress, row, state);
 			}
 		}
 	};
