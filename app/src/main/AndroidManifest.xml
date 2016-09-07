@@ -7,22 +7,26 @@
 
 	<application
 		android:allowBackup="true"
-		android:restoreAnyVersion="true"
-		android:screenOrientation="portrait"
 		android:backupAgent=".ApneaBackupHelper"
+		android:fullBackupContent="true"
 		android:hardwareAccelerated="true"
 		android:icon="@mipmap/ic_ico"
 		android:label="@string/app_name"
+		android:restoreAnyVersion="true"
+		android:screenOrientation="portrait"
+		android:supportsRtl="false"
 		android:theme="@style/AppTheme">
 
-		<meta-data android:name="com.google.android.backup.api_key" android:value="AEdPqrEAAAAIMWsrDSSGn6q4g7En2PgtRuCaFC7c-cGtfyyOPg" />
+		<meta-data
+			android:name="com.google.android.backup.api_key"
+			android:value="AEdPqrEAAAAIMWsrDSSGn6q4g7En2PgtRuCaFC7c-cGtfyyOPg"/>
 
 		<activity
 			android:name=".MainAct_"
+			android:alwaysRetainTaskState="true"
 			android:configChanges="orientation|keyboardHidden|screenSize"
 			android:label="@string/main_act_title"
 			android:launchMode="singleTop"
-			android:alwaysRetainTaskState="true"
 			android:theme="@style/AppTheme.Branded">
 			<intent-filter android:label="@string/app_name">
 				<action android:name="android.intent.action.MAIN"/>

@@ -47,6 +47,6 @@
 		android:layout_marginRight="10sp"
 		android:contentDescription="@string/app_name"
 		android:src="@drawable/ic_link"
-		android:tint="@color/colorIndicator"/>
+		android:tint="@color/color_indicator"/>
 
 </RelativeLayout>

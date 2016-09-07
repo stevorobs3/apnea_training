@@ -2,39 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:gravity="center">
 
-	<LinearLayout
+	<ru.megazlo.apnea.component.ArcProgress
+		android:id="@+id/arc_record"
+		android:layout_width="300dp"
+		android:layout_height="300dp"
+		android:layout_centerInParent="true"
+		android:background="@android:color/transparent"
+		custom:arc_bottom_text="@string/arc_best_best"
+		custom:arc_bottom_text_size="25sp"
+		custom:arc_finished_color="@color/arc_finished"
+		custom:arc_max="135"
+		custom:arc_progress="70"
+		custom:arc_text_color="@color/colorAccent"
+		custom:arc_text_size="95sp"
+		custom:arc_unfinished_color="@color/arc_unfinished"/>
+
+	<Button
+		android:id="@+id/start_record"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:layout_centerInParent="true">
-
-		<ru.megazlo.apnea.component.ArcProgress
-			android:id="@+id/arc_record"
-			android:layout_width="300dp"
-			android:layout_height="300dp"
-			android:background="@android:color/transparent"
-			custom:arc_bottom_text="@string/arc_best_best"
-			custom:arc_bottom_text_size="25sp"
-			custom:arc_finished_color="#039e00"
-			custom:arc_max="135"
-			custom:arc_progress="70"
-			custom:arc_text_color="@color/colorAccent"
-			custom:arc_text_size="95sp"
-			custom:arc_unfinished_color="#a5ffa3"/>
-
-		<Button
-			android:id="@+id/start_record"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center_horizontal"
-			android:background="@color/colorAccent"
-			android:drawableLeft="@drawable/ic_play_white"
-			android:padding="14dp"
-			android:text="@string/bt_text_start"
-			android:textColor="@color/white"
-			android:textSize="26dp"/>
-	</LinearLayout>
+		android:layout_below="@id/arc_record"
+		android:layout_centerInParent="true"
+		android:layout_gravity="center_horizontal"
+		android:background="@color/colorAccent"
+		android:drawableLeft="@drawable/ic_play_white"
+		android:padding="14dp"
+		android:text="@string/bt_text_start"
+		android:textColor="@color/white"
+		android:textSize="26sp"/>
 
 </RelativeLayout>

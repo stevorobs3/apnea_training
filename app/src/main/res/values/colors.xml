@@ -8,7 +8,7 @@
 	<color name="timer_circle">#045a86</color>
 	<color name="white">#ffffff</color>
 
-	<color name="colorIndicator">#0eae1e</color>
+	<color name="color_indicator">#0eae1e</color>
 
 	<color name="list_row_default_bg">@color/white</color>
 	<color name="list_row_pressed_bg">#d2d2d2</color>
@@ -17,4 +17,7 @@
 	<color name="list_lung_o">#368ec9</color>
 	<color name="list_lung_co">#ff7925</color>
 	<color name="list_lung_user">#0e71ae</color>
+
+	<color name="arc_finished">#039e00</color>
+	<color name="arc_unfinished">#a5ffa3</color>
 </resources>
