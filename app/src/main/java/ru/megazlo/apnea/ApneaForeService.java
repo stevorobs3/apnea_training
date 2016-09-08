@@ -4,8 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.*;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -26,6 +25,7 @@ import ru.megazlo.apnea.entity.RowState;
 import ru.megazlo.apnea.entity.TableApnea;
 import ru.megazlo.apnea.entity.TableApneaRow;
 import ru.megazlo.apnea.frag.DetailFragmentReceiver;
+import ru.megazlo.apnea.frag.EndCurrentReceiver;
 import ru.megazlo.apnea.service.AlertService;
 import ru.megazlo.apnea.service.ApneaService;
 import ru.megazlo.apnea.service.ScreenReceiver;
@@ -88,6 +88,8 @@ public class ApneaForeService extends Service {
 		currentItem = items.get(0);
 		currentItem.setState(RowState.BREATHE);
 		startTimer();
+		registerReceiver(endReceiver, new IntentFilter(EndCurrentReceiver.ACTION_SKIP));
+		registerReceiver(receiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
 		return START_NOT_STICKY;
 	}
 
@@ -110,6 +112,7 @@ public class ApneaForeService extends Service {
 	@Override
 	public void onDestroy() {
 		stopTimer();
+		unregisterReceiver(endReceiver);
 		super.onDestroy();
 		try {
 			alertService.close();
@@ -174,7 +177,7 @@ public class ApneaForeService extends Service {
 		} else if (currentItem.getState() == RowState.HOLD) {
 			builder.setContentText(getString(R.string.notif_hold, arg)).setContentIntent(pi);
 		}
-		notificationManager.notify(ONGOING_NOTIFICATION_ID, builder.build());
+		notificationManager.notify(ONGOING_NOTIFICATION_ID, builder.getNotification());
 	}
 
 	private void updateFragmentUi(boolean ended) {
@@ -194,6 +197,14 @@ public class ApneaForeService extends Service {
 		intent.putExtra(TABLE_RESTORE, table);
 		return PendingIntent.getActivity(getApplicationContext(), 651651, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 	}
+
+	private EndCurrentReceiver endReceiver = new EndCurrentReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			progress = getCurrentMax();
+			updateProgress();
+		}
+	};
 
 	class ApneaTimerTask extends TimerTask {
 		@Override

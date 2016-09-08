@@ -83,7 +83,7 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 
 	@Click(R.id.fab_discard)
 	void clickDiscard() {
-		Toast.makeText(getActivity(), R.string.coming_soon, Toast.LENGTH_SHORT).show();
+		getActivity().getApplication().sendBroadcast(new Intent(EndCurrentReceiver.ACTION_SKIP));
 	}
 
 	private void updateTotalTime() {
