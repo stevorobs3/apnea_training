@@ -68,7 +68,7 @@ public class ApneaForeService extends Service {
 		PendingIntent pi = getPendingIntent(MainAct_.class);
 
 		builder = new Notification.Builder(getApplicationContext()).setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_ico))
-				.setSmallIcon(R.drawable.ic_lungs).setContentTitle(getText(R.string.app_name)).setContentIntent(pi)
+				.setSmallIcon(R.drawable.ic_lungs).setContentTitle(getText(R.string.app_name)).setContentIntent(pi).setProgress(100, 0, false)
 				.setOngoing(true).setAutoCancel(false).setWhen(System.currentTimeMillis());
 		startForeground(ONGOING_NOTIFICATION_ID, builder.getNotification());
 
@@ -171,11 +171,13 @@ public class ApneaForeService extends Service {
 
 	private void updateNotificationUi() {
 		PendingIntent pi = getPendingIntent(this.getClass());
-		final String arg = Utils.formatMS(getCurrentMax() - progress);
+		final int currMax = getCurrentMax();
+		final String arg = Utils.formatMS(currMax - progress);
+		builder.setProgress(currMax, currMax - progress, false)/*.setContentIntent(pi)*/;
 		if (currentItem.getState() == RowState.BREATHE) {
-			builder.setContentText(getString(R.string.notif_breathe, arg)).setContentIntent(pi);
+			builder.setContentText(getString(R.string.notif_breathe, arg));
 		} else if (currentItem.getState() == RowState.HOLD) {
-			builder.setContentText(getString(R.string.notif_hold, arg)).setContentIntent(pi);
+			builder.setContentText(getString(R.string.notif_hold, arg));
 		}
 		notificationManager.notify(ONGOING_NOTIFICATION_ID, builder.getNotification());
 	}

@@ -15,11 +15,8 @@ import ru.megazlo.apnea.entity.TableApneaRow;
 
 public class TableDetailAdapter extends ArrayAdapter<TableApneaRow> {
 
-    private LayoutInflater inflater;
-
-    public TableDetailAdapter(Context context, int resource) {
-        super(context, resource);
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public TableDetailAdapter(Context context) {
+        super(context, R.layout.table_detail_row);
     }
 
     @Override
@@ -27,7 +24,7 @@ public class TableDetailAdapter extends ArrayAdapter<TableApneaRow> {
         ViewHolder holder;
         if (cView == null) {
             holder = new ViewHolder();
-            cView = inflater.inflate(R.layout.table_detail_row, null);
+            cView = LayoutInflater.from(getContext()).inflate(R.layout.table_detail_row, null);
             holder.breathe = (TextView) cView.findViewById(R.id.r_time_breathe);
             holder.hold = (TextView) cView.findViewById(R.id.r_time_hold);
             holder.i_breathe = (ImageView) cView.findViewById(R.id.r_img_breathe);

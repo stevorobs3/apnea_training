@@ -21,11 +21,8 @@ public class TableListAdapter extends ArrayAdapter<TableApnea> {
 	private final int normalColor;
 	private int selectedIndex = NO_SELECT_INDEX;
 
-	private LayoutInflater inflater;
-
 	public TableListAdapter(Context context, int resource) {
 		super(context, resource);
-		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		selectedColor = context.getResources().getColor(R.color.colorAccent);
 		normalColor = context.getResources().getColor(R.color.white);
 	}
@@ -35,7 +32,7 @@ public class TableListAdapter extends ArrayAdapter<TableApnea> {
 		ViewHolder holder;
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = inflater.inflate(R.layout.table_list_row, null);
+			convertView = LayoutInflater.from(getContext()).inflate(R.layout.table_list_row, null);
 			holder.icon = (ImageView) convertView.findViewById(R.id.img_lungs_icon);
 			holder.state = (ImageView) convertView.findViewById(R.id.table_run_state);
 			holder.title = (TextView) convertView.findViewById(R.id.table_title);

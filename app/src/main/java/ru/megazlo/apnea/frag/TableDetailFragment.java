@@ -66,7 +66,7 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 	@AfterViews
 	void init() {
 		rows = apneaService.getRowsForTable(tableApnea);
-		final TableDetailAdapter adapter = new TableDetailAdapter(getActivity(), R.layout.table_detail_row);
+		final TableDetailAdapter adapter = new TableDetailAdapter(getActivity());
 		adapter.addAll(rows);
 		listView.setAdapter(adapter);
 		updateTotalTime();
