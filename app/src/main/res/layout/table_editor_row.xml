@@ -4,4 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+	<!-- длина дыхания -->
+	<!-- длина задержки -->
+	<!-- длина удалить -->
 </LinearLayout>

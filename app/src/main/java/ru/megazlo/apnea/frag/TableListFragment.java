@@ -27,15 +27,12 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 
 	private List<TableApnea> apneaList;
 
-	private TableListAdapter adapter;
-
 	@AfterViews
 	protected void afterView() {
 		Context ctx = this.getActivity();
-		adapter = new TableListAdapter(ctx, 0);
+		setListAdapter(new TableListAdapter(ctx, 0));
 		apneaList = apneaService.loadAllTables();
-		adapter.addAll(apneaList);
-		setListAdapter(adapter);
+		getAdapter().addAll(apneaList);
 		if (listener != null) {
 			getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 			getListView().setSelector(R.drawable.list_color_selector);
@@ -43,7 +40,7 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 			getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 				@Override
 				public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-					adapter.setSelectedIndex(position);
+					getAdapter().setSelectedIndex(position);
 					FloatingActionButton fab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
 					fab.setImageResource(R.drawable.ic_delete);
 					return true;
@@ -51,6 +48,10 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 			});
 		}
 		getActivity().registerReceiver(detailFragmentReceiver, new IntentFilter(DetailFragmentReceiver.ACTION_UPDATER));
+	}
+
+	private TableListAdapter getAdapter() {
+		return (TableListAdapter) getListAdapter();
 	}
 
 	public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
@@ -66,9 +67,9 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 	}
 
 	private void deleteSelectedItem() {
-		TableApnea tb = adapter.getItem(adapter.getSelectedIndex());
+		TableApnea tb = getAdapter().getItem(getAdapter().getSelectedIndex());
 		apneaService.deleteTableById(tb.getId());
-		adapter.remove(tb);
+		getAdapter().remove(tb);
 		FloatingActionButton fab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
 		fab.setImageResource(R.drawable.ic_add_plus);
 	}
@@ -79,7 +80,7 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 			Toast.makeText(getActivity(), R.string.tst_cant_edit, Toast.LENGTH_SHORT).show();
 			return;
 		}
-		if (adapter.hasSelection()) {
+		if (getAdapter().hasSelection()) {
 			deleteSelectedItem();
 			return;
 		}
@@ -95,8 +96,8 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 
 	@Override
 	public boolean backPressed() {
-		if (adapter.hasSelection()) {
-			adapter.resetSelection();
+		if (getAdapter().hasSelection()) {
+			getAdapter().resetSelection();
 			FloatingActionButton fab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
 			fab.setImageResource(R.drawable.ic_add_plus);
 			return false;

@@ -1,7 +1,6 @@
 package ru.megazlo.apnea.service;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
@@ -9,7 +8,6 @@ import com.j256.ormlite.stmt.DeleteBuilder;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
-import org.androidannotations.annotations.res.StringRes;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
@@ -20,9 +18,7 @@ import java.util.List;
 import ru.megazlo.apnea.R;
 import ru.megazlo.apnea.component.Utils;
 import ru.megazlo.apnea.db.DatabaseHelper;
-import ru.megazlo.apnea.entity.TableApnea;
-import ru.megazlo.apnea.entity.TableApneaRow;
-import ru.megazlo.apnea.entity.TableType;
+import ru.megazlo.apnea.entity.*;
 
 @EBean(scope = EBean.Scope.Singleton)
 public class ApneaService {
@@ -129,6 +125,20 @@ public class ApneaService {
 		userTables.add(0, createTableApnea(ID_O2, R.color.list_lung_o, R.string.def_tab_title_o2));
 		userTables.add(0, createTableApnea(ID_CO2, R.color.list_lung_co, R.string.def_tab_title_co2));
 		return userTables;
+	}
+
+	public void saveNewTable(TableApnea table, List<TableApneaRow> rows) {
+		try {
+			tableDao.create(table);
+			int order = 0;
+			for (TableApneaRow r : rows) {
+				r.setTable(table.getId());
+				r.setOrder(order++);
+			}
+			rowDao.create(rows);
+		} catch (SQLException ignored) {
+			Log.w("ApneaService", "Can`t create table with rows");
+		}
 	}
 
 	private TableApnea createTableApnea(int id, int color, int titleRes) {
