@@ -1,4 +1,4 @@
-package ru.megazlo.apnea.service;
+package ru.megazlo.apnea.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.PowerManager;
 import android.util.Log;
 
-public class ScreenReceiver extends BroadcastReceiver {
+public class ScreenOffReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {

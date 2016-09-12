@@ -1,4 +1,4 @@
-package ru.megazlo.apnea.frag;
+package ru.megazlo.apnea.receivers;
 
 import android.content.BroadcastReceiver;
 

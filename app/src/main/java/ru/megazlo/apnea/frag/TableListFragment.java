@@ -15,38 +15,37 @@ import ru.megazlo.apnea.ApneaForeService_;
 import ru.megazlo.apnea.R;
 import ru.megazlo.apnea.entity.TableApnea;
 import ru.megazlo.apnea.extend.TableListAdapter;
+import ru.megazlo.apnea.receivers.ChangeFragmentReceiver;
+import ru.megazlo.apnea.receivers.DetailFragmentReceiver;
 import ru.megazlo.apnea.service.ApneaService;
 
 @EFragment(R.layout.table_list)
-public class TableListFragment extends ListFragment implements FabClickListener {
+public class TableListFragment extends ListFragment implements FabClickListener, AdapterView.OnItemClickListener {
 
 	@Bean
 	ApneaService apneaService;
 
-	private AdapterView.OnItemClickListener listener;
+	//private AdapterView.OnItemClickListener listener;
 
 	private List<TableApnea> apneaList;
 
 	@AfterViews
 	protected void afterView() {
-		Context ctx = this.getActivity();
-		setListAdapter(new TableListAdapter(ctx, 0));
+		setListAdapter(new TableListAdapter(getActivity()));
 		apneaList = apneaService.loadAllTables();
 		getAdapter().addAll(apneaList);
-		if (listener != null) {
-			getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-			getListView().setSelector(R.drawable.list_color_selector);
-			getListView().setOnItemClickListener(listener);
-			getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-				@Override
-				public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-					getAdapter().setSelectedIndex(position);
-					FloatingActionButton fab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
-					fab.setImageResource(R.drawable.ic_delete);
-					return true;
-				}
-			});
-		}
+		getListView().setOnItemClickListener(this);
+		getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+		getListView().setSelector(R.drawable.list_color_selector);
+		getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				getAdapter().setSelectedIndex(position);
+				FloatingActionButton fab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
+				fab.setImageResource(R.drawable.ic_delete);
+				return true;
+			}
+		});
 		getActivity().registerReceiver(detailFragmentReceiver, new IntentFilter(DetailFragmentReceiver.ACTION_UPDATER));
 	}
 
@@ -54,8 +53,11 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 		return (TableListAdapter) getListAdapter();
 	}
 
-	public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
-		this.listener = listener;
+	public void sendChangeFragment(String name, TableApnea tab) {
+		Intent tb = new Intent(ChangeFragmentReceiver.ACTION_FRAGMENT);
+		tb.putExtra(ChangeFragmentReceiver.KEY_FRAG, name);
+		tb.putExtra(ChangeFragmentReceiver.KEY_TABLE, tab);
+		getActivity().sendBroadcast(tb);
 	}
 
 	@Override
@@ -84,7 +86,7 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 			deleteSelectedItem();
 			return;
 		}
-		Snackbar.make(view, R.string.snack_tab_dev, Snackbar.LENGTH_SHORT).setAction(R.string.ok, null).show();
+		sendChangeFragment(ChangeFragmentReceiver.KEY_EDIT, null);
 	}
 
 	@Override
@@ -119,4 +121,10 @@ public class TableListFragment extends ListFragment implements FabClickListener 
 			}
 		}
 	};
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		TableApnea table = (TableApnea) parent.getItemAtPosition(position);
+		sendChangeFragment(ChangeFragmentReceiver.KEY_DETAIL, table);
+	}
 }

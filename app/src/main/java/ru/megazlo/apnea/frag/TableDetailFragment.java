@@ -19,6 +19,8 @@ import ru.megazlo.apnea.component.ArcProgress;
 import ru.megazlo.apnea.component.Utils;
 import ru.megazlo.apnea.entity.*;
 import ru.megazlo.apnea.extend.TableDetailAdapter;
+import ru.megazlo.apnea.receivers.DetailFragmentReceiver;
+import ru.megazlo.apnea.receivers.EndCurrentReceiver;
 import ru.megazlo.apnea.service.ApneaService;
 
 @EFragment(R.layout.table_detail)

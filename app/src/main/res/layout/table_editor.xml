@@ -3,43 +3,82 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
-
-	<TextView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_alignParentTop="true"
-		android:text="Table name"/>
-
 	<EditText
 		android:id="@+id/edit_tab_name"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_alignParentTop="true"
-		android:inputType="text"/>
-
-	<TextView
-		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentTop="true"
-		android:text="Description"/>
+		android:hint="Table name"
+		android:inputType="text"/>
 
 	<EditText
 		android:id="@+id/edit_tab_description"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_alignParentTop="true"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/edit_tab_name"
+		android:hint="Description"
 		android:inputType="text"/>
 
-	<Button
-		android:id="@+id/btn_tab_save"
-		android:layout_width="wrap_content"
+	<LinearLayout
+		android:id="@+id/lay_contain"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:text="Add row"/>
+		android:layout_below="@id/edit_tab_description"
+		android:orientation="horizontal">
+
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight=".5"
+			android:gravity="center"
+			android:padding="2sp"
+			android:text="@string/timer_breath_lb"/>
+
+		<TextView
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight=".5"
+			android:gravity="center"
+			android:padding="2sp"
+			android:text="@string/timer_hold_lb"/>
+	</LinearLayout>
+
+	<View
+		android:id="@+id/strut"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_centerHorizontal="true"
+		android:background="@color/white"/>
 
 	<Button
 		android:id="@+id/btn_tab_addRow"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:text="Save table"/>
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentLeft="true"
+		android:layout_alignRight="@id/strut"
+		android:layout_marginRight="1sp"
+		android:background="@color/colorPrimary"
+		android:text="Add row"
+		android:textColor="@color/white"/>
+
+	<Button
+		android:id="@+id/btn_tab_save"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_alignLeft="@id/strut"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true"
+		android:layout_marginLeft="1sp"
+		android:background="@color/colorPrimary"
+		android:text="Save table"
+		android:textColor="@color/white"/>
+
+	<ListView
+		android:id="@+id/editor_table"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_above="@id/btn_tab_save"
+		android:layout_below="@id/lay_contain"
+		android:descendantFocusability="beforeDescendants"/>
 </RelativeLayout>

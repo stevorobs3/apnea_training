@@ -15,7 +15,6 @@ import org.androidannotations.annotations.EService;
 import org.androidannotations.annotations.SystemService;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,11 +23,11 @@ import ru.megazlo.apnea.component.Utils;
 import ru.megazlo.apnea.entity.RowState;
 import ru.megazlo.apnea.entity.TableApnea;
 import ru.megazlo.apnea.entity.TableApneaRow;
-import ru.megazlo.apnea.frag.DetailFragmentReceiver;
-import ru.megazlo.apnea.frag.EndCurrentReceiver;
+import ru.megazlo.apnea.receivers.DetailFragmentReceiver;
+import ru.megazlo.apnea.receivers.EndCurrentReceiver;
 import ru.megazlo.apnea.service.AlertService;
 import ru.megazlo.apnea.service.ApneaService;
-import ru.megazlo.apnea.service.ScreenReceiver;
+import ru.megazlo.apnea.receivers.ScreenOffReceiver;
 
 @EService
 public class ApneaForeService extends Service {
@@ -52,7 +51,7 @@ public class ApneaForeService extends Service {
 	private TableApnea table;
 	private TableApneaRow currentItem;
 	private List<TableApneaRow> items;
-	private ScreenReceiver receiver = new ScreenReceiver();
+	private ScreenOffReceiver receiver = new ScreenOffReceiver();
 
 	@Nullable
 	@Override

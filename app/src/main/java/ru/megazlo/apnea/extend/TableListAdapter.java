@@ -21,8 +21,8 @@ public class TableListAdapter extends ArrayAdapter<TableApnea> {
 	private final int normalColor;
 	private int selectedIndex = NO_SELECT_INDEX;
 
-	public TableListAdapter(Context context, int resource) {
-		super(context, resource);
+	public TableListAdapter(Context context) {
+		super(context, 0);
 		selectedColor = context.getResources().getColor(R.color.colorAccent);
 		normalColor = context.getResources().getColor(R.color.white);
 	}

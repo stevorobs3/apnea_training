@@ -1,7 +1,9 @@
 package ru.megazlo.apnea.frag;
 
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.*;
@@ -15,21 +17,26 @@ import ru.megazlo.apnea.entity.TableApneaRow;
 import ru.megazlo.apnea.extend.TableEditorAdapter;
 import ru.megazlo.apnea.service.ApneaService;
 
-/** Created by iGurkin on 08.09.2016. */
 @EFragment(R.layout.table_editor)
-public class TableEditorFragment extends ListFragment implements FabClickListener {
+public class TableEditorFragment extends Fragment implements FabClickListener {
 
 	@Bean
 	ApneaService apneaService;
 
+	@ViewById(R.id.editor_table)
+	ListView listView;
+
 	@AfterViews
 	void afterView() {
-		setListAdapter(new TableEditorAdapter(getActivity()));
+		final TableEditorAdapter adapter = new TableEditorAdapter(getActivity());
+		adapter.add(new TableApneaRow());
+		listView.setAdapter(adapter);
 	}
 
 	@Click(R.id.btn_tab_addRow)
 	void clickAdd() {
 		getAdapter().add(new TableApneaRow());
+		//getAdapter().notifyDataSetChanged();
 	}
 
 	void saveNewTable() {
@@ -49,7 +56,7 @@ public class TableEditorFragment extends ListFragment implements FabClickListene
 	}
 
 	private TableEditorAdapter getAdapter() {
-		return (TableEditorAdapter) getListAdapter();
+		return (TableEditorAdapter) listView.getAdapter();
 	}
 
 	@Override
@@ -58,6 +65,7 @@ public class TableEditorFragment extends ListFragment implements FabClickListene
 
 	@Override
 	public void modifyToContext(View view) {
+		view.setVisibility(View.GONE);
 	}
 
 	@Override
