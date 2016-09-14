@@ -8,7 +8,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentTop="true"
-		android:hint="Table name"
+		android:hint="@string/table_name"
 		android:inputType="text"/>
 
 	<EditText
@@ -16,7 +16,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_below="@id/edit_tab_name"
-		android:hint="Description"
+		android:hint="@string/tab_description"
 		android:inputType="text"/>
 
 	<LinearLayout
@@ -59,7 +59,7 @@
 		android:layout_alignRight="@id/strut"
 		android:layout_marginRight="1sp"
 		android:background="@color/colorPrimary"
-		android:text="Add row"
+		android:text="@string/add_row"
 		android:textColor="@color/white"/>
 
 	<Button
@@ -71,7 +71,7 @@
 		android:layout_alignParentRight="true"
 		android:layout_marginLeft="1sp"
 		android:background="@color/colorPrimary"
-		android:text="Save table"
+		android:text="@string/save_table"
 		android:textColor="@color/white"/>
 
 	<ListView

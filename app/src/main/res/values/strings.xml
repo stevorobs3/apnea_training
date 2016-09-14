@@ -100,4 +100,10 @@
 	<string name="dlg_new_rec">Are you new record?</string>
 	<string name="coming_soon" translatable="false">Coming soon</string>
 
+	<string name="add_row">Add row</string>
+	<string name="save_table">Save table</string>
+	<string name="table_name">Table name</string>
+	<string name="tab_description">Description</string>
+	<string name="err_tab_save">Error save table</string>
+
 </resources>

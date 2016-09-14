@@ -4,8 +4,7 @@ import android.app.Fragment;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 
 import org.androidannotations.annotations.*;
 
@@ -53,6 +52,8 @@ public class TableEditorFragment extends Fragment implements FabClickListener {
 		if (saveNewTable) {
 			Intent tb = new Intent(ChangeFragmentReceiver.ACTION_FRAGMENT).putExtra(ChangeFragmentReceiver.KEY_FRAG, ChangeFragmentReceiver.KEY_LIST);
 			getActivity().sendBroadcast(tb);
+		} else {
+			Toast.makeText(getActivity(), R.string.err_tab_save, Toast.LENGTH_SHORT).show();
 		}
 	}
 

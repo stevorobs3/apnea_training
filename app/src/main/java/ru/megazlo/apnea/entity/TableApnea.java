@@ -24,7 +24,7 @@ public class TableApnea implements Serializable {
 	private boolean allowEdit;
 
 	@DatabaseField(canBeNull = false, columnName = "color")
-	private int color;
+	private int color = 0xff0e71ae;
 
 	@DatabaseField(canBeNull = false, columnName = "title")
 	private String title;
