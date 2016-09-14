@@ -5,6 +5,7 @@ Program for apnea training freediving
 
 [Link to Google Play](https://play.google.com/store/apps/details?id=ru.megazlo.apnea)
 
+![](https://lh3.googleusercontent.com/2IBmaehlLKCH-DyUhfqsl4Khl8BVDkjVkxOuS1u2p0OORoYYb2eZbBoXI_tCyD5vyHc=h310-rw)
 ![](https://lh3.googleusercontent.com/pp6bgMP80CNF9o6YZCNJM9n_nV8qJBA6jZb2n73CE616SwqqHDGgz0jXAvHpqUcxobi8=h310-rw)
 ![](https://lh3.googleusercontent.com/PMy7DigqLAGKMLD9s0ILPrV9tnEzvPc0CUmp43KL-timQHJdWh9EauFlyGcYRD-6LMo=h310-rw)
 
