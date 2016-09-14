@@ -1,5 +1,8 @@
-# apnea training
-Programm for apnea training freediving
+### Apnea training
+Program for apnea training freediving
+
+![Logo](https://lh3.googleusercontent.com/xH17kxOc58sOw8C4iO9XOWGUtcnibeGfvzVxuAPYqrvBwCExeW7A_jTcQLlyVEhU0S0=w300-rw)
+[Google Play](https://play.google.com/store/apps/details?id=ru.megazlo.apnea)
 
 Copyright (c) <year> <copyright holders>
 
