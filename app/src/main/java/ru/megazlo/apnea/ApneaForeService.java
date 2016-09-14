@@ -169,10 +169,9 @@ public class ApneaForeService extends Service {
 	}
 
 	private void updateNotificationUi() {
-		PendingIntent pi = getPendingIntent(this.getClass());
 		final int currMax = getCurrentMax();
 		final String arg = Utils.formatMS(currMax - progress);
-		builder.setProgress(currMax, currMax - progress, false)/*.setContentIntent(pi)*/;
+		builder.setProgress(currMax, currMax - progress, false)/*.setContentIntent(getPendingIntent(this.getClass()))*/;
 		if (currentItem.getState() == RowState.BREATHE) {
 			builder.setContentText(getString(R.string.notif_breathe, arg));
 		} else if (currentItem.getState() == RowState.HOLD) {

@@ -72,6 +72,7 @@ public class TableListFragment extends ListFragment implements FabClickListener,
 		TableApnea tb = getAdapter().getItem(getAdapter().getSelectedIndex());
 		apneaService.deleteTableById(tb.getId());
 		getAdapter().remove(tb);
+		getAdapter().resetSelection();
 		FloatingActionButton fab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
 		fab.setImageResource(R.drawable.ic_add_plus);
 	}
