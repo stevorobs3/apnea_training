@@ -127,7 +127,7 @@ public class ApneaService {
 		return userTables;
 	}
 
-	public void saveNewTable(TableApnea table, List<TableApneaRow> rows) {
+	public boolean saveNewTable(TableApnea table, List<TableApneaRow> rows) {
 		try {
 			tableDao.create(table);
 			int order = 0;
@@ -136,8 +136,10 @@ public class ApneaService {
 				r.setOrder(order++);
 			}
 			rowDao.create(rows);
+			return true;
 		} catch (SQLException ignored) {
 			Log.w("ApneaService", "Can`t create table with rows");
+			return false;
 		}
 	}
 

@@ -2,6 +2,7 @@ package ru.megazlo.apnea.frag;
 
 import android.app.Fragment;
 import android.app.ListFragment;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import ru.megazlo.apnea.R;
 import ru.megazlo.apnea.entity.TableApnea;
 import ru.megazlo.apnea.entity.TableApneaRow;
 import ru.megazlo.apnea.extend.TableEditorAdapter;
+import ru.megazlo.apnea.receivers.ChangeFragmentReceiver;
 import ru.megazlo.apnea.service.ApneaService;
 
 @EFragment(R.layout.table_editor)
@@ -25,6 +27,10 @@ public class TableEditorFragment extends Fragment implements FabClickListener {
 
 	@ViewById(R.id.editor_table)
 	ListView listView;
+	@ViewById(R.id.edit_tab_name)
+	TextView vName;
+	@ViewById(R.id.edit_tab_description)
+	TextView vDescr;
 
 	@AfterViews
 	void afterView() {
@@ -36,23 +42,18 @@ public class TableEditorFragment extends Fragment implements FabClickListener {
 	@Click(R.id.btn_tab_addRow)
 	void clickAdd() {
 		getAdapter().add(new TableApneaRow());
-		//getAdapter().notifyDataSetChanged();
 	}
 
+	@Click(R.id.btn_tab_save)
 	void saveNewTable() {
-		final TextView vName = (TextView) getActivity().findViewById(R.id.edit_tab_name);
-		final TextView vDescr = (TextView) getActivity().findViewById(R.id.edit_tab_description);
 		TableApnea t = new TableApnea();
 		t.setTitle(vName.getText().toString());
 		t.setDescription(vDescr.getText().toString());
-
-		final TableEditorAdapter adp = getAdapter();
-		List<TableApneaRow> rows = new ArrayList<>(adp.getCount());
-		for (int i = 0; i < adp.getCount(); i++) {
-			TableApneaRow r = adp.getItem(i);
-			rows.add(r);
+		final boolean saveNewTable = apneaService.saveNewTable(t, getAdapter().getAllItems());
+		if (saveNewTable) {
+			Intent tb = new Intent(ChangeFragmentReceiver.ACTION_FRAGMENT).putExtra(ChangeFragmentReceiver.KEY_FRAG, ChangeFragmentReceiver.KEY_LIST);
+			getActivity().sendBroadcast(tb);
 		}
-		apneaService.saveNewTable(t, rows);
 	}
 
 	private TableEditorAdapter getAdapter() {

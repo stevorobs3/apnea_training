@@ -6,6 +6,9 @@ import android.text.TextWatcher;
 import android.view.*;
 import android.widget.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ru.megazlo.apnea.R;
 import ru.megazlo.apnea.component.Utils;
 import ru.megazlo.apnea.entity.TableApneaRow;
@@ -27,43 +30,36 @@ public class TableEditorAdapter extends ArrayAdapter<TableApneaRow> {
 			holder.hold = (EditText) v.findViewById(R.id.ed_time_hold);
 			holder.imgDelete = (ImageView) v.findViewById(R.id.ed_img_delete);
 			v.setTag(holder);
+
+			holder.breathe.addTextChangedListener(new TextWatcherSimple(holder.breathe) {
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					ViewHolder vh = (ViewHolder) ((RelativeLayout) ed.getParent()).getTag();
+					if (vh.pos < getCount()) {
+						getItem(vh.pos).setBreathe(Integer.parseInt(ed.getText().toString()));
+					}
+				}
+			});
+			holder.hold.addTextChangedListener(new TextWatcherSimple(holder.hold) {
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					ViewHolder vh = (ViewHolder) ((RelativeLayout) ed.getParent()).getTag();
+					if (vh.pos < getCount()) {
+						getItem(vh.pos).setHold(Integer.parseInt(ed.getText().toString()));
+					}
+				}
+			});
+			holder.imgDelete.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					ViewHolder vh = (ViewHolder) ((RelativeLayout) v.getParent()).getTag();
+					TableEditorAdapter.this.remove(getItem(vh.pos));
+				}
+			});
 		} else {
 			holder = (ViewHolder) v.getTag();
 		}
 		holder.pos = position;
-
-		holder.breathe.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (!hasFocus) {
-					ViewHolder vh = (ViewHolder) ((RelativeLayout) v.getParent()).getTag();
-					if (vh.pos < getCount()) {
-						final EditText et = (EditText) v;
-						getItem(vh.pos).setBreathe(Integer.parseInt(et.getText().toString()));
-					}
-				}
-			}
-		});
-
-		holder.hold.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (!hasFocus) {
-					ViewHolder vh = (ViewHolder) ((RelativeLayout) v.getParent()).getTag();
-					if (vh.pos < getCount()) {
-						final EditText et = (EditText) v;
-						getItem(vh.pos).setHold(Integer.parseInt(et.getText().toString()));
-					}
-				}
-			}
-		});
-		holder.imgDelete.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ViewHolder vh = (ViewHolder) ((RelativeLayout) v.getParent()).getTag();
-				TableEditorAdapter.this.remove(getItem(vh.pos));
-			}
-		});
 
 		TableApneaRow item = this.getItem(position);
 		holder.breathe.setText(Integer.toString(item.getBreathe()));
@@ -71,7 +67,33 @@ public class TableEditorAdapter extends ArrayAdapter<TableApneaRow> {
 		return v;
 	}
 
-	private class ViewHolder {
+	public List<TableApneaRow> getAllItems() {
+		List<TableApneaRow> rez = new ArrayList<>(getCount());
+		for (int i = 0; i < getCount(); i++) {
+			TableApneaRow r = getItem(i);
+			rez.add(r);
+		}
+		return rez;
+	}
+
+	private abstract class TextWatcherSimple implements TextWatcher {
+
+		protected final EditText ed;
+
+		public TextWatcherSimple(View v) {
+			this.ed = (EditText) v;
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+		}
+	}
+
+	private static class ViewHolder {
 		int pos;
 		EditText breathe;
 		EditText hold;

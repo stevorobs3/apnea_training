@@ -38,5 +38,4 @@ public class TableApnea implements Serializable {
 	public TableApnea(Integer id) {
 		this.id = id;
 	}
-
 }

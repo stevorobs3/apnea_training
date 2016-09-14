@@ -3,7 +3,7 @@ apply plugin: 'android-apt'
 
 def aa_ver = '4.1.0'
 def lom_ver = '1.16.10'
-def compat_ver = '24.2.0'
+def compat_ver = '24.2.1'
 def ormLite_ver = '5.0'
 
 repositories {

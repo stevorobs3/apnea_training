@@ -20,4 +20,6 @@
 
 	<color name="arc_finished">#039e00</color>
 	<color name="arc_unfinished">#a5ffa3</color>
+
+	<color name="red">#ff4444</color>
 </resources>

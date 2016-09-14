@@ -153,6 +153,8 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 			} else if (ChangeFragmentReceiver.KEY_EDIT.equals(fragName)) {
 				TableEditorFragment_ fragment = new TableEditorFragment_();
 				setFragment(fragment);
+			} else if (ChangeFragmentReceiver.KEY_LIST.equals(fragName)) {
+				setFragment(tabList);
 			}
 		}
 	};
