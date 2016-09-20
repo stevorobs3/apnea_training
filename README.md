@@ -5,6 +5,8 @@ Program for apnea training freediving
 
 [Link to Google Play](https://play.google.com/store/apps/details?id=ru.megazlo.apnea)
 
+[PayPal donation link for cardio belt](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9U6ZVN9KQAXCC)
+
 ##### Task list
 - [x] add user tables
 - [ ] edit exist tables
@@ -15,6 +17,8 @@ Program for apnea training freediving
 ![](https://lh3.googleusercontent.com/2IBmaehlLKCH-DyUhfqsl4Khl8BVDkjVkxOuS1u2p0OORoYYb2eZbBoXI_tCyD5vyHc=h310-rw)
 ![](https://lh3.googleusercontent.com/pp6bgMP80CNF9o6YZCNJM9n_nV8qJBA6jZb2n73CE616SwqqHDGgz0jXAvHpqUcxobi8=h310-rw)
 ![](https://lh3.googleusercontent.com/PMy7DigqLAGKMLD9s0ILPrV9tnEzvPc0CUmp43KL-timQHJdWh9EauFlyGcYRD-6LMo=h310-rw)
+
+The MIT License (MIT)
 
 Copyright (c) 2016 Ivan Gurkin
 
