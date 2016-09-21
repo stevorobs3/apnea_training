@@ -2,6 +2,7 @@ package ru.megazlo.apnea.service;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.DeleteBuilder;
@@ -33,14 +34,14 @@ public class ApneaService {
 	ApneaPrefs_ pref;
 
 	@OrmLiteDao(helper = DatabaseHelper.class)
-	protected Dao<TableApnea, Integer> tableDao;
+	Dao<TableApnea, Integer> tableDao;
 	@OrmLiteDao(helper = DatabaseHelper.class)
-	protected Dao<TableApneaRow, Integer> rowDao;
+	Dao<TableApneaRow, Integer> rowDao;
 
 	public List<TableApneaRow> getRowsForTable(TableApnea table) {
-		if (table.getId() == ID_O2) {
+		if (table.getId() == ID_O2 && validateO2Settings()) {
 			return createOxygenSeries();
-		} else if (table.getId() == ID_CO2) {
+		} else if (table.getId() == ID_CO2 && validateCO2Settings()) {
 			return createCarbonSeries();
 		}
 		return loadDbSeries(table.getId());
@@ -99,6 +100,31 @@ public class ApneaService {
 
 		correctSeries(rez);
 		return rez;
+	}
+
+	private boolean validateO2Settings() {
+		int breTime = Utils.getTotalSeconds(pref.o2Timeout().get());
+		int holTimeStart = Utils.getTotalSeconds(pref.o2StartTime().get());
+		int holTimeEnd = Utils.getTotalSeconds(pref.o2EndTime().get());
+		int increaseSec = pref.o2IncreaseTime().get();
+		if (breTime == 0 || increaseSec == 0 || holTimeStart >= holTimeEnd) {
+			Toast.makeText(context, "Invalid O2 settings", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		return true;
+	}
+
+	private boolean validateCO2Settings() {
+		int myMax = Utils.getTotalSeconds(pref.bestRecord().get());
+		int hold = (int) (myMax * pref.co2Percent().get() / 100.0);
+		int breTimeStart = Utils.getTotalSeconds(pref.co2StartTime().get());
+		int breTimeEnd = Utils.getTotalSeconds(pref.co2EndTime().get());
+		int reduceSec = pref.co2Reduce().get();
+		if (hold == 0 || reduceSec == 0 || breTimeStart < breTimeEnd) {
+			Toast.makeText(context, "Invalid CO2 settings", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		return true;
 	}
 
 	private void correctSeries(List<TableApneaRow> rows) {

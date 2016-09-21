@@ -72,7 +72,7 @@ public class ApneaForeService extends Service {
 		startForeground(ONGOING_NOTIFICATION_ID, builder.getNotification());
 
 		if (table == null) {
-			return -1;
+			return START_NOT_STICKY;
 			//throw new RuntimeException("not found table id");
 		}
 		items = apneaService.getRowsForTable(table);

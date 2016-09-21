@@ -1,6 +1,7 @@
 package ru.megazlo.apnea.extend;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.*;
@@ -20,6 +21,7 @@ public class TableEditorAdapter extends ArrayAdapter<TableApneaRow> {
 		super(context, R.layout.table_editor_row);
 	}
 
+	@NonNull
 	@Override
 	public View getView(final int position, View v, ViewGroup parent) {
 		ViewHolder holder;
@@ -62,8 +64,8 @@ public class TableEditorAdapter extends ArrayAdapter<TableApneaRow> {
 		holder.pos = position;
 
 		TableApneaRow item = this.getItem(position);
-		holder.breathe.setText(Integer.toString(item.getBreathe()));
-		holder.hold.setText(Integer.toString(item.getHold()));
+		holder.breathe.setText(String.valueOf(item.getBreathe()));
+		holder.hold.setText(String.valueOf(item.getHold()));
 		return v;
 	}
 
@@ -78,9 +80,9 @@ public class TableEditorAdapter extends ArrayAdapter<TableApneaRow> {
 
 	private abstract class TextWatcherSimple implements TextWatcher {
 
-		protected final EditText ed;
+		final EditText ed;
 
-		public TextWatcherSimple(View v) {
+		TextWatcherSimple(View v) {
 			this.ed = (EditText) v;
 		}
 

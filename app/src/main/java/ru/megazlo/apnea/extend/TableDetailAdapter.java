@@ -1,6 +1,7 @@
 package ru.megazlo.apnea.extend;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class TableDetailAdapter extends ArrayAdapter<TableApneaRow> {
         super(context, R.layout.table_detail_row);
     }
 
+    @NonNull
     @Override
     public View getView(int position, View cView, ViewGroup parent) {
         ViewHolder holder;
