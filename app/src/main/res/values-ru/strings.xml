@@ -83,4 +83,7 @@
 	<string name="table_name">Название таблицы</string>
 	<string name="tab_description">Описание</string>
 	<string name="err_tab_save">Ошибка сохранения таблицы</string>
+
+	<string name="valid_o2_simple">Противоречия в настройках O2</string>
+	<string name="valid_co2_simple">Противоречия в настройках CO2</string>
 </resources>

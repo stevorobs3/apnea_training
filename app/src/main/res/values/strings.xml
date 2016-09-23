@@ -106,4 +106,6 @@
 	<string name="tab_description">Description</string>
 	<string name="err_tab_save">Error save table</string>
 
+	<string name="valid_o2_simple">Invalid O2 settings</string>
+	<string name="valid_co2_simple">Invalid CO2 settings</string>
 </resources>

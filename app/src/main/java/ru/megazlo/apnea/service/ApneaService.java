@@ -108,7 +108,7 @@ public class ApneaService {
 		int holTimeEnd = Utils.getTotalSeconds(pref.o2EndTime().get());
 		int increaseSec = pref.o2IncreaseTime().get();
 		if (breTime == 0 || increaseSec == 0 || holTimeStart >= holTimeEnd) {
-			Toast.makeText(context, "Invalid O2 settings", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.valid_o2_simple, Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		return true;
@@ -121,7 +121,7 @@ public class ApneaService {
 		int breTimeEnd = Utils.getTotalSeconds(pref.co2EndTime().get());
 		int reduceSec = pref.co2Reduce().get();
 		if (hold == 0 || reduceSec == 0 || breTimeStart < breTimeEnd) {
-			Toast.makeText(context, "Invalid CO2 settings", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.valid_co2_simple, Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		return true;
