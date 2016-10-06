@@ -9,6 +9,7 @@ def ormLite_ver = '5.0'
 repositories {
 	mavenCentral()
 	mavenLocal()
+	maven { url "https://jitpack.io" }
 }
 
 buildscript {
@@ -37,8 +38,8 @@ android {
 		applicationId "ru.megazlo.apnea"
 		minSdkVersion 14
 		targetSdkVersion 24
-		versionCode 7
-		versionName '1.0 rc3'
+		versionCode 8
+		versionName '2.0 preview'
 	}
 	compileOptions {
 		sourceCompatibility JavaVersion.VERSION_1_7
@@ -51,7 +52,6 @@ android {
 dependencies {
 	compile fileTree(include: ['*.jar'], dir: 'libs')
 	testCompile 'junit:junit:4.12'
-	compile "com.android.support:appcompat-v7:$compat_ver"
 	compile "com.android.support:design:$compat_ver"
 	apt "org.androidannotations:androidannotations:$aa_ver"
 	compile "org.androidannotations:androidannotations-api:$aa_ver"
@@ -63,5 +63,5 @@ dependencies {
 	//compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
 	provided "org.projectlombok:lombok:$lom_ver"
 	apt "org.projectlombok:lombok:$lom_ver"
-	compile "com.android.support:support-v4:$aa_ver"
+	compile "com.github.PhilJay:MPAndroidChart:v3.0.0-beta1"
 }

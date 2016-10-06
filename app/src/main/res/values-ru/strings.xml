@@ -5,9 +5,9 @@
 	<string name="action_settings">Настройки</string>
 	<string name="nav_title_tables">Таблицы</string>
 	<string name="nav_title_settings">Настройки</string>
-	<string name="nav_title_info">Руководство</string>
+	<string name="nav_title_info">Информация</string>
 	<string name="nav_title_record">Лучшее время</string>
-	<string name="nav_title_about">О программе</string>
+	<string name="nav_title_spo">Журнал</string>
 	<string name="pref_notify_cat">Оповещения</string>
 	<string name="def_tab_title_co2">Гиперкапническая CO2</string>
 	<string name="def_tab_title_o2">Гипоксическая O2</string>
@@ -86,4 +86,7 @@
 
 	<string name="valid_o2_simple">Противоречия в настройках O2</string>
 	<string name="valid_co2_simple">Противоречия в настройках CO2</string>
+
+	<string name="coming_soon_oxy">Совсем скоро</string>
+	<string name="spo_soon">Скоро (ноябрь/декабрь 2016)!\r\nЖурнал и графики SpO2 и пульса.\r\nТебуется:\r\n• bluetooth 4.0\r\n• оксиметр JPD-500F\r\n• android 4.3</string>
 </resources>

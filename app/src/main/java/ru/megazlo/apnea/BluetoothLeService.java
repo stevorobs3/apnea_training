@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import java.util.UUID;
 
 /** Created by iGurkin on 04.10.2016. */
-
 public class BluetoothLeService extends Service {
 	private final static String TAG = BluetoothLeService.class.getSimpleName();
 

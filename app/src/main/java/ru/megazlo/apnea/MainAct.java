@@ -119,8 +119,9 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 			setFragment(new SettingsFragment_());
 		} else if (id == R.id.nav_info) {
 			setFragment(new InfoFragment_().setResRawId(R.raw.info));
-		} else if (id == R.id.nav_about) {
-			setFragment(new InfoFragment_().setResRawId(R.raw.about));
+		} else if (id == R.id.nav_graphs) {
+			dialogOxySoon();
+			//setFragment();
 		} else if (id == R.id.nav_record) {
 			setFragment(new RecordFragment_());
 		} else if (id == R.id.nav_tables) {
@@ -130,6 +131,18 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 		drawer.closeDrawer(GravityCompat.START);
 		ApneaBackupHelper.requestBackup(this);// бэкапим если надо
 		return true;
+	}
+
+	private void dialogOxySoon() {
+		AlertDialog.Builder b = new AlertDialog.Builder(this);
+		b.setView(getLayoutInflater().inflate(R.layout.dialog_oxi, null)).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		b.setTitle(R.string.coming_soon_oxy);
+		b.create().show();
 	}
 
 	public Fragment getVisibleFragment() {
