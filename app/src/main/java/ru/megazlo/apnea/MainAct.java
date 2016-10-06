@@ -133,7 +133,8 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 		return true;
 	}
 
-	private void dialogOxySoon() {
+	@UiThread(delay = 300)
+	void dialogOxySoon() {
 		AlertDialog.Builder b = new AlertDialog.Builder(this);
 		b.setView(getLayoutInflater().inflate(R.layout.dialog_oxi, null)).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 			@Override
