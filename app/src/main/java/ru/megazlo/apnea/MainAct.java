@@ -135,15 +135,13 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 
 	@UiThread(delay = 300)
 	void dialogOxySoon() {
-		AlertDialog.Builder b = new AlertDialog.Builder(this);
-		b.setView(getLayoutInflater().inflate(R.layout.dialog_oxi, null)).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+		new AlertDialog.Builder(this)
+		.setView(getLayoutInflater().inflate(R.layout.dialog_oxi, null)).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
 			}
-		});
-		b.setTitle(R.string.coming_soon_oxy);
-		b.create().show();
+		}).create().show();
 	}
 
 	public Fragment getVisibleFragment() {

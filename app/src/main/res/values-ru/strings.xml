@@ -88,5 +88,5 @@
 	<string name="valid_co2_simple">Противоречия в настройках CO2</string>
 
 	<string name="coming_soon_oxy">Совсем скоро</string>
-	<string name="spo_soon">Скоро (ноябрь/декабрь 2016)!\r\nЖурнал и графики SpO2 и пульса.\r\nТебуется:\r\n• bluetooth 4.0\r\n• оксиметр JPD-500F\r\n• android 4.3</string>
+	<string name="spo_soon">Скоро (ноябрь/декабрь 2016)!\r\nЖурнал и графики SpO2 и пульса.\r\Системные требования:\r\n• bluetooth 4.0\r\n• оксиметр JPD-500F\r\n• android 4.3</string>
 </resources>
