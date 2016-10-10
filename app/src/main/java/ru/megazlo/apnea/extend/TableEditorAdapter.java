@@ -38,7 +38,8 @@ public class TableEditorAdapter extends ArrayAdapter<TableApneaRow> {
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
 					ViewHolder vh = (ViewHolder) ((RelativeLayout) ed.getParent()).getTag();
 					if (vh.pos < getCount()) {
-						getItem(vh.pos).setBreathe(Integer.parseInt(ed.getText().toString()));
+						int seconds = getStringSeconds(ed.getText().toString());
+						getItem(vh.pos).setBreathe(seconds);
 					}
 				}
 			});
@@ -47,7 +48,8 @@ public class TableEditorAdapter extends ArrayAdapter<TableApneaRow> {
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
 					ViewHolder vh = (ViewHolder) ((RelativeLayout) ed.getParent()).getTag();
 					if (vh.pos < getCount()) {
-						getItem(vh.pos).setHold(Integer.parseInt(ed.getText().toString()));
+						int seconds = getStringSeconds(ed.getText().toString());
+						getItem(vh.pos).setHold(seconds);
 					}
 				}
 			});
@@ -67,6 +69,18 @@ public class TableEditorAdapter extends ArrayAdapter<TableApneaRow> {
 		holder.breathe.setText(String.valueOf(item.getBreathe()));
 		holder.hold.setText(String.valueOf(item.getHold()));
 		return v;
+	}
+
+	private int getStringSeconds(String str) {
+		int seconds = 0;
+		if (str.length() > 0) {
+			try {
+				seconds = Integer.parseInt(str.replace(',', '.'));
+			} catch (NumberFormatException e) {
+				Toast.makeText(getContext(), R.string.invalid_num_format, Toast.LENGTH_SHORT).show();
+			}
+		}
+		return seconds;
 	}
 
 	public List<TableApneaRow> getAllItems() {

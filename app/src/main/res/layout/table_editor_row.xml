@@ -20,8 +20,8 @@
 		android:layout_toLeftOf="@id/ed_delim"
 		android:gravity="center"
 		android:inputType="number"
-		android:textSize="18sp">
-	</EditText>
+		android:maxLength="3"
+		android:textSize="18sp"/>
 
 	<ImageView
 		android:id="@+id/ed_img_delete"
@@ -30,8 +30,8 @@
 		android:layout_alignParentRight="true"
 		android:layout_centerVertical="true"
 		android:contentDescription="@string/app_name"
-		android:tint="@color/red"
-		android:src="@drawable/ic_delete"/>
+		android:src="@drawable/ic_delete"
+		android:tint="@color/red"/>
 
 	<EditText
 		android:id="@+id/ed_time_hold"
@@ -42,6 +42,7 @@
 		android:layout_toRightOf="@id/ed_delim"
 		android:gravity="center"
 		android:inputType="number"
+		android:maxLength="3"
 		android:textSize="18sp"/>
 
 </RelativeLayout>

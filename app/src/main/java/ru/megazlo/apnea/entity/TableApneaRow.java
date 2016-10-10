@@ -20,10 +20,10 @@ public class TableApneaRow {
 	private Integer order;
 
 	@DatabaseField(canBeNull = false, columnName = "breathe_sec")
-	private int breathe;
+	private int breathe = 0;
 
 	@DatabaseField(canBeNull = false, columnName = "hold_sec")
-	private int hold;
+	private int hold = 0;
 
 	@DatabaseField(canBeNull = false, columnName = "table_id")
 	private Integer table;

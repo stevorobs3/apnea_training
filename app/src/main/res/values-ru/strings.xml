@@ -89,4 +89,5 @@
 
 	<string name="coming_soon_oxy">Совсем скоро</string>
 	<string name="spo_soon">Скоро (ноябрь/декабрь 2016)!\r\nЖурнал и графики SpO2 и пульса.\r\Системные требования:\r\n• bluetooth 4.0\r\n• оксиметр JPD-500F\r\n• android 4.3</string>
+	<string name="invalid_num_format">Неверный формат числа, должно быть общее количество секунд</string>
 </resources>
