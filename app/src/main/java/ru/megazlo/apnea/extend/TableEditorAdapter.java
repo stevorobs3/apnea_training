@@ -23,7 +23,7 @@ public class TableEditorAdapter extends ArrayAdapter<TableApneaRow> {
 
 	@NonNull
 	@Override
-	public View getView(final int position, View v, ViewGroup parent) {
+	public View getView(final int position, View v, @NonNull ViewGroup parent) {
 		ViewHolder holder;
 		if (v == null) {
 			holder = new ViewHolder();

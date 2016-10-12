@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +28,9 @@ public class TableListAdapter extends ArrayAdapter<TableApnea> {
 		normalColor = context.getResources().getColor(R.color.white);
 	}
 
+	@NonNull
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
 			holder = new ViewHolder();

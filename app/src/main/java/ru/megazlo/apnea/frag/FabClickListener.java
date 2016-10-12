@@ -9,7 +9,7 @@ public interface FabClickListener extends BackPressHandler {
     void clickByContext(View view);
 
     /**
-     * Подстройка плавающей кнопки под контекст приложения и окружения
+     * Подстройка контекста приложения и окружения
      */
     void modifyToContext(View view);
 }

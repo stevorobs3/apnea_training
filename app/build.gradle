@@ -9,7 +9,7 @@ def ormLite_ver = '5.0'
 repositories {
 	mavenCentral()
 	mavenLocal()
-	maven { url "https://jitpack.io" }
+	//maven { url "https://jitpack.io" }
 }
 
 buildscript {
@@ -38,7 +38,7 @@ android {
 		applicationId "ru.megazlo.apnea"
 		minSdkVersion 14
 		targetSdkVersion 24
-		versionCode 9
+		versionCode 10
 		versionName '2.0 preview'
 	}
 	compileOptions {
@@ -63,5 +63,6 @@ dependencies {
 	//compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
 	provided "org.projectlombok:lombok:$lom_ver"
 	apt "org.projectlombok:lombok:$lom_ver"
-	compile "com.github.PhilJay:MPAndroidChart:v3.0.0-beta1"
+	/*compile "com.github.PhilJay:MPAndroidChart:v3.0.0-beta1"*/
+	compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
 }
