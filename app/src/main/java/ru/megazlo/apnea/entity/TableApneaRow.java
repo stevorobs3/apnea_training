@@ -9,12 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @DatabaseTable(tableName = "table_apnea_row")
-public class TableApneaRow {
+public class TableApneaRow  extends AbstractEntity {
 
 	private RowState state = RowState.NONE;
-
-	@DatabaseField(generatedId = true)
-	private Integer id;
 
 	@DatabaseField(canBeNull = false, columnName = "row_order")
 	private Integer order;

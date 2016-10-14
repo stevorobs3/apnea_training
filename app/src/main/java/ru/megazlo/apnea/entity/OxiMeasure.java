@@ -11,10 +11,8 @@ import lombok.Setter;
 /** Created by iGurkin on 10.10.2016. */
 @Getter
 @Setter
-@DatabaseTable(tableName = "table_apnea")
-public class OxiMeasure implements Serializable {
-	@DatabaseField(generatedId = true)
-	private Integer id;
+@DatabaseTable(tableName = "table_oxy_measure")
+public class OxiMeasure  extends AbstractEntity {
 
 	@DatabaseField(canBeNull = false, columnName = "series")
 	private int seriesId;

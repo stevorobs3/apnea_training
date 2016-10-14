@@ -192,4 +192,10 @@ public class ApneaService {
 			Log.w("ApneaService", "Can`t delete table with id " + id);
 		}
 	}
+
+	public List<OxiSession> loadAllSessions() {
+		final ArrayList<OxiSession> rez = new ArrayList<>();
+		rez.add(new OxiSession());
+		return rez;
+	}
 }

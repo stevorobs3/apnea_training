@@ -3,6 +3,7 @@ package ru.megazlo.apnea;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.*;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -54,13 +55,6 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 		toggle.syncState();
 		navigationView.setNavigationItemSelectedListener(this);
 		setFragment(tabList);
-		registerReceiver(fragReceiver, new IntentFilter(ChangeFragmentReceiver.ACTION_FRAGMENT));
-	}
-
-	@Override
-	protected void onDestroy() {
-		unregisterReceiver(fragReceiver);
-		super.onDestroy();
 	}
 
 	@Override
@@ -120,6 +114,7 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 		} else if (id == R.id.nav_info) {
 			setFragment(new InfoFragment_().setResRawId(R.raw.info));
 		} else if (id == R.id.nav_graphs) {
+			setFragment(new ChartListFragment_());
 			dialogOxySoon();
 			//setFragment();
 		} else if (id == R.id.nav_record) {
@@ -151,23 +146,25 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 	public void setFragment(Fragment fragment) {
 		FabClickListener listener = (FabClickListener) fragment;
 		listener.modifyToContext(fab);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		getFragmentManager().beginTransaction().replace(R.id.main_content, fragment, FRAGMENT_TAG).commit();
 	}
 
-	private ChangeFragmentReceiver fragReceiver = new ChangeFragmentReceiver() {
-		@Override
-		public void onReceive(Context context, Intent i) {
-			final String fragName = i.getStringExtra(ChangeFragmentReceiver.KEY_FRAG);
-			if (ChangeFragmentReceiver.KEY_DETAIL.equals(fragName)) {
-				TableDetailFragment_ fragment = new TableDetailFragment_();
-				fragment.setTableApnea((TableApnea) i.getSerializableExtra(ChangeFragmentReceiver.KEY_TABLE));
-				setFragment(fragment);
-			} else if (ChangeFragmentReceiver.KEY_EDIT.equals(fragName)) {
-				TableEditorFragment_ fragment = new TableEditorFragment_();
-				setFragment(fragment);
-			} else if (ChangeFragmentReceiver.KEY_LIST.equals(fragName)) {
-				setFragment(tabList);
-			}
+	@Receiver(actions = ChangeFragmentReceiver.ACTION_FRAGMENT)
+	void changeFragment(Intent i) {
+		final String fragName = i.getStringExtra(ChangeFragmentReceiver.KEY_FRAG);
+		if (ChangeFragmentReceiver.KEY_DETAIL.equals(fragName)) {
+			TableDetailFragment_ fragment = new TableDetailFragment_();
+			fragment.setTableApnea((TableApnea) i.getSerializableExtra(ChangeFragmentReceiver.KEY_TABLE));
+			setFragment(fragment);
+		} else if (ChangeFragmentReceiver.KEY_EDIT.equals(fragName)) {
+			TableEditorFragment_ fragment = new TableEditorFragment_();
+			setFragment(fragment);
+		} else if (ChangeFragmentReceiver.KEY_LIST.equals(fragName)) {
+			setFragment(tabList);
+		} else if (ChangeFragmentReceiver.KEY_OXI_VIEW.equals(fragName)) {
+			ChartFragment_ chart = new ChartFragment_();
+			setFragment(chart);
 		}
-	};
+	}
 }

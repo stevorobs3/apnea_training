@@ -41,9 +41,6 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 	@ViewById(R.id.list_row)
 	ListView listView;
 
-	/*@ViewById(R.id.fab_discard)
-	FloatingActionButton fabDiscard;*/
-
 	private List<TableApneaRow> rows;
 
 	private void updateViews(int max, int progress, int row, RowState state) {
@@ -74,13 +71,6 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 		updateTotalTime();
 		int iconRes = isMyServiceRunning(ApneaForeService_.class) ? R.drawable.ic_stop : R.drawable.ic_play;
 		((FloatingActionButton) getActivity().findViewById(R.id.fab)).setImageResource(iconRes);
-		getActivity().registerReceiver(detailFragmentReceiver, new IntentFilter(DetailFragmentReceiver.ACTION_UPDATER));
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		getActivity().unregisterReceiver(detailFragmentReceiver);
 	}
 
 	@Click(R.id.fab_discard)
@@ -142,25 +132,23 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 		return true;
 	}
 
-	private DetailFragmentReceiver detailFragmentReceiver = new DetailFragmentReceiver() {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			boolean ended = intent.getBooleanExtra(KEY_ENDED, false);
-			if (ended) {
-				updateTotalTime();
-				((FloatingActionButton) getActivity().findViewById(R.id.fab)).setImageResource(R.drawable.ic_play);
-				return;
-			}
-			int max = intent.getIntExtra(KEY_MAX, -1);
-			int progress = intent.getIntExtra(KEY_PROGRESS, -1);
-			int row = intent.getIntExtra(KEY_ROW, -1);
-			RowState state = (RowState) intent.getSerializableExtra(KEY_ROW_TYPE);
-			final int tabId = intent.getIntExtra(KEY_ID, -100);
-			if (tableApnea.getId() != tabId) {
-				Log.i("TableDetailFragment", "need restart service with new parameters");
-			} else if (rows != null && rows.size() > 0) {
-				updateViews(max, progress, row, state);
-			}
+	@Receiver(actions = DetailFragmentReceiver.ACTION_UPDATER)
+	void detailReceiver(Intent intent) {
+		boolean ended = intent.getBooleanExtra(DetailFragmentReceiver.KEY_ENDED, false);
+		if (ended) {
+			updateTotalTime();
+			((FloatingActionButton) getActivity().findViewById(R.id.fab)).setImageResource(R.drawable.ic_play);
+			return;
 		}
-	};
+		int max = intent.getIntExtra(DetailFragmentReceiver.KEY_MAX, -1);
+		int progress = intent.getIntExtra(DetailFragmentReceiver.KEY_PROGRESS, -1);
+		int row = intent.getIntExtra(DetailFragmentReceiver.KEY_ROW, -1);
+		RowState state = (RowState) intent.getSerializableExtra(DetailFragmentReceiver.KEY_ROW_TYPE);
+		final int tabId = intent.getIntExtra(DetailFragmentReceiver.KEY_ID, -100);
+		if (tableApnea.getId() != tabId) {
+			Log.i("TableDetailFragment", "need restart service with new parameters");
+		} else if (rows != null && rows.size() > 0) {
+			updateViews(max, progress, row, state);
+		}
+	}
 }

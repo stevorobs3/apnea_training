@@ -5,20 +5,17 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @DatabaseTable(tableName = "table_apnea")
-public class TableApnea implements Serializable {
+public class TableApnea extends AbstractEntity {
 
 	private boolean running = false;
 
 	private TableType type = TableType.USER;
-
-	@DatabaseField(generatedId = true)
-	private Integer id;
 
 	@DatabaseField(canBeNull = false, columnName = "allow_edit")
 	private boolean allowEdit;
@@ -32,10 +29,7 @@ public class TableApnea implements Serializable {
 	@DatabaseField(columnName = "description")
 	private String description;
 
-	public TableApnea() {
-	}
-
 	public TableApnea(Integer id) {
-		this.id = id;
+		setId(id);
 	}
 }

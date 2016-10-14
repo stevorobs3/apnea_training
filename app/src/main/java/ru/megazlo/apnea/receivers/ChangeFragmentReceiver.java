@@ -10,4 +10,5 @@ public abstract class ChangeFragmentReceiver extends BroadcastReceiver {
 	public final static String KEY_LIST = "KEY_LIST";
 	public final static String KEY_EDIT = "KEY_EDIT";
 	public final static String KEY_TABLE = "KEY_TABLE";
+	public final static String KEY_OXI_VIEW = "KEY_OXI_VIEW";
 }

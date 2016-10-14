@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
 	<lecho.lib.hellocharts.view.LineChartView
 		android:id="@+id/chart"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent" >
-	</lecho.lib.hellocharts.view.LineChartView>
+		android:layout_height="0dp"
+		android:layout_weight="1"/>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="2dp"
+		android:layout_marginBottom="8dp"
+		android:layout_marginTop="8dp"
+		android:background="@android:color/darker_gray"/>
 
 	<lecho.lib.hellocharts.view.PreviewLineChartView
 		android:id="@+id/chart_preview"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		android:layout_weight="1" >
-	</lecho.lib.hellocharts.view.PreviewLineChartView>
+		android:layout_weight="1"/>
 </LinearLayout>
