@@ -2,9 +2,6 @@ package ru.megazlo.apnea.component;
 
 import android.content.res.Resources;
 
-import java.io.Serializable;
-import java.net.PortUnreachableException;
-
 public final class Utils {
 	public static float dp2px(Resources resources, float dp) {
 		final float scale = resources.getDisplayMetrics().density;

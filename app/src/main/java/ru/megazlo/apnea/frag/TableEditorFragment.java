@@ -1,15 +1,11 @@
 package ru.megazlo.apnea.frag;
 
 import android.app.Fragment;
-import android.app.ListFragment;
 import android.content.Intent;
 import android.view.View;
 import android.widget.*;
 
 import org.androidannotations.annotations.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import ru.megazlo.apnea.R;
 import ru.megazlo.apnea.entity.TableApnea;

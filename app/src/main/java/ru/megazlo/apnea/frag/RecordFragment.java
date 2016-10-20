@@ -1,7 +1,6 @@
 package ru.megazlo.apnea.frag;
 
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -54,12 +53,7 @@ public class RecordFragment extends Fragment implements FabClickListener {
 			final int oldBest = Utils.getTotalSeconds(pref.bestRecord().get());
 			if (progress.getMax() > oldBest) {
 				new AlertDialog.Builder(getActivity()).setMessage(R.string.dlg_new_rec).setCancelable(false).setNegativeButton(R.string.cancel, null)
-						.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								pref.edit().bestRecord().put(Utils.formatMS(progress.getMax())).apply();
-							}
-						}).show();
+						.setPositiveButton(R.string.ok, (dialog, which) -> pref.edit().bestRecord().put(Utils.formatMS(progress.getMax())).apply()).show();
 
 			}
 		}
@@ -119,18 +113,15 @@ public class RecordFragment extends Fragment implements FabClickListener {
 	class RecordTask extends TimerTask {
 		@Override
 		public void run() {
-			getActivity().runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					final int totalSeconds = Utils.getTotalSeconds(pref.bestRecord().get());
-					if (progress.getProgress() < totalSeconds) {
-						progress.setProgress(progress.getProgress() + 1);
-					} else if (progress.getProgress() == totalSeconds) {
-						if (progress.getUnfinishedStrokeColor() != colorAccent) {
-							progress.setUnfinishedStrokeColor(colorAccent);
-						}
-						progress.setMax(progress.getMax() + 1);
+			getActivity().runOnUiThread(() -> {
+				final int totalSeconds = Utils.getTotalSeconds(pref.bestRecord().get());
+				if (progress.getProgress() < totalSeconds) {
+					progress.setProgress(progress.getProgress() + 1);
+				} else if (progress.getProgress() == totalSeconds) {
+					if (progress.getUnfinishedStrokeColor() != colorAccent) {
+						progress.setUnfinishedStrokeColor(colorAccent);
 					}
+					progress.setMax(progress.getMax() + 1);
 				}
 			});
 		}

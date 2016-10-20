@@ -109,12 +109,9 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 	public void clickByContext(View view) {
 		final FloatingActionButton fab = (FloatingActionButton) view;
 		if (isMyServiceRunning(ApneaForeService_.class)) {
-			Snackbar.make(view, R.string.snack_stop_session, Snackbar.LENGTH_LONG).setAction(R.string.ok, new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					ApneaForeService_.intent(getActivity().getBaseContext()).stop();
-					fab.setImageResource(R.drawable.ic_play);
-				}
+			Snackbar.make(view, R.string.snack_stop_session, Snackbar.LENGTH_LONG).setAction(R.string.ok, v -> {
+				ApneaForeService_.intent(getActivity().getBaseContext()).stop();
+				fab.setImageResource(R.drawable.ic_play);
 			}).show();
 		} else {
 			ApneaForeService_.intent(getActivity().getBaseContext()).extra("table", tableApnea).start();

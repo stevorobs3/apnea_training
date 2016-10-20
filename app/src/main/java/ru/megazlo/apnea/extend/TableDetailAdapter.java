@@ -22,7 +22,7 @@ public class TableDetailAdapter extends ArrayAdapter<TableApneaRow> {
 
     @NonNull
     @Override
-    public View getView(int position, View cView, ViewGroup parent) {
+    public View getView(int position, View cView, @NonNull ViewGroup parent) {
         ViewHolder holder;
         if (cView == null) {
             holder = new ViewHolder();

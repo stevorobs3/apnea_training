@@ -1,9 +1,6 @@
 package ru.megazlo.apnea.frag;
 
 import android.app.Fragment;
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.support.annotation.ColorInt;
 import android.view.View;
 
 import org.androidannotations.annotations.*;
@@ -12,7 +9,6 @@ import org.androidannotations.annotations.res.ColorRes;
 import java.util.*;
 
 import lecho.lib.hellocharts.formatter.AxisValueFormatter;
-import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
 import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.listener.ViewportChangeListener;
 import lecho.lib.hellocharts.model.*;
@@ -76,12 +72,9 @@ public class ChartFragment extends Fragment implements FabClickListener {
 		return rez;
 	}
 
-	LineChartData createData(String title, Line... line) {
+	LineChartData createData(String title, Line... lines) {
 		final LineChartData data = new LineChartData();
-		for (Line l : line) {
-			l.setCubic(true);
-		}
-		data.setLines(Arrays.asList(line));
+		data.setLines(Arrays.asList(lines));
 		data.setBaseValue(0);
 		Axis axisX = new Axis().setName(getString(R.string.axis_time)).setFormatter(new TimeAxisValueFormatter());
 		Axis axisY = new Axis().setName(title).setHasLines(true);
@@ -117,7 +110,7 @@ public class ChartFragment extends Fragment implements FabClickListener {
 		for (int i = 0; i < vals.length; i++) {
 			values.add(new PointValue(i, vals[i]));
 		}
-		return new Line(values).setColor(color).setHasPoints(false).setStrokeWidth(1);
+		return new Line(values).setColor(color).setCubic(true).setHasPoints(false).setStrokeWidth(1);
 	}
 
 	@Override

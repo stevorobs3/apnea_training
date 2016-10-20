@@ -1,6 +1,7 @@
 package ru.megazlo.apnea.frag;
 
 import android.app.Fragment;
+import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
@@ -35,6 +36,7 @@ public class InfoFragment extends Fragment implements FabClickListener {
 		infoView.setText(Html.fromHtml(readTxt()));
 	}
 
+	@NonNull
 	private String readTxt() {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(getResources().openRawResource(resRawId)));
 		StringBuilder bld = new StringBuilder();

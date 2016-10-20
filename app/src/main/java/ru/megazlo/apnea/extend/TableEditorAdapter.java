@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.megazlo.apnea.R;
-import ru.megazlo.apnea.component.Utils;
 import ru.megazlo.apnea.entity.TableApneaRow;
 
 /** Created by iGurkin on 08.09.2016. */
@@ -53,12 +52,9 @@ public class TableEditorAdapter extends ArrayAdapter<TableApneaRow> {
 					}
 				}
 			});
-			holder.imgDelete.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					ViewHolder vh = (ViewHolder) ((RelativeLayout) v.getParent()).getTag();
-					TableEditorAdapter.this.remove(getItem(vh.pos));
-				}
+			holder.imgDelete.setOnClickListener(v1 -> {
+				ViewHolder vh = (ViewHolder) ((RelativeLayout) v1.getParent()).getTag();
+				TableEditorAdapter.this.remove(getItem(vh.pos));
 			});
 		} else {
 			holder = (ViewHolder) v.getTag();

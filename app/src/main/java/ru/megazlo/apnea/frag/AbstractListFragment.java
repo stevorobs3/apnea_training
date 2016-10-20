@@ -37,14 +37,11 @@ public abstract class AbstractListFragment<T extends AbstractIndexAdapter> exten
 		getListView().setOnItemClickListener(this);
 		getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 		getListView().setSelector(R.drawable.list_color_selector);
-		getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-				getAdapter().setSelectedIndex(position);
-				FloatingActionButton fab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
-				fab.setImageResource(R.drawable.ic_delete);
-				return true;
-			}
+		getListView().setOnItemLongClickListener((parent, view, position, id) -> {
+			getAdapter().setSelectedIndex(position);
+			FloatingActionButton fab = ((FloatingActionButton) getActivity().findViewById(R.id.fab));
+			fab.setImageResource(R.drawable.ic_delete);
+			return true;
 		});
 	}
 

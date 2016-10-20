@@ -1,18 +1,11 @@
 package ru.megazlo.apnea.service;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.media.AudioAttributes;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
-import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
-import org.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.*;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.io.Closeable;
@@ -25,7 +18,7 @@ import ru.megazlo.apnea.entity.RowState;
 @EBean
 public class AlertService implements TextToSpeech.OnInitListener, Closeable {
 
-	public static final int VIBRATE_TIME = 200;
+	private static final int VIBRATE_TIME = 200;
 
 	private TextToSpeech tts;
 
