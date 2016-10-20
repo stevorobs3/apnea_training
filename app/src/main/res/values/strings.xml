@@ -112,4 +112,10 @@
 	<string name="coming_soon_oxy">Coming soon</string>
 	<string name="spo_soon">Coming soon (december 2016)!\r\nSpO2 and heart rate log and graphs.\r\System requirements:\r\n• bluetooth 4.0\r\n• oximeter JPD-500F\r\n• android 4.3</string>
 	<string name="invalid_num_format">Invalid number format, must be total seconds</string>
+	<string name="axis_spo">SpO%</string>
+	<string name="axis_pulse">Pulse</string>
+	<string name="axis_indicators">Indicators</string>
+	<string name="axis_time">Time</string>
+	<string name="chart_row_total">Session time: %s</string>
+	<string name="chart_row_date">Date: %s</string>
 </resources>

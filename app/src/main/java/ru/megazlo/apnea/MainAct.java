@@ -115,7 +115,7 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 			setFragment(new InfoFragment_().setResRawId(R.raw.info));
 		} else if (id == R.id.nav_graphs) {
 			setFragment(new ChartListFragment_());
-			dialogOxySoon();
+			//dialogOxySoon();
 			//setFragment();
 		} else if (id == R.id.nav_record) {
 			setFragment(new RecordFragment_());
@@ -146,7 +146,6 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 	public void setFragment(Fragment fragment) {
 		FabClickListener listener = (FabClickListener) fragment;
 		listener.modifyToContext(fab);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		getFragmentManager().beginTransaction().replace(R.id.main_content, fragment, FRAGMENT_TAG).commit();
 	}
 

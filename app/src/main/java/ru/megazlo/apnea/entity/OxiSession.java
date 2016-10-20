@@ -13,7 +13,7 @@ import lombok.*;
 @DatabaseTable(tableName = "table_apnea")
 public class OxiSession extends AbstractEntity {
 
-	private Integer total = 360;
+	private Integer total = 190;
 
 	private Integer count = 0;
 

@@ -11,7 +11,20 @@
 		android:src="@drawable/ic_graphs"/>
 
 	<TextView
-		android:id="@+id/chart_time"
+		android:id="@+id/chart_total_time"
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"/>
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/chart_icon"
+		android:layout_alignParentBottom="true"
+		android:layout_marginBottom="6dp"
+		android:layout_marginLeft="13dp"/>
+
+	<TextView
+		android:id="@+id/chart_date"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/chart_icon"
+		android:layout_alignParentTop="true"
+		android:layout_marginTop="5dp"
+		android:layout_marginLeft="13dp"/>
 </RelativeLayout>

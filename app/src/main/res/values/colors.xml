@@ -22,4 +22,7 @@
 	<color name="arc_unfinished">#a5ffa3</color>
 
 	<color name="red">#ff4444</color>
+
+	<color name="chart_spo">#4c9fd7</color>
+	<color name="chart_pulse">#ff6767</color>
 </resources>

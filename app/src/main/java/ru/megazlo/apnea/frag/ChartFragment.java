@@ -2,48 +2,122 @@ package ru.megazlo.apnea.frag;
 
 import android.app.Fragment;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.view.View;
 
 import org.androidannotations.annotations.*;
+import org.androidannotations.annotations.res.ColorRes;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
+import lecho.lib.hellocharts.formatter.AxisValueFormatter;
+import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
+import lecho.lib.hellocharts.gesture.ZoomType;
+import lecho.lib.hellocharts.listener.ViewportChangeListener;
 import lecho.lib.hellocharts.model.*;
 import lecho.lib.hellocharts.view.LineChartView;
 import lecho.lib.hellocharts.view.PreviewLineChartView;
 import ru.megazlo.apnea.R;
+import ru.megazlo.apnea.component.Utils;
 
 /** Created by iGurkin on 10.10.2016. */
 @EFragment(R.layout.chart_fragment)
 public class ChartFragment extends Fragment implements FabClickListener {
 
-	@ViewById(R.id.chart)
-	LineChartView chart;
+	@ViewById(R.id.chart_spo)
+	LineChartView chartSpo;
+	@ViewById(R.id.chart_heart)
+	LineChartView chartHeart;
 	@ViewById(R.id.chart_preview)
 	PreviewLineChartView chartPreview;
 
+	@ColorRes(R.color.chart_spo)
+	int colorSpo;
+	@ColorRes(R.color.chart_pulse)
+	int colorPulse;
+
 	@AfterViews
 	void afterView() {
-		getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		final LineChartData data = new LineChartData();
-		Line spo = createLine(1,2,2,2,3,2,4,2);
-		spo.setColor(0xffff0000);
-		Line hr = createLine(2,1,2,2,2,3,2,4);
-		hr.setColor(0xff00ff00);
-		data.setLines(Arrays.asList(spo, hr));
-		chart.setLineChartData(data);
+		final Line l1 = createLine(colorSpo, valuesSpo());
+		chartSpo.setLineChartData(createData(getString(R.string.axis_spo), l1));
+
+		final Line l2 = createLine(colorPulse, valuesPulse());
+		chartHeart.setLineChartData(createData(getString(R.string.axis_pulse), l2));
+
+		chartPreview.setLineChartData(createData(getString(R.string.axis_indicators), l1, l2));
+		//chartPreview.setLineChartData(data);
+		chartPreview.setZoomType(ZoomType.HORIZONTAL);
+		chartPreview.setViewportChangeListener(new ViewportListener());
+		previewX(false);
 	}
 
-	private Line createLine(float... vals) {
-		Line rez = new Line();
-		final ArrayList<PointValue> values = new ArrayList<>();
-		final int half = vals.length / 2;
-		for (int i = 0; i < half; i++) {
-			values.add(new PointValue(vals[i], vals[i + half]));
+	float[] valuesSpo() {
+		int seconds = 3 * 60 + 10;//3:10
+		float[] rez = new float[seconds];
+		int min = 56;
+		int max = 99;
+		for (int i = 0; i < rez.length; i++) {
+			rez[i] = max - ((max - min) * (i / (float)seconds));
 		}
-		rez.setValues(values);
 		return rez;
+	}
+
+	float[] valuesPulse() {
+		int seconds = 3 * 60 + 10;//3:10
+		Random r = new Random();
+		float[] rez = new float[seconds];
+		for (int i = 0; i < rez.length; i++) {
+			final int fade = 40 - Math.min(i, 40);
+			int min = 50 + fade;// расчитываем min и max чтоб был нормальный коридор. падение 40 сек
+			int max = 60 + fade;
+			rez[i] = r.nextInt(max - min) + min;
+		}
+		return rez;
+	}
+
+	LineChartData createData(String title, Line... line) {
+		final LineChartData data = new LineChartData();
+		for (Line l : line) {
+			l.setCubic(true);
+		}
+		data.setLines(Arrays.asList(line));
+		data.setBaseValue(0);
+		Axis axisX = new Axis().setName(getString(R.string.axis_time)).setFormatter(new TimeAxisValueFormatter());
+		Axis axisY = new Axis().setName(title).setHasLines(true);
+		data.setAxisXBottom(axisX);
+		data.setAxisYLeft(axisY);
+		return data;
+	}
+
+	private void previewX(boolean animate) {
+		Viewport tempViewport = new Viewport(chartPreview.getMaximumViewport());
+		float dx = tempViewport.width() / 2.3f;
+		tempViewport.inset(dx, 0);
+		if (animate) {
+			chartPreview.setCurrentViewportWithAnimation(tempViewport);
+		} else {
+			chartPreview.setCurrentViewport(tempViewport);
+		}
+		chartPreview.setZoomType(ZoomType.HORIZONTAL);
+	}
+
+	private class ViewportListener implements ViewportChangeListener {
+
+		@Override
+		public void onViewportChanged(Viewport newViewport) {
+			// don't use animation, it is unnecessary when using preview chart.
+			chartSpo.setCurrentViewport(newViewport);
+			chartHeart.setCurrentViewport(newViewport);
+		}
+	}
+
+	private Line createLine(int color, float... vals) {
+		final ArrayList<PointValue> values = new ArrayList<>();
+		for (int i = 0; i < vals.length; i++) {
+			values.add(new PointValue(i, vals[i]));
+		}
+		return new Line(values).setColor(color).setHasPoints(false).setStrokeWidth(1);
 	}
 
 	@Override
@@ -58,5 +132,20 @@ public class ChartFragment extends Fragment implements FabClickListener {
 	@Override
 	public boolean backPressed() {
 		return true;
+	}
+
+	private class TimeAxisValueFormatter implements AxisValueFormatter {
+
+		@Override
+		public int formatValueForManualAxis(char[] formattedValue, AxisValue axisValue) {
+			return 0;
+		}
+
+		@Override
+		public int formatValueForAutoGeneratedAxis(char[] formattedValue, float value, int autoDecimalDigits) {
+			char[] arr = Utils.formatMS((int)value).toCharArray();
+			System.arraycopy(arr, 0, formattedValue, formattedValue.length - arr.length, arr.length);
+			return formattedValue.length;
+		}
 	}
 }
