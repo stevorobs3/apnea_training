@@ -41,7 +41,8 @@ android {
 		minSdkVersion 14
 		targetSdkVersion 25
 		versionCode 10
-		versionName '2.0 preview 2'
+		versionName '2.0'
+		versionNameSuffix 'preview 2'
 	}
 	compileOptions {
 		sourceCompatibility JavaVersion.VERSION_1_8
