@@ -1,7 +1,6 @@
 package ru.megazlo.apnea;
 
-import android.app.AlertDialog;
-import android.app.Fragment;
+import android.app.*;
 import android.content.*;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -68,11 +67,7 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 		if (getIntent().getBooleanExtra(ApneaForeService_.IS_ALERT_SERIES_END, false)) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(R.string.dlg_sess_complete).setIcon(R.mipmap.ic_ico).setCancelable(false).setPositiveButton(R.string.dlg_im_ok,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-							dialog.cancel();
-						}
-					});
+					(dialog, id) -> dialog.cancel());
 			builder.create().show();
 		}
 	}
@@ -131,12 +126,7 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 	@UiThread(delay = 300)
 	void dialogOxySoon() {
 		new AlertDialog.Builder(this)
-		.setView(getLayoutInflater().inflate(R.layout.dialog_oxi, null)).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		}).create().show();
+		.setView(getLayoutInflater().inflate(R.layout.dialog_oxi, null)).setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss()).create().show();
 	}
 
 	public Fragment getVisibleFragment() {
@@ -146,7 +136,10 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 	public void setFragment(Fragment fragment) {
 		FabClickListener listener = (FabClickListener) fragment;
 		listener.modifyToContext(fab);
-		getFragmentManager().beginTransaction().replace(R.id.main_content, fragment, FRAGMENT_TAG).commit();
+		getFragmentManager().beginTransaction()
+				.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right)
+				//.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+				.replace(R.id.main_content, fragment, FRAGMENT_TAG).commit();
 	}
 
 	@Receiver(actions = ChangeFragmentReceiver.ACTION_FRAGMENT)

@@ -13,16 +13,16 @@
 		<TextView
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:gravity="center"
 			android:layout_weight=".5"
+			android:gravity="center"
 			android:padding="2sp"
 			android:text="@string/timer_breath_lb"/>
 
 		<TextView
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:gravity="center"
 			android:layout_weight=".5"
+			android:gravity="center"
 			android:padding="2sp"
 			android:text="@string/timer_hold_lb"/>
 	</LinearLayout>
@@ -41,8 +41,8 @@
 
 		<ru.megazlo.apnea.component.ArcProgress
 			android:id="@+id/arc_progress"
-			android:layout_width="130dp"
-			android:layout_height="130dp"
+			android:layout_width="@dimen/cont_size"
+			android:layout_height="@dimen/cont_size"
 			android:layout_gravity="center_vertical"
 			android:background="@android:color/transparent"
 			android:gravity="center_vertical"
@@ -55,16 +55,6 @@
 			custom:arc_text_color="@color/colorAccent"
 			custom:arc_unfinished_color="@color/arc_unfinished"/>
 
-		<android.support.design.widget.FloatingActionButton
-			android:id="@+id/fab_discard"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginLeft="10dp"
-			android:layout_alignTop="@id/arc_progress"
-			android:layout_toRightOf="@id/arc_progress"
-			android:src="@drawable/ic_discard"
-			android:tint="@color/white"/>
-
 		<TextView
 			android:id="@+id/total_time"
 			android:layout_width="wrap_content"
@@ -73,6 +63,129 @@
 			android:layout_toRightOf="@id/arc_progress"
 			android:paddingBottom="10sp"
 			android:text="@string/total_time"/>
+
+		<ImageView
+			android:id="@+id/img_heart"
+			android:layout_width="30dp"
+			android:layout_height="30dp"
+			android:layout_marginLeft="18dp"
+			android:layout_toRightOf="@id/arc_progress"
+			android:src="@drawable/ic_heart"
+			android:tint="@color/chart_pulse"/>
+
+		<TextView
+			android:id="@+id/tv_heart_rate"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignBottom="@id/img_heart"
+			android:layout_marginBottom="6dp"
+			android:layout_toRightOf="@id/img_heart"
+			android:text="64bpm"
+			android:textColor="@color/darker_gray"
+			android:textSize="16sp"/>
+
+		<TextView
+			android:id="@+id/lb_spo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignRight="@id/img_heart"
+			android:layout_below="@id/img_heart"
+			android:text="SpO"
+			android:textColor="@color/chart_spo"
+			android:textSize="22sp"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignLeft="@id/tv_heart_rate"
+			android:layout_alignTop="@id/lb_spo"
+			android:text="99%"
+			android:textColor="@color/darker_gray"
+			android:textSize="16sp"/>
+
+		<RelativeLayout
+			android:id="@+id/control_pane"
+			android:layout_width="@dimen/cont_size"
+			android:layout_height="@dimen/cont_size"
+			android:layout_alignParentRight="true"
+			android:background="@drawable/ic_circle"
+			android:scaleX=".5"
+			android:scaleY=".5">
+
+			<ImageView
+				android:id="@+id/img_play"
+				android:layout_width="@dimen/play_size"
+				android:layout_height="@dimen/play_size"
+				android:layout_centerInParent="true"
+				android:src="@drawable/ic_play"
+				android:tint="@color/white"/>
+
+			<View
+				android:id="@+id/ver_rule"
+				android:layout_width="1dp"
+				android:layout_height="match_parent"
+				android:layout_centerHorizontal="true"
+				android:background="@color/white"
+				android:visibility="gone"/>
+
+			<View
+				android:id="@+id/hor_rule"
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_centerVertical="true"
+				android:background="@color/white"
+				android:visibility="gone"/>
+
+			<ImageView
+				android:id="@+id/img_discard"
+				android:layout_width="@dimen/cont_btn_size"
+				android:layout_height="@dimen/cont_btn_size"
+				android:layout_above="@id/hor_rule"
+				android:layout_marginBottom="@dimen/cont_btn_padd"
+				android:layout_marginRight="@dimen/cont_btn_padd"
+				android:layout_toLeftOf="@id/ver_rule"
+				android:src="@drawable/ic_discard"
+				android:tint="@color/white"
+				android:visibility="gone"/>
+
+			<ImageView
+				android:id="@+id/img_stop"
+				android:layout_width="@dimen/cont_btn_size"
+				android:layout_height="@dimen/cont_btn_size"
+				android:layout_above="@id/hor_rule"
+				android:layout_marginBottom="@dimen/cont_btn_padd"
+				android:layout_marginLeft="@dimen/cont_btn_padd"
+				android:layout_toRightOf="@id/ver_rule"
+				android:src="@drawable/ic_stop"
+				android:tint="@color/white"
+				android:visibility="gone"/>
+
+			<ImageView
+				android:id="@+id/img_pause"
+				android:layout_width="@dimen/cont_btn_size"
+				android:layout_height="@dimen/cont_btn_size"
+				android:layout_below="@id/hor_rule"
+				android:layout_marginLeft="@dimen/cont_btn_padd"
+				android:layout_marginTop="@dimen/cont_btn_padd"
+				android:layout_toRightOf="@id/ver_rule"
+				android:src="@drawable/ic_pause"
+				android:tint="@color/white"
+				android:visibility="gone"/>
+
+			<ImageView
+				android:id="@+id/img_add_time"
+				android:layout_width="@dimen/cont_btn_size"
+				android:layout_height="@dimen/cont_btn_size"
+				android:layout_below="@id/hor_rule"
+				android:layout_marginRight="@dimen/cont_btn_padd"
+				android:layout_marginTop="@dimen/cont_btn_padd"
+				android:layout_toLeftOf="@id/ver_rule"
+				android:src="@drawable/ic_forward_10"
+				android:tint="@color/white"
+				android:visibility="gone"/>
+
+		</RelativeLayout>
+
 	</RelativeLayout>
 
 </LinearLayout>

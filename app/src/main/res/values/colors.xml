@@ -25,4 +25,6 @@
 
 	<color name="chart_spo">#4c9fd7</color>
 	<color name="chart_pulse">#ff6767</color>
+
+	<color name="darker_gray">#313131</color>
 </resources>

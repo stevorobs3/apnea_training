@@ -11,6 +11,7 @@ import android.widget.*;
 import org.androidannotations.annotations.*;
 import org.androidannotations.annotations.res.StringRes;
 
+import java.io.Serializable;
 import java.util.List;
 
 import ru.megazlo.apnea.ApneaForeService_;
@@ -20,7 +21,7 @@ import ru.megazlo.apnea.component.Utils;
 import ru.megazlo.apnea.entity.*;
 import ru.megazlo.apnea.extend.TableDetailAdapter;
 import ru.megazlo.apnea.receivers.DetailFragmentReceiver;
-import ru.megazlo.apnea.receivers.EndCurrentReceiver;
+import ru.megazlo.apnea.receivers.ApneaForeReceiver;
 import ru.megazlo.apnea.service.ApneaService;
 
 @EFragment(R.layout.table_detail)
@@ -40,6 +41,8 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 	TextView totalTime;
 	@ViewById(R.id.list_row)
 	ListView listView;
+	@ViewById(R.id.control_pane)
+	RelativeLayout buttonPane;
 
 	private List<TableApneaRow> rows;
 
@@ -73,9 +76,45 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 		((FloatingActionButton) getActivity().findViewById(R.id.fab)).setImageResource(iconRes);
 	}
 
-	@Click(R.id.fab_discard)
+	@Click(R.id.img_discard)
 	void clickDiscard() {
-		getActivity().getApplication().sendBroadcast(new Intent(EndCurrentReceiver.ACTION_SKIP));
+		sendServiceCommand(ApneaForeReceiver.ACTION_SKIP);
+	}
+
+	@Click(R.id.img_stop)
+	void clickStop() {
+		setViewPlayPause(false);
+	}
+
+	@Click(R.id.img_play)
+	void clickPlay() {
+		setViewPlayPause(true);
+	}
+
+	private void setViewPlayPause(boolean isPlayClick) {
+		float scale = isPlayClick ? 1 : 0.5f;
+		final int visibleChild = isPlayClick ? View.VISIBLE : View.GONE;
+		buttonPane.animate().scaleX(scale).scaleY(scale).setDuration(200).start();//.withLayer();
+		for (int i = 0; i < buttonPane.getChildCount(); i++) {
+			buttonPane.getChildAt(i).setVisibility(visibleChild);
+		}
+		buttonPane.findViewById(R.id.img_play).setVisibility(isPlayClick ? View.GONE : View.VISIBLE);
+	}
+
+	@Click(R.id.img_pause)
+	void clickPause() {
+		sendServiceCommand(ApneaForeReceiver.ACTION_PAUSE);
+		setViewPlayPause(false);
+	}
+
+	@Click(R.id.img_add_time)
+	void clickAddTime() {
+		sendServiceCommand(ApneaForeReceiver.ACTION_ADD_TIME);
+	}
+
+	void sendServiceCommand(String name) {
+		Intent tb = new Intent(ApneaForeReceiver.ACTION).putExtra(ApneaForeReceiver.ACTION_TYPE, name);
+		getActivity().sendBroadcast(tb);
 	}
 
 	private void updateTotalTime() {
@@ -121,7 +160,7 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 
 	@Override
 	public void modifyToContext(View view) {
-		view.setVisibility(View.VISIBLE);
+		view.setVisibility(View.GONE);
 	}
 
 	@Override

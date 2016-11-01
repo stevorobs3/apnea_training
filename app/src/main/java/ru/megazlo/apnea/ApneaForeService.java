@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EService;
@@ -23,14 +24,18 @@ import ru.megazlo.apnea.component.Utils;
 import ru.megazlo.apnea.entity.RowState;
 import ru.megazlo.apnea.entity.TableApnea;
 import ru.megazlo.apnea.entity.TableApneaRow;
-import ru.megazlo.apnea.receivers.DetailFragmentReceiver;
-import ru.megazlo.apnea.receivers.EndCurrentReceiver;
+import ru.megazlo.apnea.receivers.*;
+import ru.megazlo.apnea.receivers.ApneaForeReceiver;
 import ru.megazlo.apnea.service.AlertService;
 import ru.megazlo.apnea.service.ApneaService;
-import ru.megazlo.apnea.receivers.ScreenOffReceiver;
 
 @EService
 public class ApneaForeService extends Service {
+
+	public static final int STOP = 0;
+	public static final int RUN = 1;
+	public static final int PAUSE = 2;
+	public static int STATE = STOP;
 
 	private final static int ONGOING_NOTIFICATION_ID = 251665161;
 	public static final String TABLE_RESTORE = "table_restore";
@@ -87,7 +92,7 @@ public class ApneaForeService extends Service {
 		currentItem = items.get(0);
 		currentItem.setState(RowState.BREATHE);
 		startTimer();
-		registerReceiver(endReceiver, new IntentFilter(EndCurrentReceiver.ACTION_SKIP));
+		registerReceiver(apneaForeReceiver, new IntentFilter(ApneaForeReceiver.ACTION));
 		registerReceiver(receiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
 		return START_NOT_STICKY;
 	}
@@ -111,7 +116,7 @@ public class ApneaForeService extends Service {
 	@Override
 	public void onDestroy() {
 		stopTimer();
-		unregisterReceiver(endReceiver);
+		unregisterReceiver(apneaForeReceiver);
 		super.onDestroy();
 		try {
 			alertService.close();
@@ -198,18 +203,29 @@ public class ApneaForeService extends Service {
 		return PendingIntent.getActivity(getApplicationContext(), 651651, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 	}
 
-	private EndCurrentReceiver endReceiver = new EndCurrentReceiver() {
+	private ApneaForeReceiver apneaForeReceiver = new ApneaForeReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			progress = getCurrentMax();
-			updateProgress();
+			final String action = intent.getStringExtra(ApneaForeReceiver.ACTION_TYPE);
+			if (ApneaForeReceiver.ACTION_SKIP.equals(action)) {
+				progress = getCurrentMax();
+				updateProgress();
+			} else if (ApneaForeReceiver.ACTION_PAUSE.equals(action)) {
+				ApneaForeService.STATE = ApneaForeService.PAUSE;
+			} else if (ApneaForeReceiver.ACTION_CONTINUE.equals(action)) {
+				ApneaForeService.STATE = ApneaForeService.RUN;
+			} else if (ApneaForeReceiver.ACTION_ADD_TIME.equals(action)) {
+				Toast.makeText(context, "Time added", Toast.LENGTH_SHORT).show();
+			}
 		}
 	};
 
 	class ApneaTimerTask extends TimerTask {
 		@Override
 		public void run() {
-			updateProgress();
+			if (ApneaForeService.STATE == ApneaForeService.RUN) {
+				updateProgress();
+			}
 		}
 	}
 
