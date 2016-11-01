@@ -118,4 +118,7 @@
 	<string name="axis_time">Time</string>
 	<string name="chart_row_total">Session time: %s</string>
 	<string name="chart_row_date">Date: %s</string>
+	<string name="lb_spo" translatable="false">SpO</string>
+	<string name="lb_bpm">——bpm</string>
+	<string name="lb_spo_vl" translatable="false">——%</string>
 </resources>

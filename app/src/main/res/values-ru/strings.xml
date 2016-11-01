@@ -97,4 +97,5 @@
 	<string name="axis_time">Время</string>
 	<string name="chart_row_total">Время сессии: %s</string>
 	<string name="chart_row_date">Дата: %s</string>
+	<string name="lb_bpm">——у/м</string>
 </resources>

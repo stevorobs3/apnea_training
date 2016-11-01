@@ -80,7 +80,7 @@
 			android:layout_alignBottom="@id/img_heart"
 			android:layout_marginBottom="6dp"
 			android:layout_toRightOf="@id/img_heart"
-			android:text="64bpm"
+			android:text="@string/lb_bpm"
 			android:textColor="@color/darker_gray"
 			android:textSize="16sp"/>
 
@@ -90,7 +90,7 @@
 			android:layout_height="wrap_content"
 			android:layout_alignRight="@id/img_heart"
 			android:layout_below="@id/img_heart"
-			android:text="SpO"
+			android:text="@string/lb_spo"
 			android:textColor="@color/chart_spo"
 			android:textSize="22sp"/>
 
@@ -99,7 +99,7 @@
 			android:layout_height="wrap_content"
 			android:layout_alignLeft="@id/tv_heart_rate"
 			android:layout_alignTop="@id/lb_spo"
-			android:text="99%"
+			android:text="@string/lb_spo_vl"
 			android:textColor="@color/darker_gray"
 			android:textSize="16sp"/>
 
