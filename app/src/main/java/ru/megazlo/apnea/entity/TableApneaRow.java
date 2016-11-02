@@ -24,4 +24,8 @@ public class TableApneaRow  extends AbstractEntity {
 
 	@DatabaseField(canBeNull = false, columnName = "table_id")
 	private Integer table;
+
+	private int extHold = 0;
+
+	private int extBreathe = 0;
 }

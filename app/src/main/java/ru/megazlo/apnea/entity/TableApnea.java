@@ -3,7 +3,7 @@ package ru.megazlo.apnea.entity;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.io.Serializable;
+import java.util.List;
 
 import lombok.*;
 
@@ -28,6 +28,8 @@ public class TableApnea extends AbstractEntity {
 
 	@DatabaseField(columnName = "description")
 	private String description;
+
+	private List<TableApneaRow> rows;
 
 	public TableApnea(Integer id) {
 		setId(id);

@@ -11,9 +11,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EService;
-import org.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -40,8 +38,6 @@ public class ApneaForeService extends Service {
 	private final static int ONGOING_NOTIFICATION_ID = 251665161;
 	public static final String TABLE_RESTORE = "table_restore";
 	public static final String IS_ALERT_SERIES_END = "is_alert_series_end";
-
-	public static boolean RUNNING = false;
 
 	@Bean
 	AlertService alertService;
@@ -80,7 +76,7 @@ public class ApneaForeService extends Service {
 			return START_NOT_STICKY;
 			//throw new RuntimeException("not found table id");
 		}
-		items = apneaService.getRowsForTable(table);
+		items = table.getRows();
 		/*items = new ArrayList<>();
 		final List<TableApneaRow> rowsForTable = apneaService.getRowsForTable(table);
 		items.add(rowsForTable.get(rowsForTable.size() - 1));*/
@@ -92,21 +88,20 @@ public class ApneaForeService extends Service {
 		currentItem = items.get(0);
 		currentItem.setState(RowState.BREATHE);
 		startTimer();
-		registerReceiver(apneaForeReceiver, new IntentFilter(ApneaForeReceiver.ACTION));
 		registerReceiver(receiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
 		return START_NOT_STICKY;
 	}
 
 	private void startTimer() {
 		timer.scheduleAtFixedRate(new ApneaTimerTask(), 0, 1000);
-		RUNNING = true;
+		STATE = RUN;
 		registerReceiver(receiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
 	}
 
 	private void stopTimer() {
 		updateFragmentUi(true);
 		unregisterReceiver(receiver);
-		RUNNING = false;
+		STATE = STOP;
 		try {
 			timer.cancel();
 		} catch (Exception ignored) {
@@ -116,7 +111,6 @@ public class ApneaForeService extends Service {
 	@Override
 	public void onDestroy() {
 		stopTimer();
-		unregisterReceiver(apneaForeReceiver);
 		super.onDestroy();
 		try {
 			alertService.close();
@@ -146,21 +140,25 @@ public class ApneaForeService extends Service {
 	}
 
 	private void updateProgress() {
-		final int currentMax = getCurrentMax();
-		if (progress >= currentMax) {
-			progress = 0;
-			try {
-				updateCurrentRow();
-			} catch (EndCycleException e) {
-				onEndSeries();
-				return;
+		if (ApneaForeService.STATE == ApneaForeService.RUN) {
+			final int currentMax = getCurrentMax();
+			if (progress >= currentMax) {
+				progress = 0;
+				try {
+					updateCurrentRow();
+				} catch (EndCycleException e) {
+					onEndSeries();
+					return;
+				}
+				alertService.sayState(currentItem.getState());
 			}
-			alertService.sayState(currentItem.getState());
+			alertService.checkNotifications(currentMax - progress);
+			updateNotificationUi();
+			updateFragmentUi(false);
+			progress++;
+		} else {// здесь видимо пауза
+			updateFragmentUi(false);
 		}
-		alertService.checkNotifications(currentMax - progress);
-		updateNotificationUi();
-		updateFragmentUi(false);
-		progress++;
 	}
 
 	private void onEndSeries() {
@@ -192,7 +190,7 @@ public class ApneaForeService extends Service {
 		tb.putExtra(DetailFragmentReceiver.KEY_PROGRESS, progress);
 		tb.putExtra(DetailFragmentReceiver.KEY_ROW, items.indexOf(currentItem));
 		tb.putExtra(DetailFragmentReceiver.KEY_ROW_TYPE, currentItem.getState());
-		tb.putExtra(DetailFragmentReceiver.KEY_ID, table.getId());
+		tb.putExtra(DetailFragmentReceiver.KEY_TABLE, table);
 		getApplication().sendBroadcast(tb);
 	}
 
@@ -203,29 +201,30 @@ public class ApneaForeService extends Service {
 		return PendingIntent.getActivity(getApplicationContext(), 651651, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 	}
 
-	private ApneaForeReceiver apneaForeReceiver = new ApneaForeReceiver() {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			final String action = intent.getStringExtra(ApneaForeReceiver.ACTION_TYPE);
-			if (ApneaForeReceiver.ACTION_SKIP.equals(action)) {
-				progress = getCurrentMax();
-				updateProgress();
-			} else if (ApneaForeReceiver.ACTION_PAUSE.equals(action)) {
-				ApneaForeService.STATE = ApneaForeService.PAUSE;
-			} else if (ApneaForeReceiver.ACTION_CONTINUE.equals(action)) {
-				ApneaForeService.STATE = ApneaForeService.RUN;
-			} else if (ApneaForeReceiver.ACTION_ADD_TIME.equals(action)) {
-				Toast.makeText(context, "Time added", Toast.LENGTH_SHORT).show();
+	@Receiver(actions = ApneaForeReceiver.ACTION)
+	void serviceCommandReceiver(Intent intent) {
+		final String action = intent.getStringExtra(ApneaForeReceiver.ACTION_TYPE);
+		if (ApneaForeReceiver.ACTION_SKIP.equals(action)) {
+			progress = getCurrentMax();
+			updateProgress();
+		} else if (ApneaForeReceiver.ACTION_PAUSE.equals(action)) {
+			STATE = PAUSE;
+		} else if (ApneaForeReceiver.ACTION_CONTINUE.equals(action)) {
+			STATE = RUN;
+		} else if (ApneaForeReceiver.ACTION_ADD_TIME.equals(action)) {
+			if (currentItem.getState() == RowState.HOLD) {
+				currentItem.setExtHold(currentItem.getExtHold() + 10);
+			} else if (currentItem.getState() == RowState.BREATHE) {
+				currentItem.setExtBreathe(currentItem.getExtBreathe() + 10);
 			}
+			Toast.makeText(getApplicationContext(), "Time added", Toast.LENGTH_SHORT).show();
 		}
-	};
+	}
 
 	class ApneaTimerTask extends TimerTask {
 		@Override
 		public void run() {
-			if (ApneaForeService.STATE == ApneaForeService.RUN) {
-				updateProgress();
-			}
+			updateProgress();
 		}
 	}
 

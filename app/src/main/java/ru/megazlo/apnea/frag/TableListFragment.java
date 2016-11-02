@@ -42,7 +42,7 @@ public class TableListFragment extends AbstractListFragment<TableListAdapter> {
 	}
 
 	void noDeletionClick() {
-		if (ApneaForeService_.RUNNING) {
+		if (ApneaForeService_.STATE == ApneaForeService_.RUN) {
 			Toast.makeText(getActivity(), R.string.tst_cant_edit, Toast.LENGTH_SHORT).show();
 			return;
 		}
@@ -59,10 +59,10 @@ public class TableListFragment extends AbstractListFragment<TableListAdapter> {
 	@Receiver(actions = DetailFragmentReceiver.ACTION_UPDATER)
 	void detailReceiver(Intent intent) {
 		boolean ended = intent.getBooleanExtra(DetailFragmentReceiver.KEY_ENDED, false);
-		final int tabId = intent.getIntExtra(DetailFragmentReceiver.KEY_ID, -100);
+		final TableApnea tbl = (TableApnea) intent.getSerializableExtra(DetailFragmentReceiver.KEY_TABLE);
 		for (TableApnea t : apneaList) {
 			t.setRunning(false);
-			if (!ended && t.getId() == tabId && !t.isRunning()) {
+			if (!ended && t.getId().equals(tbl.getId()) && !t.isRunning()) {
 				t.setRunning(true);
 				((TableListAdapter) getListAdapter()).notifyDataSetChanged();
 			}
