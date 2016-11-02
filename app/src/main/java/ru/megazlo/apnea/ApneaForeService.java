@@ -35,6 +35,8 @@ public class ApneaForeService extends Service {
 	public static final int PAUSE = 2;
 	public static int STATE = STOP;
 
+	private final static int add_time = 10;
+
 	private final static int ONGOING_NOTIFICATION_ID = 251665161;
 	public static final String TABLE_RESTORE = "table_restore";
 	public static final String IS_ALERT_SERIES_END = "is_alert_series_end";
@@ -209,13 +211,13 @@ public class ApneaForeService extends Service {
 			updateProgress();
 		} else if (ApneaForeReceiver.ACTION_PAUSE.equals(action)) {
 			STATE = PAUSE;
-		} else if (ApneaForeReceiver.ACTION_CONTINUE.equals(action)) {
+		} else if (ApneaForeReceiver.ACTION_RESUME.equals(action)) {
 			STATE = RUN;
 		} else if (ApneaForeReceiver.ACTION_ADD_TIME.equals(action)) {
 			if (currentItem.getState() == RowState.HOLD) {
-				currentItem.setExtHold(currentItem.getExtHold() + 10);
+				currentItem.setExtHold(currentItem.getExtHold() + add_time);
 			} else if (currentItem.getState() == RowState.BREATHE) {
-				currentItem.setExtBreathe(currentItem.getExtBreathe() + 10);
+				currentItem.setExtBreathe(currentItem.getExtBreathe() + add_time);
 			}
 			Toast.makeText(getApplicationContext(), "Time added", Toast.LENGTH_SHORT).show();
 		}

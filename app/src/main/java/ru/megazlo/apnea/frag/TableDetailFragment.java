@@ -88,8 +88,13 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 
 	@Click(R.id.img_play)
 	void clickPlay() {
-		ApneaForeService_.intent(getActivity().getBaseContext()).extra("table", tableApnea).start();
-		setViewPlayPause(true);
+		if (ApneaForeService_.STATE == ApneaForeService_.STOP) {
+			ApneaForeService_.intent(getActivity().getBaseContext()).extra("table", tableApnea).start();
+			setViewPlayPause(true);
+		} else if (ApneaForeService_.STATE == ApneaForeService_.PAUSE) {
+			sendServiceCommand(ApneaForeReceiver.ACTION_RESUME);
+			setViewPlayPause(true);
+		}
 	}
 
 	private void setViewPlayPause(boolean isPlayClick) {
@@ -156,10 +161,7 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 			setViewPlayPause(false);
 			return;
 		}
-		//int max = intent.getIntExtra(DetailFragmentReceiver.KEY_MAX, -1);
 		int progress = intent.getIntExtra(DetailFragmentReceiver.KEY_PROGRESS, -1);
-		//int row = intent.getIntExtra(DetailFragmentReceiver.KEY_ROW, -1);
-		//RowState state = (RowState) intent.getSerializableExtra(DetailFragmentReceiver.KEY_ROW_TYPE);
 		tableApnea = (TableApnea) intent.getSerializableExtra(DetailFragmentReceiver.KEY_TABLE);
 		if (listView != null) {
 			final TableDetailAdapter adapter = (TableDetailAdapter) listView.getAdapter();

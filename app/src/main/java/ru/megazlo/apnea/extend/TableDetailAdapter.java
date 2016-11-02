@@ -36,8 +36,8 @@ public class TableDetailAdapter extends ArrayAdapter<TableApneaRow> {
             holder = (ViewHolder) cView.getTag();
         }
         TableApneaRow item = this.getItem(position);
-        holder.breathe.setText(Utils.formatMS(item.getBreathe() + item.getExtBreathe()));
-        holder.hold.setText(Utils.formatMS(item.getHold() + item.getExtHold()));
+        holder.breathe.setText(Utils.formatMS(item.getBreathe()) + (item.getExtBreathe() > 0 ? " + " + Utils.formatMS(item.getExtBreathe()) : ""));
+        holder.hold.setText(Utils.formatMS(item.getHold()) + (item.getExtHold() > 0 ? " + " + Utils.formatMS(item.getExtHold()) : ""));
         holder.i_breathe.setVisibility(item.getState() == RowState.BREATHE ? View.VISIBLE : View.GONE);
         holder.i_hold.setVisibility(item.getState() == RowState.HOLD ? View.VISIBLE : View.GONE);
         return cView;
