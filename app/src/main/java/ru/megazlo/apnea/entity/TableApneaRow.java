@@ -28,4 +28,10 @@ public class TableApneaRow  extends AbstractEntity {
 	private int extHold = 0;
 
 	private int extBreathe = 0;
+
+	public void reset() {
+		extHold = 0;
+		extBreathe = 0;
+		state = RowState.NONE;
+	}
 }

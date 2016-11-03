@@ -5,7 +5,9 @@ import android.app.Activity;
 import android.bluetooth.*;
 import android.bluetooth.le.*;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Handler;
 import android.preference.DialogPreference;
@@ -16,6 +18,7 @@ import android.widget.*;
 
 import java.util.List;
 
+import ru.megazlo.apnea.BuildConfig;
 import ru.megazlo.apnea.R;
 
 /** Created by iGurkin on 26.10.2016. */
@@ -24,6 +27,8 @@ import ru.megazlo.apnea.R;
 public class BluetoothPreference extends DialogPreference {
 
 	private final static int SCAN_PERIOD = 10000;
+
+	private String prefix;
 
 	private BluetoothAdapter mBluetoothAdapter;
 	private BluetoothLeScanner mLEScanner;
@@ -45,7 +50,11 @@ public class BluetoothPreference extends DialogPreference {
 	}
 
 	private void initStyles(Context context, AttributeSet attrs, int defStyleAttr) {
-
+		setPositiveButtonText(R.string.ok);
+		setNegativeButtonText(R.string.cancel);
+		TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TimePreference, defStyleAttr, 0);
+		prefix = attributes.getString(R.styleable.TimePreference_prefix);
+		prefix = prefix == null ? "" : prefix + " ";
 	}
 
 	@Override
@@ -67,6 +76,18 @@ public class BluetoothPreference extends DialogPreference {
 		FrameLayout dialogView = new FrameLayout(getContext());
 		dialogView.addView(list);
 
+
+		mHandler = new Handler();
+		final BluetoothManager bluetoothManager = (BluetoothManager) getContext().getSystemService(Context.BLUETOOTH_SERVICE);
+		mBluetoothAdapter = bluetoothManager.getAdapter();
+		if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			((Activity) getContext()).startActivityForResult(enableBtIntent, 1);
+			Toast.makeText(getContext(), "You must enable bluetooth", Toast.LENGTH_SHORT).show();
+		} else {
+			scanLeDevice(true);
+		}
+
 		return dialogView;
 	}
 
@@ -74,9 +95,16 @@ public class BluetoothPreference extends DialogPreference {
 	protected View onCreateView(ViewGroup parent) {
 		if (!getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
 			Toast.makeText(getContext(), "Bluetooth LE not supported", Toast.LENGTH_SHORT).show();
-			return null;
+			if (!BuildConfig.DEBUG) {
+				return super.onCreateView(parent);
+			}
 		}
 		return super.onCreateView(parent);
+	}
+
+	@Override
+	public void onActivityDestroy() {
+		super.onActivityDestroy();
 	}
 
 	@Override
@@ -84,6 +112,7 @@ public class BluetoothPreference extends DialogPreference {
 		super.onBindDialogView(view);
 		//list.setValue(getValue());
 	}
+
 
 	public void setBluetoothAddress(String address) {
 		persistString(address);
@@ -112,6 +141,7 @@ public class BluetoothPreference extends DialogPreference {
 	}
 
 	private BluetoothAdapter.LeScanCallback mLeScanCallback = (device, i, bytes) -> ((Activity) getContext()).runOnUiThread(() -> {
+		Toast.makeText(getContext(), device.getName() + device.getAddress(), Toast.LENGTH_SHORT).show();
 		/*Log.i("onLeScan", device.toString());
 		connectToDevice(device);*/
 	});

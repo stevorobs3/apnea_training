@@ -1,6 +1,7 @@
 package ru.megazlo.apnea.frag;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -16,6 +17,7 @@ import java.util.TimerTask;
 import ru.megazlo.apnea.R;
 import ru.megazlo.apnea.component.ArcProgress;
 import ru.megazlo.apnea.component.Utils;
+import ru.megazlo.apnea.receivers.OxiReceiver;
 import ru.megazlo.apnea.service.ApneaPrefs_;
 
 /** Created by iGurkin on 05.09.2016. */
@@ -108,6 +110,12 @@ public class RecordFragment extends Fragment implements FabClickListener {
 			return false;
 		}
 		return true;
+	}
+
+	@Receiver(actions = OxiReceiver.ACTION)
+	void getDataOximeter(Intent intent) {
+		final int pulse = intent.getIntExtra(OxiReceiver.PULSE_VAL, -1);
+		final int spo = intent.getIntExtra(OxiReceiver.SPO_VAL, -1);
 	}
 
 	class RecordTask extends TimerTask {

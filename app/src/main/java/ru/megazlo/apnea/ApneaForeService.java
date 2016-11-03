@@ -219,8 +219,14 @@ public class ApneaForeService extends Service {
 			} else if (currentItem.getState() == RowState.BREATHE) {
 				currentItem.setExtBreathe(currentItem.getExtBreathe() + add_time);
 			}
-			Toast.makeText(getApplicationContext(), "Time added", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), R.string.time_added, Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	@Receiver(actions = OxiReceiver.ACTION)
+	void getDataOximeter(Intent intent) {
+		final int pulse = intent.getIntExtra(OxiReceiver.PULSE_VAL, -1);
+		final int spo = intent.getIntExtra(OxiReceiver.SPO_VAL, -1);
 	}
 
 	class ApneaTimerTask extends TimerTask {

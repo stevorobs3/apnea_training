@@ -31,6 +31,8 @@
 	<string name="btn_discard">Сброс</string>
 	<string name="cancel">Отмена</string>
 	<string name="pref_best_record">Лучший рекод апноэ</string>
+	<string name="pref_device_address">Адрес устройства</string>
+
 	<string name="pref_co_cat">Тренировка CO2</string>
 	<string name="pref_main_cat">Основное</string>
 	<string name="pref_title_vibrate">Вибрация</string>
@@ -57,6 +59,9 @@
 	<string name="p_o2_end_time">Конечная задержка в серии:</string>
 	<string name="s_notify_vibrate">Вибрация при событии</string>
 	<string name="s_notify_voice">Голосовые оповещения</string>
+
+	<string name="s_allow_bt">При подключении больше расходуется батарея</string>
+	<string name="t_allow_bt">Подключаться к оксиметру</string>
 
 	<string name="t_notify_minute">Каждую минуту</string>
 	<string name="s_notify_minute">Оповещение каджую минуту до окончания</string>
@@ -98,4 +103,5 @@
 	<string name="chart_row_total">Время сессии: %s</string>
 	<string name="chart_row_date">Дата: %s</string>
 	<string name="lb_bpm">——</string>
+	<string name="time_added">Время добавлено</string>
 </resources>

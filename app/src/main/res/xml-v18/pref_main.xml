@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto">
+	<PreferenceCategory
+		android:key="pref_main_cat_settings"
+		android:title="@string/pref_main_cat">
+		<ru.megazlo.apnea.component.TimePreference
+			android:defaultValue="2:40"
+			android:key="bestRecord"
+			android:title="@string/pref_best_record"
+			app:prefix="@string/sum_max_time"/>
+
+		<SwitchPreference
+			android:defaultValue="false"
+			android:key="allowBluetooth"
+			android:summary="@string/s_allow_bt"
+			android:title="@string/t_allow_bt"/>
+
+		<ru.megazlo.apnea.component.BluetoothPreference
+			android:defaultValue=""
+			android:dependency="allowBluetooth"
+			android:key="deviceAddress"
+			android:title="@string/pref_device_address"/>
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:key="pref_co2_cat_settings"
+		android:title="@string/pref_co_cat">
+
+		<ru.megazlo.apnea.component.NumberPickerPreference
+			android:defaultValue="50"
+			android:key="co2Percent"
+			android:title="@string/titl_co2_max_perc"
+			app:max="80"
+			app:min="50"
+			app:suffix="@string/pref_perc_suff"/>
+
+		<ru.megazlo.apnea.component.TimePreference
+			android:defaultValue="2:30"
+			android:key="co2StartTime"
+			android:title="@string/titl_co2_beg_time"
+			app:prefix="@string/sum_co2_beg_time"/>
+
+		<ru.megazlo.apnea.component.NumberPickerPreference
+			android:defaultValue="15"
+			android:key="co2Reduce"
+			android:title="@string/titl_co2_reduce"
+			app:max="30"
+			app:min="5"
+			app:suffix="@string/pref_sec_suff"/>
+
+		<ru.megazlo.apnea.component.TimePreference
+			android:defaultValue="1:00"
+			android:key="co2EndTime"
+			android:title="@string/t_co2_end_time"
+			app:prefix="@string/p_co2_end_time"/>
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:key="pref_o_cat_settings"
+		android:title="@string/pref_o_cat">
+		<ru.megazlo.apnea.component.TimePreference
+			android:defaultValue="2:00"
+			android:key="o2Timeout"
+			android:title="@string/t_o2_timeout"
+			app:prefix="@string/p_o2_timeout"/>
+
+		<ru.megazlo.apnea.component.TimePreference
+			android:defaultValue="1:00"
+			android:key="o2StartTime"
+			android:title="@string/t_o2_start_time"
+			app:prefix="@string/p_o2_start_time"/>
+
+		<ru.megazlo.apnea.component.NumberPickerPreference
+			android:defaultValue="15"
+			android:key="o2IncreaseTime"
+			android:title="@string/t_o2_increase_time"
+			app:max="30"
+			app:min="5"
+			app:suffix="@string/pref_sec_suff"/>
+
+		<ru.megazlo.apnea.component.TimePreference
+			android:defaultValue="2:30"
+			android:key="o2EndTime"
+			android:title="@string/t_o2_end_time"
+			app:prefix="@string/p_o2_end_time"/>
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:title="@string/t_notify_type"
+		android:summary="@string/s_notify_type">
+		<SwitchPreference
+			android:defaultValue="false"
+			android:key="notifyVibrate"
+			android:summary="@string/s_notify_vibrate"
+			android:title="@string/pref_title_vibrate"/>
+
+		<SwitchPreference
+			android:defaultValue="true"
+			android:key="notifySpeech"
+			android:summary="@string/s_notify_voice"
+			android:title="@string/pref_title_speech"/>
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:summary="@string/s_notify_cat"
+		android:title="@string/pref_notify_cat">
+		<SwitchPreference
+			android:defaultValue="true"
+			android:key="notifyMinute"
+			android:title="@string/t_notify_minute"
+			android:summary="@string/s_notify_minute"/>
+
+		<SwitchPreference
+			android:defaultValue="true"
+			android:key="notify30sec"
+			android:title="@string/t_notify_30sec"
+			android:summary="@string/s_notify_30sec"/>
+
+		<SwitchPreference
+			android:defaultValue="true"
+			android:key="notify10sec"
+			android:title="@string/t_notify_10sec"
+			android:summary="@string/s_notify_10sec"/>
+
+		<SwitchPreference
+			android:defaultValue="true"
+			android:key="notify5sec"
+			android:title="@string/t_notify_5sec"
+			android:summary="@string/s_notify_5sec"/>
+	</PreferenceCategory>
+
+</PreferenceScreen>

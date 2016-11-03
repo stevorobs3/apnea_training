@@ -45,9 +45,16 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 	RelativeLayout buttonPane;
 
 	private void updateViews(int progress) {
+		updateViews(false, progress);
+	}
+
+	private void updateViews(boolean reset, int progress) {
 		TableApneaRow cr = null;
 		int total = 0;
 		for (TableApneaRow r : tableApnea.getRows()) {
+			if (reset) {
+				r.reset();
+			}
 			total += r.getHold() + r.getExtHold() + r.getBreathe() + r.getExtBreathe();
 			if (r.getState() != RowState.NONE) {
 				cr = r;
@@ -56,7 +63,11 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 		if (cr != null) {
 			prg.setMax(cr.getState() == RowState.HOLD ? cr.getHold() + cr.getExtHold() : cr.getBreathe() + cr.getExtBreathe());
 			prg.setBottomText(getString(cr.getState() == RowState.BREATHE ? R.string.timer_breath_lb : R.string.timer_hold_lb));
+		} else if (tableApnea.getRows().size() > 0) {
+			prg.setMax(tableApnea.getRows().get(0).getBreathe());
+			prg.setBottomText("");
 		}
+
 		prg.setProgress(progress);
 		totalTime.setText(String.format(totalTimeStr, Utils.formatMS(total)));
 	}
@@ -69,7 +80,7 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 			tableApnea.setRows(apneaService.getRowsForTable(tableApnea));
 			adapter.addAll(tableApnea.getRows());
 		}
-		updateTotalTime();
+		updateViews(0);
 		setViewPlayPause(ApneaForeService_.STATE == ApneaForeService_.RUN);
 	}
 
@@ -97,16 +108,6 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 		}
 	}
 
-	private void setViewPlayPause(boolean isPlayClick) {
-		float scale = isPlayClick ? 1 : 0.5f;
-		final int visibleChild = isPlayClick ? View.VISIBLE : View.GONE;
-		buttonPane.animate().scaleX(scale).scaleY(scale).setDuration(200).start();
-		for (int i = 0; i < buttonPane.getChildCount(); i++) {
-			buttonPane.getChildAt(i).setVisibility(visibleChild);
-		}
-		buttonPane.findViewById(R.id.img_play).setVisibility(isPlayClick ? View.GONE : View.VISIBLE);
-	}
-
 	@Click(R.id.img_pause)
 	void clickPause() {
 		sendServiceCommand(ApneaForeReceiver.ACTION_PAUSE);
@@ -118,21 +119,19 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 		sendServiceCommand(ApneaForeReceiver.ACTION_ADD_TIME);
 	}
 
+	private void setViewPlayPause(boolean isPlayClick) {
+		float scale = isPlayClick ? 1 : 0.5f;
+		final int visibleChild = isPlayClick ? View.VISIBLE : View.GONE;
+		buttonPane.animate().scaleX(scale).scaleY(scale).setDuration(200).start();
+		for (int i = 0; i < buttonPane.getChildCount(); i++) {
+			buttonPane.getChildAt(i).setVisibility(visibleChild);
+		}
+		buttonPane.findViewById(R.id.img_play).setVisibility(isPlayClick ? View.GONE : View.VISIBLE);
+	}
+
 	void sendServiceCommand(String name) {
 		Intent tb = new Intent(ApneaForeReceiver.ACTION).putExtra(ApneaForeReceiver.ACTION_TYPE, name);
 		getActivity().sendBroadcast(tb);
-	}
-
-	private void updateTotalTime() {
-		prg.setProgress(0);
-		if (tableApnea.getRows() != null && tableApnea.getRows().size() > 0) {
-			prg.setMax(tableApnea.getRows().get(0).getBreathe());
-			int total = 0;
-			for (TableApneaRow r : tableApnea.getRows()) {
-				total += r.getBreathe() + r.getHold();
-			}
-			totalTime.setText(String.format(totalTimeStr, Utils.formatMS(total)));
-		}
 	}
 
 	public void setTableApnea(TableApnea tableApnea) {
@@ -157,7 +156,7 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 	void detailReceiver(Intent intent) {
 		boolean ended = intent.getBooleanExtra(DetailFragmentReceiver.KEY_ENDED, false);
 		if (ended) {
-			updateTotalTime();
+			updateViews(true, 0);
 			setViewPlayPause(false);
 			return;
 		}
