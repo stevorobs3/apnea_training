@@ -64,22 +64,21 @@
 			android:paddingBottom="10sp"
 			android:text="@string/total_time"/>
 
-
 		<TextView
 			android:id="@+id/tv_heart_rate"
-			android:layout_width="60dp"
+			android:layout_width="58dp"
 			android:layout_height="wrap_content"
 			android:layout_toRightOf="@id/arc_progress"
-			android:text="169"
 			android:gravity="right"
+			android:text="57"
 			android:textColor="@color/darker_gray"
 			android:textSize="30sp"/>
 
 		<ImageView
 			android:layout_width="14dp"
 			android:layout_height="14dp"
-			android:layout_toRightOf="@id/tv_heart_rate"
 			android:layout_alignTop="@id/tv_heart_rate"
+			android:layout_toRightOf="@id/tv_heart_rate"
 			android:src="@drawable/ic_heart"
 			android:tint="@color/chart_pulse"/>
 
@@ -96,8 +95,8 @@
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_toRightOf="@id/tv_heart_spo"
 			android:layout_alignTop="@id/tv_heart_spo"
+			android:layout_toRightOf="@id/tv_heart_spo"
 			android:text="@string/lb_spo"
 			android:textColor="@color/chart_spo"
 			android:textSize="12sp"/>
