@@ -13,6 +13,7 @@
 		<SwitchPreference
 			android:defaultValue="false"
 			android:key="allowBluetooth"
+			android:enabled="false"
 			android:summary="@string/s_allow_bt"
 			android:title="@string/t_allow_bt"/>
 

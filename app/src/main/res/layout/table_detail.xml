@@ -80,7 +80,7 @@
 			android:layout_alignBottom="@id/img_heart"
 			android:layout_marginBottom="6dp"
 			android:layout_toRightOf="@id/img_heart"
-			android:text="@string/lb_bpm"
+			android:text="@string/lb_empty_val"
 			android:textColor="@color/darker_gray"
 			android:textSize="16sp"/>
 
@@ -99,7 +99,7 @@
 			android:layout_height="wrap_content"
 			android:layout_alignLeft="@id/tv_heart_rate"
 			android:layout_alignTop="@id/lb_spo"
-			android:text="@string/lb_spo_vl"
+			android:text="@string/lb_empty_val"
 			android:textColor="@color/darker_gray"
 			android:textSize="16sp"/>
 

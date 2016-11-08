@@ -20,6 +20,48 @@
 		custom:arc_text_size="95sp"
 		custom:arc_unfinished_color="@color/arc_unfinished"/>
 
+	<RelativeLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above="@id/arc_record"
+		android:layout_centerInParent="true"
+		android:layout_gravity="center_horizontal"
+		android:layout_marginBottom="15dp">
+
+		<TextView
+			android:id="@+id/tv_rec_heart"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/lb_empty_val"
+			android:textSize="38sp"/>
+
+		<ImageView
+			android:layout_width="20dp"
+			android:layout_height="20dp"
+			android:layout_alignTop="@id/tv_rec_heart"
+			android:layout_toRightOf="@id/tv_rec_heart"
+			android:src="@drawable/ic_heart"
+			android:tint="@color/chart_pulse"/>
+
+		<TextView
+			android:id="@+id/tv_rec_spo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="40sp"
+			android:layout_toRightOf="@id/tv_rec_heart"
+			android:text="99"
+			android:textSize="38sp"/>
+
+		<TextView
+			android:id="@+id/lb_sp_rec"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignTop="@id/tv_rec_spo"
+			android:layout_toRightOf="@id/tv_rec_spo"
+			android:text="@string/lb_spo"
+			android:textSize="16sp"/>
+	</RelativeLayout>
+
 	<Button
 		android:id="@+id/start_record"
 		android:layout_width="wrap_content"
