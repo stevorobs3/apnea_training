@@ -64,44 +64,43 @@
 			android:paddingBottom="10sp"
 			android:text="@string/total_time"/>
 
-		<ImageView
-			android:id="@+id/img_heart"
-			android:layout_width="30dp"
-			android:layout_height="30dp"
-			android:layout_marginLeft="18dp"
+
+		<TextView
+			android:id="@+id/tv_heart_rate"
+			android:layout_width="60dp"
+			android:layout_height="wrap_content"
 			android:layout_toRightOf="@id/arc_progress"
+			android:text="169"
+			android:gravity="right"
+			android:textColor="@color/darker_gray"
+			android:textSize="30sp"/>
+
+		<ImageView
+			android:layout_width="14dp"
+			android:layout_height="14dp"
+			android:layout_toRightOf="@id/tv_heart_rate"
+			android:layout_alignTop="@id/tv_heart_rate"
 			android:src="@drawable/ic_heart"
 			android:tint="@color/chart_pulse"/>
 
 		<TextView
-			android:id="@+id/tv_heart_rate"
+			android:id="@+id/tv_heart_spo"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_alignBottom="@id/img_heart"
-			android:layout_marginBottom="6dp"
-			android:layout_toRightOf="@id/img_heart"
-			android:text="@string/lb_empty_val"
+			android:layout_alignRight="@id/tv_heart_rate"
+			android:layout_below="@id/tv_heart_rate"
+			android:text="99"
 			android:textColor="@color/darker_gray"
-			android:textSize="16sp"/>
+			android:textSize="30sp"/>
 
 		<TextView
-			android:id="@+id/lb_spo"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_alignRight="@id/img_heart"
-			android:layout_below="@id/img_heart"
+			android:layout_toRightOf="@id/tv_heart_spo"
+			android:layout_alignTop="@id/tv_heart_spo"
 			android:text="@string/lb_spo"
 			android:textColor="@color/chart_spo"
-			android:textSize="22sp"/>
-
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignLeft="@id/tv_heart_rate"
-			android:layout_alignTop="@id/lb_spo"
-			android:text="@string/lb_empty_val"
-			android:textColor="@color/darker_gray"
-			android:textSize="16sp"/>
+			android:textSize="12sp"/>
 
 		<RelativeLayout
 			android:id="@+id/control_pane"

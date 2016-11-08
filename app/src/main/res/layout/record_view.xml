@@ -59,6 +59,7 @@
 			android:layout_alignTop="@id/tv_rec_spo"
 			android:layout_toRightOf="@id/tv_rec_spo"
 			android:text="@string/lb_spo"
+			android:textColor="@color/chart_spo"
 			android:textSize="16sp"/>
 	</RelativeLayout>
 
