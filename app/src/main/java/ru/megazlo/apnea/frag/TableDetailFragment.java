@@ -45,7 +45,9 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 	RelativeLayout buttonPane;
 
 	private void updateViews(int progress) {
-		updateViews(false, progress);
+		if (tableApnea != null && tableApnea.getRows() != null) {
+			updateViews(false, progress);
+		}
 	}
 
 	private void updateViews(boolean reset, int progress) {
@@ -79,8 +81,8 @@ public class TableDetailFragment extends Fragment implements FabClickListener {
 		if (ApneaForeService_.STATE == ApneaForeService_.STOP) {
 			tableApnea.setRows(apneaService.getRowsForTable(tableApnea));
 			adapter.addAll(tableApnea.getRows());
+			updateViews(0);
 		}
-		updateViews(0);
 		setViewPlayPause(ApneaForeService_.STATE == ApneaForeService_.RUN);
 	}
 

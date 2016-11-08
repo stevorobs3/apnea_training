@@ -110,8 +110,7 @@ public class MainAct extends AppCompatActivity implements NavigationView.OnNavig
 			setFragment(new InfoFragment_().setResRawId(R.raw.info));
 		} else if (id == R.id.nav_graphs) {
 			setFragment(new ChartListFragment_());
-			//dialogOxySoon();
-			//setFragment();
+			dialogOxySoon();
 		} else if (id == R.id.nav_record) {
 			setFragment(new RecordFragment_());
 		} else if (id == R.id.nav_tables) {
