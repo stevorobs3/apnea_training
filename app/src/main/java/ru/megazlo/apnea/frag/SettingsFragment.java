@@ -33,7 +33,7 @@ public class SettingsFragment extends PreferenceFragment implements FabClickList
 		addPreferencesFromResource(R.xml.pref_main);
 		getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 		if (!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-			if (!BuildConfig.DEBUG) {
+			if (!BuildConfig.DEBUG && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
 				// отключаем настройку если нет bluetooth 4 с профилем LE
 				getPreferenceManager().findPreference("allowBluetooth").setEnabled(false);
 				pref.edit().allowBluetooth().put(false).apply();
